@@ -2,9 +2,8 @@
 layout: post
 title:  "Notes on Littlewood's 'Large Numbers' and Related Thoughts"
 date:   2022-01-03 08:28:12 -0600
-categories: jekyll uuiate
+categories: 
 ---
-
 
 
 ## Coincidences / Probabilities
@@ -45,6 +44,8 @@ Considering that the U.S. made [10 million arrests in 2019](https://www.ojjdp.go
 
 $$ p' = 1 - (1-P)^{N} = 1 - \left( 1 - NP + \frac{N(N-1)}{2} P^2 - \cdots \right) = NP + O(P^2) $$ 
 
-Plugging in $$N = 250 \cdot 5 \cdot 10^6, P = 10^{-16}$$, we get that $p' \approx 10^{-7}$. 
+Plugging in $$N = 250 \cdot 5 \cdot 10^6, P = 10^{-16}$$, we get that $$p' \approx 10^{-7}$$. 
 
 This probability is reasonable as [various doppelgangers have been found in real life](https://en.wikipedia.org/wiki/Doppelg%C3%A4nger#Examples_in_real_life) and so we expect it to be within the realm of possibility.
+
+
