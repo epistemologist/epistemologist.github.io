@@ -1,4 +1,4 @@
-I"$<h2 id="coincidences--probabilities">Coincidences / Probabilities</h2>
+I"<h2 id="coincidences--probabilities">Coincidences / Probabilities</h2>
 
 <h3 id="will-west-case">Will West Case</h3>
 
@@ -19,7 +19,7 @@
 
 <p>Using data from <a href="https://www.ssa.gov/OACT/babynames/">U.S. Social Security Adminbistration</a> and using the top 1000 names from the years 1880 and 2010 (assuming that 50% of births are male and 50% of births are female), we <a href="https://gist.github.com/epistemologist/12cff945e6b8c918055f5585fc373c7f">get estimates</a> of probabilities of 1.8% and 0.21% respectively. Assuming that choosing first names and last names are independent, we estimate that $ P_n \approx 10^{-2} \cdot 10^{-2} = 10^{-4} $</p>
 
-<h5 id="estimating-p_b-and-p_f">Estimating \(P_b\) and \(P_f\)</h5>
+<h5 id="estimating-p_b">Estimating \(P_b\)</h5>
 
 <p>Littlewood mentions that the two Wests’ shared Bermillon measurements - these are a system of 11 different biometric measurements that were taken of prisoners as means of identification. In the original case, the measurements of the two Wests’ were <a href="https://web.archive.org/web/20120505160629/opinionator.blogs.nytimes.com/2012/05/01/whats-in-a-name-part-2/">not exactly the same, but remarkably similar</a>.</p>
 

@@ -26,7 +26,7 @@ $$ P(n_1 = n_2) = \sum_{\text{names }n} P(n_1 = n) P(n_2 = n) = \sum_{\text{name
 
 Using data from [U.S. Social Security Adminbistration](https://www.ssa.gov/OACT/babynames/) and using the top 1000 names from the years 1880 and 2010 (assuming that 50% of births are male and 50% of births are female), we [get estimates](https://gist.github.com/epistemologist/12cff945e6b8c918055f5585fc373c7f) of probabilities of 1.8% and 0.21% respectively. Assuming that choosing first names and last names are independent, we estimate that $ P_n \approx 10^{-2} \cdot 10^{-2} = 10^{-4} $
 
-##### Estimating $$P_b$$ and $$P_f$$
+##### Estimating $$P_b$$
 
 Littlewood mentions that the two Wests' shared Bermillon measurements - these are a system of 11 different biometric measurements that were taken of prisoners as means of identification. In the original case, the measurements of the two Wests' were [not exactly the same, but remarkably similar](https://web.archive.org/web/20120505160629/opinionator.blogs.nytimes.com/2012/05/01/whats-in-a-name-part-2/). 
 
