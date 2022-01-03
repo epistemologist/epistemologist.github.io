@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts | Your awesome title</title>
+<meta name="generator" content="Jekyll v4.2.1" />
+<meta property="og:title" content="Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Coincidences / Probabilities" />
+<meta property="og:description" content="Coincidences / Probabilities" />
+<link rel="canonical" href="http://localhost:4000/jekyll/uuiate/2022/01/03/big-numbers-notes.html" />
+<meta property="og:url" content="http://localhost:4000/jekyll/uuiate/2022/01/03/big-numbers-notes.html" />
+<meta property="og:site_name" content="Your awesome title" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-03T08:28:12-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"http://localhost:4000/jekyll/uuiate/2022/01/03/big-numbers-notes.html","headline":"Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts","dateModified":"2022-01-03T08:28:12-06:00","datePublished":"2022-01-03T08:28:12-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/uuiate/2022/01/03/big-numbers-notes.html"},"description":"Coincidences / Probabilities","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Your awesome title</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Notes on Littlewood&#39;s &#39;Large Numbers&#39; and Related Thoughts</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2022-01-03T08:28:12-06:00" itemprop="datePublished">Jan 3, 2022
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="coincidences--probabilities">Coincidences / Probabilities</h2>
+
+<h3 id="will-west-case">Will West Case</h3>
+
+<p>Littlewood writes:</p>
+<blockquote>
+  <p>Dorothy Sayers in Unpopular Opinions, cites the case of two negroes, each named Will West, confined simultaneously in Leavenworth Penitentiary, U.S.A. (in 1903), and with the same Bertillon measurements. (Is this really credible ?)</p>
+</blockquote>
+
+<p>We estimate this probability, let $P$ be the probability that two people share the same facial features, Bertillon measurements and name. We have:</p>
+
+\[P \approx \underbrace{\text{Prob(same body measurements)}}_{:=P_b} \; \cdot \;  \underbrace{\text{Prob(same name)}}_{:=P_n}\]
+
+<h5 id="estimationg-p_n">Estimationg \(P_n\)</h5>
+
+<p>Let \(n_1, n_2\) be the names of two arbitrary people. We have the crude approximation:</p>
+
+\[P(n_1 = n_2) = \sum_{\text{names }n} P(n_1 = n) P(n_2 = n) = \sum_{\text{names } n} P(n)^2\]
+
+<p>Using data from <a href="https://www.ssa.gov/OACT/babynames/">U.S. Social Security Adminbistration</a> and using the top 1000 names from the years 1880 and 2010 (assuming that 50% of births are male and 50% of births are female), we <a href="https://gist.github.com/epistemologist/12cff945e6b8c918055f5585fc373c7f">get estimates</a> of probabilities of 1.8% and 0.21% respectively. Assuming that choosing first names and last names are independent, we estimate that $ P_n \approx 10^{-2} \cdot 10^{-2} = 10^{-4} $</p>
+
+<h5 id="estimating-p_b-and-p_f">Estimating \(P_b\) and \(P_f\)</h5>
+
+<p>Littlewood mentions that the two Wests’ shared Bermillon measurements - these are a system of 11 different biometric measurements that were taken of prisoners as means of identification. In the original case, the measurements of the two Wests’ were <a href="https://web.archive.org/web/20120505160629/opinionator.blogs.nytimes.com/2012/05/01/whats-in-a-name-part-2/">not exactly the same, but remarkably similar</a>.</p>
+
+<p>Bertillon <a href="https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2014.00739.x">himself predicted</a> that the probability of two people sharing all 11 measurements was \(P_b \approx 1/4^{32} = 1/268435456\). However, <a href="https://link.springer.com/article/10.1007%2Fs00414-015-1158-6">more recent studies</a> in forensic anthropometry place the probability of two people sharing 8 different body measurement traits at \(P_b \approx 10^{-20}\).</p>
+
+<p>We therefore make the estimate \(P_b \approx 10^{-12}\) and therefore, \(P \approx 10^{-12} \cdot \cdot 10^{-4} = 10^{-16}\).</p>
+
+<h5 id="wrapping-things-up">Wrapping Things Up</h5>
+
+<p>We now calculate the probability that for any one person being incarcerated that they share the same features to someone in the same prison that they are being held similarly to the two Will Wests.</p>
+
+<p>Assuming an average prison houses an average of <a href="https://www.americanjail.org/jail-statistics">250 inmates</a>, the probability that a person who is imprisoned meets their doppelganger in the same prison is \(p = 1 - (1-P)^{250}\).</p>
+
+<p>Therefore, if $n$ people are incarcerated, we have that the probability that any one person will find their doppelganger is \(p' = 1 - (1-p)^n = 1 - (1-P)^{250n}\).
+Considering that the U.S. made <a href="https://www.ojjdp.gov/ojstatbb/crime/ucr.asp?table_in=2">10 million arrests in 2019</a>, we estimate \(N \approx 5 \cdot 10^6\). We therefore have that:</p>
+
+\[p' = 1 - (1-P)^{N} = 1 - \left( 1 - NP + \frac{N(N-1)}{2} P^2 - \cdots \right) = NP + O(P^2)\]
+
+<p>Plugging in \(N = 250 \cdot 5 \cdot 10^6, P = 10^{-16}\), we get that $p’ \approx 10^{-7}$.</p>
+
+<p>This probability is reasonable as <a href="https://en.wikipedia.org/wiki/Doppelg%C3%A4nger#Examples_in_real_life">various doppelgangers have been found in real life</a> and so we expect it to be within the realm of possibility.</p>
+
+  </div><a class="u-url" href="/jekyll/uuiate/2022/01/03/big-numbers-notes.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Your awesome title</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
