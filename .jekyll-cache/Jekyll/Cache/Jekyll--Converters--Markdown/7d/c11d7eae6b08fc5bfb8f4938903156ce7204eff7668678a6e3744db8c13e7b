@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-04T04:20:37-06:00</updated><id>/feed.xml</id><title type="html">epistemologist</title><subtitle>Random musings on whatever I feel</subtitle><entry><title type="html">Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts</title><link href="/2022/01/03/big-numbers-notes.html" rel="alternate" type="text/html" title="Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts" /><published>2022-01-03T08:28:12-06:00</published><updated>2022-01-03T08:28:12-06:00</updated><id>/2022/01/03/big-numbers-notes</id><content type="html" xml:base="/2022/01/03/big-numbers-notes.html"><![CDATA[<h2 id="human-scale-numbers">Human Scale Numbers</h2>
+I"Q)<h2 id="human-scale-numbers">Human Scale Numbers</h2>
 
 <h3 id="scales-of-measurement">Scales of Measurement</h3>
 
@@ -122,4 +122,6 @@ Considering that the U.S. made <a href="https://www.ojjdp.gov/ojstatbb/crime/ucr
   <li><a href="https://stats.distributed.net/projects.php?project_id=3">cracking a key of 56 bits</a>: \(26 \cdot 10^{15}\) keys attempted over 193 days, completed</li>
   <li><a href="https://stats.distributed.net/projects.php?project_id=5">cracking a key of 64 bits</a>: \(15 \cdot 10^{18}\) keys attempted over 1726 days, completed</li>
   <li><a href="https://stats.distributed.net/projects.php?project_id=8">cracking a key of 72 bits</a>: \(390 \cdot 10^18\) keys attempted over 6972 days, incomplete</li>
-</ul>]]></content><author><name></name></author><summary type="html"><![CDATA[Human Scale Numbers]]></summary></entry></feed>
+</ul>
+
+:ET
