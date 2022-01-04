@@ -34,7 +34,7 @@ Let $$n_1, n_2$$ be the names of two arbitrary people. We have the crude approxi
 
 $$ P(n_1 = n_2) = \sum_{\text{names }n} P(n_1 = n) P(n_2 = n) = \sum_{\text{names } n} P(n)^2 $$
 
-Using data from [U.S. Social Security Adminbistration](https://www.ssa.gov/OACT/babynames/) and using the top 1000 names from the years 1880 and 2010 (assuming that 50% of births are male and 50% of births are female), we [get estimates](https://gist.github.com/epistemologist/12cff945e6b8c918055f5585fc373c7f) of probabilities of 1.8% and 0.21% respectively. Assuming that choosing first names and last names are independent, we estimate that $ P_n \approx 10^{-2} \cdot 10^{-2} = 10^{-4} $
+Using data from [U.S. Social Security Adminbistration](https://www.ssa.gov/OACT/babynames/) and using the top 1000 names from the years 1880 and 2010 (assuming that 50% of births are male and 50% of births are female), we [get estimates](https://gist.github.com/epistemologist/12cff945e6b8c918055f5585fc373c7f) of probabilities of 1.8% and 0.21% respectively. Assuming that choosing first names and last names are independent, we estimate that $$  P_n \approx 10^{-2} \cdot 10^{-2} = 10^{-4} $$
 
 ##### Estimating $$P_b$$
 
@@ -42,7 +42,7 @@ Littlewood mentions that the two Wests' shared Bermillon measurements - these ar
 
 Bertillon [himself predicted](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2014.00739.x) that the probability of two people sharing all 11 measurements was $$P_b \approx 1/4^{32} = 1/268435456$$. However, [more recent studies](https://link.springer.com/article/10.1007%2Fs00414-015-1158-6) in forensic anthropometry place the probability of two people sharing 8 different body measurement traits at $$ P_b \approx 10^{-20} $$.
 
-We therefore make the estimate $$ P_b \approx 10^{-12} $$ and therefore, $$ P \approx 10^{-12} \cdot \cdot 10^{-4} = 10^{-16} $$.
+We therefore make the estimate $$ P_b \approx 10^{-12} $$ and therefore, $$ P \approx 10^{-12} \cdot 10^{-4} = 10^{-16} $$.
 
 ##### Wrapping Things Up
 
