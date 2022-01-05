@@ -176,3 +176,8 @@ In [1]: from math import sqrt, log
    ...: print(f"C = 10^({exp*log(base) / log(10)})")                                                                          
 C = 10^(7.512302344442364e+47)
 ```
+
+#### Other Examples
+This is not the only example of large numbers arising from the study of physical phenomena:
+ - [Here](http://www.fpx.de/fp/Fun/Googolplex/GetAGoogol.html), it is described that a black hole of mass $$ 6.14 \cdot 10^{41} \text{kg} \approx 3 \cdot 10^{11} $$ times the mass of the sun has a dimensionless entropy of $$ 10^{100} $$ and therefore has $$ e^{10^{100}} \approx 10^{10^{99.6}}$$ different macroscopic states
+ - [In this paper](https://arxiv.org/pdf/1712.08465.pdf), the probability that a human teleports due to random quantum fluctuations is calculated to be approximately $$ 10^{-4.5 \cdot 10^{29}} $$ 
