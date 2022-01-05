@@ -1,54 +1,4 @@
-<!DOCTYPE html>
-<html lang="en"><head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts | epistemologist</title>
-<meta name="generator" content="Jekyll v4.2.1" />
-<meta property="og:title" content="Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="In his essay titled “Large Numbers”(published as part of his larger collection of essays titled A Mathematical Miscellany), John Littlewood writes on the various applications of large numbers. In this post, we give a more modern take on some of his examples as well as give some new ones." />
-<meta property="og:description" content="In his essay titled “Large Numbers”(published as part of his larger collection of essays titled A Mathematical Miscellany), John Littlewood writes on the various applications of large numbers. In this post, we give a more modern take on some of his examples as well as give some new ones." />
-<link rel="canonical" href="http://localhost:4000/2022/01/03/big-numbers-notes.html" />
-<meta property="og:url" content="http://localhost:4000/2022/01/03/big-numbers-notes.html" />
-<meta property="og:site_name" content="epistemologist" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2022-01-03T08:28:12-06:00" />
-<meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts" />
-<script type="application/ld+json">
-{"@type":"BlogPosting","url":"http://localhost:4000/2022/01/03/big-numbers-notes.html","headline":"Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts","dateModified":"2022-01-03T08:28:12-06:00","datePublished":"2022-01-03T08:28:12-06:00","description":"In his essay titled “Large Numbers”(published as part of his larger collection of essays titled A Mathematical Miscellany), John Littlewood writes on the various applications of large numbers. In this post, we give a more modern take on some of his examples as well as give some new ones.","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2022/01/03/big-numbers-notes.html"},"@context":"https://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="epistemologist" /></head>
-<body><header class="site-header" role="banner">
-
-  <div class="wrapper"><a class="site-title" rel="author" href="/">epistemologist</a><nav class="site-nav">
-        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
-        <label for="nav-trigger">
-          <span class="menu-icon">
-            <svg viewBox="0 0 18 15" width="18px" height="15px">
-              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
-            </svg>
-          </span>
-        </label>
-
-        <div class="trigger"></div>
-      </nav></div>
-</header>
-<main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
-<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-
-  <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Notes on Littlewood&#39;s &#39;Large Numbers&#39; and Related Thoughts</h1>
-    <p class="post-meta">
-      <time class="dt-published" datetime="2022-01-03T08:28:12-06:00" itemprop="datePublished">Jan 3, 2022
-      </time></p>
-  </header>
-
-  <div class="post-content e-content" itemprop="articleBody">
-    <p>In his essay titled <a href="https://www.jstor.org/stable/3609933?seq=1#metadata_info_tab_contents">“Large Numbers”</a>(published as part of his larger collection of essays titled <em>A Mathematical Miscellany</em>), John Littlewood writes on the various applications of large numbers. In this post, we give a more modern take on some of his examples as well as give some new ones.</p>
+I"f3<p>In his essay titled <a href="https://www.jstor.org/stable/3609933?seq=1#metadata_info_tab_contents">“Large Numbers”</a>(published as part of his larger collection of essays titled <em>A Mathematical Miscellany</em>), John Littlewood writes on the various applications of large numbers. In this post, we give a more modern take on some of his examples as well as give some new ones.</p>
 
 <h2 id="human-scale-numbers">Human Scale Numbers</h2>
 
@@ -192,71 +142,9 @@ Considering that the U.S. made <a href="https://www.ojjdp.gov/ojstatbb/crime/ucr
 
 <p>We assume, as Littlewood does, that “…we should treat the problem as classical, and suppose that the molecules and densities are terrestial.” - let the particles in Hell (or somewhere extremely hot if you prefer) follow a <a href="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution">Maxwell-Boltzmann distribution</a></p>
 
-<p>Littlewood also defines two other variables, \(c_0, c_H\) or the average speed of particles at temperatures of \(T_0\) and \(T_H\) respectively. We can describe this by calculating the <a href="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Typical_speeds">mean velocity</a> at various temperatures, giving \(c_0 = \sqrt{\frac{8 k_B T_0}{ \pi m}}, c_H = \sqrt{\frac{8 k_B T_H}{\pi m}}\).</p>
+<p>Littlewood also defines two other variables, \(c_0, c_H\) or the average speed of particles at temperatures of \(T_0\) and \(T_H\) respectively. We can describe this by calculating the <a href="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Typical_speeds">mean velocity</a> at various temperatures, giving \(c_0 = \sqrt{\frac{8 k T_0}{ \pi m}}, c_H = \sqrt{\frac{8 k T_H}{\pi m}}\).</p>
 
 <p>Next, for any given particle at temperature \(T =  T_H\), the probability \(p\) that its speed does not exceed \(c_0\) can be found by integrating <a href="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Distribution_for_the_speed">the distribution function of the particle’s speed</a> as follows:</p>
 
-\[p = \int_0^{c_0} f(v) = \sqrt{\frac{2}{\pi}} \left(\frac{m}{k T_H}\right)^{3/2} \int_0^{c_0}  v^2 e^{-\frac{mv^2}{2k T_H}} dv \\ = \sqrt{\frac{2}{\pi}} \left(\frac{m}{k T_H}\right)^{3/2} \int_0^{c_0} \left( v^2 + O(1/T_H) \right) dv \\ \sim T_H^{-3/2} c_0^3 \sim (T_0 / T_H)^{3/2}\]
-
-<p>Littlewood then states that the probability that most of the particles in the mouse have \(c \le c_0\) is of the order of \(p^\mu\). He then breaks up the time interval of a week into time intervals of length \(\tau\) similar to the <a href="https://en.wikipedia.org/wiki/Mean_free_time">mean free time</a> or average time between molecular collisions.</p>
-
-<p>Here, we simply take Littlewood’s word [TODO: actually derive this] and say that \(\tau_H \sim \frac{n_0^{-1/3}}{c_0} \sqrt{\frac{T_0}{T_H}}\) and so the total number of time periods in a week is \(\nu = w / \tau_H\)</p>
-
-<p>We therefore have that the total probability of survival is \(p = 1/C\), where</p>
-
-\[C = (p^{-\mu})^\nu = \left(\sqrt{\frac{T_H}{T_0}}\right)^{\frac{3}{2} c_0 k w n_0^{4/3} \sqrt{\frac{T_H}{T_0}}}\]
-
-<p>Let’s now substitute actual numbers into this equation (here, we depart from the values that Littlewood uses as his values are just to get a nice final result):</p>
-<ul>
-  <li>we set room temperature at \(T_0 \approx 300 \text{K}\) or around \(80^{\circ}\text{F}\)</li>
-  <li>the temperature of Hell is difficult to estimate - while Biblical accounts such as one in <a href="https://www.biblegateway.com/passage/?search=Revelation+21">Revelations 21:8</a> describe a “fiery lake of burning sulfur” and therefore a temperature less than the boiling point of sulfur at <a href="https://en.wikipedia.org/wiki/Sulfur">around 700 K</a>, we take this as metaphor and instead take Littlewood’s value of \(T_H   \approx 10^{12} \text{K}\). For comparison, <a href="https://en.wikipedia.org/wiki/Orders_of_magnitude_(temperature)">similar temperatures</a> can be seen in the formation of stars and microseconds after the Big Bang.</li>
-  <li>we use a value of \(k = 10^2\); for reference, \(10^2 \text{mol}\) of water weighs around \(1.8 \text{kg}\)</li>
-  <li>we have that \(w = 7 \text{days} \approx 6 \cdot 10^5 \text{s}\)</li>
-  <li>we <a href="https://www.wolframalpha.com/input/?i=sqrt%28+%288+*+Boltzmann%27s+constant+*+300+Kelvin%29+%2F+%28pi+*+18+grams+%2F+Avogadro%27s+number%29+%29+">can calculate</a> \(c_0\) from our earlier definition: \(c_0 = \sqrt{\frac{8 \cdot (1.4 \cdot 10^{-23} \frac{J}{K} ) \cdot 300K }{\pi \left( \frac{18 g}{6 \cdot 10^{23}} \right) }} \approx 600 \frac{m}{s}\)</li>
-</ul>
-
-<p>We can now explicitly calculate C:</p>
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">log</span> 
-   <span class="p">...:</span> <span class="n">T_0</span> <span class="o">=</span> <span class="mi">300</span> 
-   <span class="p">...:</span> <span class="n">T_H</span> <span class="o">=</span> <span class="mf">1e12</span> 
-   <span class="p">...:</span> <span class="n">k</span> <span class="o">=</span> <span class="mf">1e2</span> 
-   <span class="p">...:</span> <span class="n">w</span> <span class="o">=</span> <span class="mf">6e5</span> 
-   <span class="p">...:</span> <span class="n">c_0</span> <span class="o">=</span> <span class="mi">600</span> 
-   <span class="p">...:</span> <span class="n">n_0</span> <span class="o">=</span> <span class="mf">6e23</span> 
-   <span class="p">...:</span> <span class="n">exp</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">c_0</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">n_0</span><span class="o">**</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">T_H</span> <span class="o">/</span> <span class="n">T_0</span><span class="p">)</span> 
-   <span class="p">...:</span> <span class="n">base</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">T_H</span> <span class="o">/</span> <span class="n">T_0</span><span class="p">)</span> 
-   <span class="p">...:</span> <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"C = 10^(</span><span class="si">{</span><span class="n">exp</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="n">base</span><span class="p">)</span> <span class="o">/</span> <span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="si">}</span><span class="s">)"</span><span class="p">)</span>                                                                          
-<span class="n">C</span> <span class="o">=</span> <span class="mi">10</span><span class="o">^</span><span class="p">(</span><span class="mf">7.512302344442364e+47</span><span class="p">)</span>
-</code></pre></div></div>
-
-  </div><a class="u-url" href="/2022/01/03/big-numbers-notes.html" hidden></a>
-</article>
-
-      </div>
-    </main><footer class="site-footer h-card">
-  <data class="u-url" href="/"></data>
-
-  <div class="wrapper">
-
-    <h2 class="footer-heading">epistemologist</h2>
-
-    <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          <li class="p-name">epistemologist</li></ul>
-      </div>
-
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/epistemologist"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">epistemologist</span></a></li></ul>
-</div>
-
-      <div class="footer-col footer-col-3">
-        <p>Random musings on whatever I feel</p>
-      </div>
-    </div>
-
-  </div>
-
-</footer>
-</body>
-
-</html>
+\[p = \int_0^{c_0} f(v) = \sqrt{\frac{2}{\pi}} \left(\frac{m}{k T_H}\right)^{3/2} \int_0^{c_0}  v^2 e^{-\frac{mv^2}{2k T_H}} dv \\ = \sqrt{\frac{2}{\pi}} \left(\frac{m}{k T_H}\right)^{3/2} \int_0^{c_0} \left( v^2 + O(1/T_H) \right) dv \\ \sim T_H^{-3/2} c_0^3\]
+:ET
