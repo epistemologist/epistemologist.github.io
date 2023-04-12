@@ -18,23 +18,23 @@ def a(b):
     return pow(7,c,0xf494eca63dcab7b47ac21158799ffcabca8f2c6b3)==0xa3742a4abcb812e0c3664551dd3d6d2207aecb9be
 ```
 
-Note that the function returns true only if $$7^c=\underbrace{\texttt{0xa3}\cdots\texttt{be}}_{\equiv H}$$
-modulo a prime $$p=\texttt{0xf4}\cdots\texttt{b3}$$. 
+Note that the function returns true only if $$ 7^c=\underbrace{\texttt{0xa3}\cdots\texttt{be}}_{\equiv H} $$
+modulo a prime $$ p=\texttt{0xf4}\cdots\texttt{b3} $$. 
 This is an example of the [discrete logarithm problem](https://en.wikipedia.org/wiki/Discrete_logarithm#Properties), an important primitive that has various applications in cryptography. 
 
 # Breaking the Discrete Log
 
-Note that the underlying group $$G = \mathbb{Z}^{\times}_p$$ that we are working in has order 
+Note that the underlying group $$ G = \mathbb{Z}^{\times}_p $$ that we are working in has order 
 
 $$ \begin{align*} |G| &= \phi(p) = p-1 \\ &= 2 \cdot 3 \cdot 23 \cdot 1057807 \cdot 2132567 \cdot \underbrace{717\cdots661}_{\text{35 digits}}  \end{align*}$$
 
 Since the order of the group factors into (relatively) small factors, we can use the [Pohlig-Hellman algorithm](https://en.wikipedia.org/wiki/Pohlig%E2%80%93Hellman_algorithm) to solve the discrete logarithm in this case. Briefly, this algorithm solves the discrete logarithm by solving the discrete logarithm modulo each of the factors and then using the Chinese Remainder Theorem to reconstruct the final solution.
 
 # A Slight Problem
-To solve the discrete logarithm modulo each of the factors, the Pohlig-Hellman algorithm defaults to using the [baby-step giant-step algorithm (or BSGS)](https://en.wikipedia.org/wiki/Baby-step_giant-step) which calculates the discrete logarithm in $$\mathbb{Z}_n$ in time $O(\sqrt{n})$$.
+To solve the discrete logarithm modulo each of the factors, the Pohlig-Hellman algorithm defaults to using the [baby-step giant-step algorithm (or BSGS)](https://en.wikipedia.org/wiki/Baby-step_giant-step) which calculates the discrete logarithm in $$ \mathbb{Z}_n $$ in time $$ O(\sqrt{n}) $$.
 
-Note that the largest prime factor of $$|G|$$ is $p'=71765404858975364469794424368755661$ 
-and therefore, the application of BSGS at this step will take approximately $$\sqrt{p'} \approx 10^{17}$$.
+Note that the largest prime factor of $$ |G| $$ is $$ p'=71765404858975364469794424368755661 $$ 
+and therefore, the application of BSGS at this step will take approximately $$ \sqrt{p'} \approx 10^{17} $$.
 Therefore, a simple application of BSGS would be intractable - we instead opt for an application of the [number field sieve](https://en.wikipedia.org/wiki/General_number_field_sieve) as implemented by [CADO-NFS](https://cado-nfs.gitlabpages.inria.fr)
 
 ```
@@ -82,7 +82,7 @@ for p_, e_ in list(factor(p-1)):
 c = crt(exponents, moduli)
 ```
 
-Running this code, we get the value of $$c = 1068574207815876554047411521461868356487653669046$$. We can verify this:
+Running this code, we get the value of $$ c = 1068574207815876554047411521461868356487653669046 $$. We can verify this:
 
 ```py
 >>> c = 1068574207815876554047411521461868356487653669046
