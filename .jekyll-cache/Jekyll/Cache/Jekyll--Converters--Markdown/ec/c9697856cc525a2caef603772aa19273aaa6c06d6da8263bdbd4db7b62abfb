@@ -1,0 +1,3 @@
+I"å<p>This is an example of inline \(\LaTeX\). The following is Stokesâ€™ theorem in a
+<code class="language-plaintext highlighter-rouge">displaymath</code> environment: $$\int_{\partial \Omega} \omega = \int_{\Omega} d\omega$$</p>
+:ET

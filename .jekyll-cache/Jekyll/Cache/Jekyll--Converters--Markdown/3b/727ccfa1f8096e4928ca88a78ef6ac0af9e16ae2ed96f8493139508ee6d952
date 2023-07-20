@@ -1,0 +1,220 @@
+I"�h<h1 id="some-notes-on-the-cryptanalysis-of-block-ciphers">Some Notes on the Cryptanalysis of Block Ciphers</h1>
+
+<p>The following are some notes on the cryptanalysis of various block ciphers - most from the <a href="https://www.schneier.com/wp-content/uploads/2016/02/paper-self-study.pdf">self-study course by Bruce Schneier</a>.</p>
+
+<h2 id="rotationless-rc5">Rotationless RC5</h2>
+
+<h3 id="algorithm">Algorithm</h3>
+
+<p>Here, we ignore the key expansion step instead letting <code class="language-plaintext highlighter-rouge">S</code> be the expanded subkeys. The encryption goes as follows:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">RC5_ENCRYPT_NO_ROTATION</span><span class="p">(</span><span class="n">WORD</span> <span class="o">*</span><span class="n">pt</span><span class="p">,</span> <span class="n">WORD</span> <span class="o">*</span><span class="n">ct</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="n">WORD</span> <span class="n">i</span><span class="p">,</span> <span class="n">A</span> <span class="o">=</span> <span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">B</span> <span class="o">=</span> <span class="n">pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+   
+   <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+   <span class="p">{</span>
+      <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span> <span class="o">^</span> <span class="n">B</span><span class="p">)</span> <span class="o">+</span> <span class="n">S</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">];</span>
+      <span class="n">B</span> <span class="o">=</span> <span class="p">(</span><span class="n">B</span> <span class="o">^</span> <span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">S</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+   <span class="p">}</span>
+   <span class="n">ct</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">;</span> <span class="n">ct</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">B</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Note that for bitwise XOR and addition, the least significant bits of the result only dependon the least significant bits of the operands. More explicitly, given two words <code class="language-plaintext highlighter-rouge">A</code> and <code class="language-plaintext highlighter-rouge">B</code> of bit length <code class="language-plaintext highlighter-rouge">w</code>, we have for any \(k \le w\) that</p>
+
+\[\left( A \oplus B \right) \% 2^k = \left( (A \% 2^k) \oplus (B \% 2^k) \right) \\ \left( A + B \right) \% 2^k = \left( (A \% 2^k) + (B \% 2^k) \right)\]
+
+<p>Since these are the only operations used by the encryption algorithm, this proprety extends to the entire algorithm. Therefore, to recover the subkeys, we can simply bruteforce over all possibilities starting from the least significant bit. Some pseudocode for this algorithm is given below:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given: list of equations of the form enc(pt_i) = ct_i
+curr_bit = 1
+curr_subkey_guess = [all 1 bit possibilities for subkeys]
+while curr_bit &lt;= w:
+    filter out any subkey guesses that don't conform to the given equations
+    extend all guesses by 1 bit
+    curr_bit += 1
+</code></pre></div></div>
+
+<p><a href="https://gist.github.com/epistemologist/b2e3bc95c4489a8fe747f90fbdfbfd8c">Here</a> is a Python implementation of this attack on a reduced 4 round version of this cipher; however, the general attack strategy remains the same for any number of rounds.</p>
+
+<h2 id="des">DES</h2>
+<p>Here, we briefly describe the DES algorithm, again ignoring the key expansion steps (below is pseudocode in Python-like syntax):</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">subkeys</span> <span class="o">=</span> <span class="n">expand_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<span class="n">L</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">apply_bit_permutation</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="n">IP</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">feistel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">subkey</span><span class="p">):</span>
+   <span class="n">x</span> <span class="o">=</span> <span class="n">expand</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Expands x from 32 bits to 48 bits
+</span>   <span class="n">x</span> <span class="o">^=</span> <span class="n">subkey</span> <span class="c1"># Key mixing
+</span>   <span class="n">x</span> <span class="o">=</span> <span class="n">substitute</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Apply S-boxes
+</span>   <span class="n">x</span> <span class="o">=</span> <span class="n">apply_bit_permutation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+   <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ROUNDS</span><span class="p">):</span> <span class="c1"># Typically 16
+</span>   <span class="n">L</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="p">,</span> <span class="n">L</span> <span class="o">^</span> <span class="n">feistel</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">subkeys</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">ct</span> <span class="o">=</span> <span class="n">apply_bit_permutation</span><span class="p">(</span> <span class="n">R</span> <span class="o">||</span> <span class="n">L</span><span class="p">,</span> <span class="n">IP_INV</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In order to assist with learning, <a href="https://gist.github.com/epistemologist/29f9de15312293ff0f946e873068f9c4">an implementation of DES</a> was made that allowed for the usage of normal Python integers as well as symbolic bit-vectors from the <a href="https://github.com/Z3Prover/z3">z3 library</a>. This allows us to represent the state of the entire cipher symbolically - for example, we can check that decryption is indeed the inverse of encryption:</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">des</span> <span class="kn">import</span> <span class="n">DES</span>
+<span class="kn">import</span> <span class="nn">z3</span>
+
+<span class="n">z3</span><span class="p">.</span><span class="n">set_param</span><span class="p">(</span><span class="s">'parallel.enable'</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">z3</span><span class="p">.</span><span class="n">set_option</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="n">z3</span><span class="p">.</span><span class="n">BitVec</span><span class="p">(</span><span class="s">"k"</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+<span class="n">pt</span> <span class="o">=</span> <span class="n">z3</span><span class="p">.</span><span class="n">BitVec</span><span class="p">(</span><span class="s">"p"</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">DES</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">,</span> <span class="n">rounds</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">z3</span><span class="p">.</span><span class="n">Solver</span><span class="p">()</span>
+<span class="n">s</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">pt</span> <span class="o">!=</span> <span class="n">cipher</span><span class="p">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">cipher</span><span class="p">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">pt</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">check</span><span class="p">())</span>
+</code></pre></div></div>
+
+<pre><code class="language-txt">(combined-solver "using solver 1")
+(simplifier :num-exprs 1 :num-asts 1015947 :time 9.03 :before-memory 135.27 :after-memory 266.42)
+simplifier
+(goal
+  false)
+unsat
+</code></pre>
+
+<h3 id="des-with-no-s-boxes">DES with no S-Boxes</h3>
+<p>Note that in encrypytion, the only non-linear operation comes from the S-box. Therefore, removing it makes the entire encryption process affine. Let</p>
+
+\[\begin{align*} \text{DES}_{\text{NO_S_BOX}}: \mathbb{Z}_2^{56} \to (\mathbb{Z}_2^{64}\to \mathbb{Z}_2^{64}) \\ k \mapsto E_k: (p \mapsto c)\end{align*}\]
+
+<p>be our new encryption function. For any given key \(k \in \mathbb{Z}_2^{56}\)<br />
+we have that the corresponding map \(E_k\) is affine. We can therefore construct a linear map from \(E_k\)</p>
+
+<p>\(L(x) = E_k(x) \oplus E_k(0)\).</p>
+
+<p>Note that given the encryptions of \(0\) and all \(e_j\)  we can construct the matrix of this linear map: 
+\(M=\begin{bmatrix} \vert &amp; \vert &amp; \cdots &amp; \vert &amp; \vert \\ f(\hat{e_1})  &amp;  f(\hat{e_2}) &amp; \cdots &amp; f(\hat{e_{63}}) &amp; f(\hat{e_{64}}) \\ \vert &amp; \vert &amp; \cdots &amp; \vert &amp; \vert \\   \end{bmatrix}\),
+where \([\{\hat{e_j}\}_{0&lt;j\le64}] = I_{64}\) is the identity matrix.</p>
+
+<p>It remains an exercise of algebra to construct the decryption map:</p>
+
+\[D_k(x) = M^{-1}(x \oplus E_k(0))\]
+
+<p>Below is some Sage code that implements this. Note that DES uses 8 different S-boxes that each produce a 4 bit output from a 6 bit input. For this weakened version of DES, I made each of these S-boxes simply return the middle 4 bits of the 6 bit input (i.e. \(\mathtt{x} \mapsto \mathtt{(x \&amp; 011110_2)&gt;&gt;1}\) )</p>
+
+<p>With this, we can see that our constructed decryption map correctly decrypts 10000 randomly chosen plaintexts.</p>
+
+<p><strong>TODO</strong>: Prove that this actually works with Z3.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">des</span> <span class="kn">import</span> <span class="n">DES</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">from</span> <span class="nn">sage.all</span> <span class="kn">import</span> <span class="n">GF</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">vector</span>
+
+<span class="n">IDENTITY_S_BOX</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="p">[(</span><span class="n">j</span> <span class="o">&amp;</span> <span class="mb">0b011110</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">)]</span>
+                  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)}</span>
+
+<span class="k">def</span> <span class="nf">_popcnt</span><span class="p">(</span><span class="n">X</span><span class="p">):</span> <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">X</span><span class="p">).</span><span class="n">count</span><span class="p">(</span><span class="s">'1'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_add_parity_bit</span><span class="p">(</span><span class="n">X</span><span class="p">):</span> <span class="k">return</span> <span class="p">(</span><span class="n">X</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">_popcnt</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">gen_des_key</span><span class="p">(</span><span class="n">key_bits</span><span class="p">):</span> <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">|</span> <span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="n">_add_parity_bit</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">key_bits</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mb">0b1111111</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">i</span><span class="p">)))</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">i</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)])</span>
+
+<span class="n">key_bits</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">56</span><span class="p">)</span>
+<span class="n">des_key</span> <span class="o">=</span> <span class="n">gen_des_key</span><span class="p">(</span><span class="n">key_bits</span><span class="p">)</span>
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">DES</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">des_key</span><span class="p">,</span> <span class="n">rounds</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">Sboxes</span><span class="o">=</span><span class="n">IDENTITY_S_BOX</span><span class="p">)</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">cipher</span><span class="p">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">^</span> <span class="n">cipher</span><span class="p">.</span><span class="n">encrypt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Construct a matrix representing L
+</span><span class="n">_to_bit_vec</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">X</span><span class="p">:</span> <span class="p">[(</span><span class="n">X</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">)]</span>
+<span class="n">_from_bit_vec</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">|</span><span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">)])</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="p">[</span> <span class="n">_to_bit_vec</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">)]).</span><span class="n">T</span>
+
+<span class="c1"># It is now trivial to invert this map
+</span><span class="n">M_inv</span> <span class="o">=</span> <span class="n">M</span><span class="p">.</span><span class="n">inverse</span><span class="p">()</span>
+<span class="n">decrypt</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ct</span><span class="p">:</span> <span class="n">_from_bit_vec</span><span class="p">(</span><span class="n">M_inv</span> <span class="o">*</span> <span class="n">vector</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">_to_bit_vec</span><span class="p">(</span><span class="n">ct</span> <span class="o">^</span> <span class="n">cipher</span><span class="p">.</span><span class="n">encrypt</span><span class="p">(</span><span class="mi">0</span><span class="p">))))</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">)):</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">64</span><span class="p">)</span>
+    <span class="n">ct</span> <span class="o">=</span> <span class="n">cipher</span><span class="p">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">ct</span><span class="p">)</span> <span class="o">==</span> <span class="n">pt</span>
+</code></pre></div></div>
+
+<h3 id="attacks-on-reduced-round-des">Attacks on Reduced Round DES</h3>
+
+<p>In attacking a reduced number of rounds of DES, note that if we use a smaller number of rounds than the recommended 16 then we may not get the necessary amount of diffusion. 
+We can empirically test this as follows:</p>
+<ul>
+  <li>choose a random key \(K\) and a random plaintext $P$</li>
+  <li>encrypt the plaintext $C = E_K(P)$</li>
+  <li>encrypt another plaintext with a 1-bit difference \(C' = E_K(P \oplus \Delta_X)\) and observe the difference in ciphertext $\Delta_Y = C \oplus C’ = E_K(P) \oplus E_K( P \oplus \Delta_X)$</li>
+</ul>
+
+<p>By observing 5000 of such random pairs, we can observe that most input/output dependence is lost after 4 rounds, with all dependence being lost after 5 rounds:</p>
+
+<p><img src="./img/des_bit_corr_plot.png" alt="Plot of DES bit dependence" /></p>
+
+<p>We can also view this by the following - by encoding the logical conditions of the encryption and solving with a SAT solver for varying number of rounds, thr average time it takes to recover the cipher’s key is given as follows (here we use CryptoMiniSat to recover a key given 3 plaintext/ciphertext pairs):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Rounds</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>3.28s</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>6.35s</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>11.35s</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>39.12s</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><strong>&gt;3600s</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>From these times, we can see that there is a large jump in complexity from between 4 rounds and 5 rounds.</p>
+
+<h3 id="attempting-to-break-5-rounds">Attempting to Break 5 Rounds</h3>
+
+<p>Following the approach given in <a href="https://link.springer.com/chapter/10.1007/978-3-540-77272-9_10">this paper</a>, instead of directly solving for the key we instead fix \(k\) of the key and then solve for the remaining bits with a SAT solver. This will either give us the rest of the bits of the key, or the SAT solver will fail to find a solution - indicating that our partial guess was wrong. Iterating over all \(2^k\) possibilities of what bits our partial guess could be, we will eventually guess the correct key.</p>
+
+<p>To estimate the time that this approach would take, for varying \(k\)  we generate a random DES key and fix \(k\) of the bits. We then encode the conditons of encryption into CNF form and attempt to solve for the remaining bits with <code class="language-plaintext highlighter-rouge">CryptoMiniSat</code>. Below is a plot of how long such an approach would take for varying values of \(k\)</p>
+
+<p><img src="./img/5_round_attack.png" alt="Plot of elapsed time vs fixed bits" /></p>
+
+<p>From extrapolating the best fit line on the above plot, this kind of attack would take \(\approx 10^5 s\) on a single core.</p>
+
+<p>It is difficult to make a one-to-one comparison between such an approach and a brute force one for several reasons - a major one being that a SAT solver’s heuristics will prune down the key’s search space in a manner that a brute force approach would not be able. Additionally, we are making several assumptions in order to simplify the analysis (e.g. the choice of the bits we guess has no effect on the time taken by the SAT solver, searching for a solution takes the same amount of time as not finding any solutions).</p>
+
+<p>However, even with generous assumptions, a SAT-solver based approach like the one described is orders of magnitude faster than a naive brute force approach. With a quick shell script, we can benchmark approximately how long a single DES encryption takes.</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">tmp_file</span><span class="o">=</span><span class="si">$(</span><span class="nb">mktemp</span><span class="si">)</span>
+<span class="nb">dd </span><span class="k">if</span><span class="o">=</span>/dev/urandom <span class="nv">bs</span><span class="o">=</span>1024 <span class="nv">count</span><span class="o">=</span>500000 2&gt;/dev/null <span class="o">&gt;</span> <span class="nv">$tmp_file</span> 
+<span class="nv">time_start</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s.%N<span class="si">)</span>
+openssl enc <span class="nt">-des-ecb</span> <span class="nt">-e</span> <span class="nt">-K</span> 133457799BBCDFF1 <span class="nt">-provider</span> legacy <span class="nt">-provider</span> default <span class="nt">-in</span> <span class="nv">$tmp_file</span> <span class="o">&gt;</span> /dev/null
+<span class="nv">time_end</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s.%N<span class="si">)</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$time_end</span><span class="s2"> - </span><span class="nv">$time_start</span><span class="s2">"</span> | bc
+<span class="nb">rm</span> <span class="s2">"</span><span class="nv">$tmp_file</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>With this, we can see that encrypting \(8 \cdot 10^6\) blocks takes approximately \(6.6 s\)  or approximately \(8.2 \cdot 10^{-7} s\) per encryption. At this speed, a full brute force of all \(2^{56}\) DES keys would take 1800 years; our SAT-solver based attack only takes an equivalent of \(\approx 2^{37}\) DES encryptions.</p>
+:ET
