@@ -4,8 +4,6 @@ title:  "Some Notes on Integer Factorization"
 categories: 
 ---
 
-# Some Notes on Integer Factorization
-
 ## A Factorization From "The Art of Computer Programming"
 We aim to factor the integer $$N = 2^{214} + 1$$. Using the identity $$4x^4+1 = (2x^2+2x+1)(2x^2-2x+1)$$, we can break $$N$$ up into two factors as 
 
@@ -34,7 +32,7 @@ $$N = \underbrace{ (2^{16} + 1) }_{65537}\cdot \underbrace{ (2^{32} - 2^{16} + 1
 
 where $$C_1 = 4294901761 = 193 \cdot 22253377$$ factors via trial division. 
 
-$C_2 = 79228162514264056118567239681$ is a 29-digit composite with relatively small factors; it can be factored with the [GNU `factor` utility](https://www.gnu.org/software/coreutils/manual/html_node/factor-invocation.html#factor-invocation):
+$$C_2 = 79228162514264056118567239681$$ is a 29-digit composite with relatively small factors; it can be factored with the [GNU `factor` utility](https://www.gnu.org/software/coreutils/manual/html_node/factor-invocation.html#factor-invocation):
 
 ```sh
 $ factor 79228162514264056118567239681
