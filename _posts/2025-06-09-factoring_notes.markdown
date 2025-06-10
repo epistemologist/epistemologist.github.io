@@ -7,32 +7,32 @@ categories:
 # Some Notes on Integer Factorization
 
 ## A Factorization From "The Art of Computer Programming"
-We aim to factor the integer $N = 2^{214} + 1$. Using the identity $4x^4+1 = (2x^2+2x+1)(2x^2-2x+1) $, we can break $N$ up into two factors as 
+We aim to factor the integer $$N = 2^{214} + 1$$. Using the identity $$4x^4+1 = (2x^2+2x+1)(2x^2-2x+1)$$, we can break $$N$$ up into two factors as 
 
 $$ N = \underbrace{ (2^{107} - 2^{54} + 1)}_{A}\underbrace{(2^{107} + 2^{54} + 1)}_{B}$$
 
 ### Factoring A
-By applying trial division for all primes $p < 1000$, we have that 
+By applying trial division for all primes $$p < 1000$$, we have that 
 
 $$ A = 162259276829213345377179500806145 = 5 \cdot 857 \cdot p_{29} $$
 
 where $$p_{29} = 37866809061660057264219253397$$ is a 29-digit prime [confirmed by the Miller-Rabin test](https://tio.run/##TY7PboQgGMTvPsVcmmiLUWARNfHgpU/QW9M0trJd0g0a6mbdp7cf9M/ulxCGGfgN82U5TE7m82W@bFuPDrwSQjVCV7VoBJdyp6TWXDeqLOuy4jtVFGl9XyudJZ5hpBc9Q5mcD/Zo4HEHga5D2Sag8SiKDiLqEQ9ET/aTxwDr8CwYJINi0Ayc06ITD7phEKQF7ZJ8qV9aRMRKbfN0Tgc2sj6Llt0Hl8AgblR9zlu8T26x7mTinVD5Gir94D5M6nOe/Xzvlrky8ce85QbavxnmzZvhMzrm@GWu2eytW1I8DuTiyjGrXdIs@U2f/InCbfsG).
 
 ### Factoring B
-We first try to divide out small primes from $B$ - we have that
+We first try to divide out small primes from $$B$$ - we have that
 $$B = 162259276829213381405976519770113 = 843589 \cdot c_{27}$$
-where $c_{27} = 192343993140277293096491917$. We know that $c_{27}$ is composite as we have that $3^{c_{27}-1} \not\equiv 1 \bmod(c_{27}) $ which contradicts Fermat's little theorem. [The Pollard Rho algorithm](https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm) [discovers](https://tio.run/##VVBbbsMgEPznFNtIlSAPyRgrFpZ6BX/lAm7ANpJtEMEqnN4B0tTqfg0z7OzsmuBGvbCLCSZsW2/1DHPnRlCz0dbBcBcok8pJ67SeHm/lrtfFIdTCF1BesopxzmhVlHVdclbwa8UppzVCQvZgR41b0iCI5WNDmVGIyGckkklGQ0RTN3@LDnwD2B/9iZLPNmspQpSL/PgZ1SThZlf5sn1bD9iTPyJkYsCB7FyaFbfCOFx8dD5Du2uqj/JHzLJ7pjJWLQ4f0vzmcM45yL8PVrrVLiB2oxT1lJZCr@bfEwDZtic) that $c_{27}$ factors into two primes:
+where $$c_{27} = 192343993140277293096491917$$. We know that $$c_{27}$$ is composite as we have that $$3^{c_{27}-1} \not\equiv 1 \bmod(c_{27}) $$ which contradicts Fermat's little theorem. [The Pollard Rho algorithm](https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm) [discovers](https://tio.run/##VVBbbsMgEPznFNtIlSAPyRgrFpZ6BX/lAm7ANpJtEMEqnN4B0tTqfg0z7OzsmuBGvbCLCSZsW2/1DHPnRlCz0dbBcBcok8pJ67SeHm/lrtfFIdTCF1BesopxzmhVlHVdclbwa8UppzVCQvZgR41b0iCI5WNDmVGIyGckkklGQ0RTN3@LDnwD2B/9iZLPNmspQpSL/PgZ1SThZlf5sn1bD9iTPyJkYsCB7FyaFbfCOFx8dD5Du2uqj/JHzLJ7pjJWLQ4f0vzmcM45yL8PVrrVLiB2oxT1lJZCr@bfEwDZtic) that $$c_{27}$$ factors into two primes:
 $$c_{27} = 8174912477117 \cdot 23528569104401$$
 
 
 ## A Modern Sized Factorization A La Knuth
-In a similar approach, we attempt to factor $N = 2^{432}+1$, a composite with 131 digits. 
+In a similar approach, we attempt to factor $$N = 2^{432}+1$$, a composite with 131 digits. 
 
-We can factor the polynomial $p(x) = x^{432} + 1$ to get an algebraic factorization of $N$. We have that:
+We can factor the polynomial $$p(x) = x^{432} + 1$$ to get an algebraic factorization of $$N$$. We have that:
 
-$$ N = \underbrace{ (2^{16} + 1) }_{65537}\cdot \underbrace{ (2^{32} - 2^{16} + 1)}_{C_1} \; \cdot \; \underbrace{  (2^{96} - 2^{48} + 1) }_{C_2}  \cdot \underbrace{ (2^{288} - 2^{144} + 1)}_{C_3} $$
+$$N = \underbrace{ (2^{16} + 1) }_{65537}\cdot \underbrace{ (2^{32} - 2^{16} + 1)}_{C_1} \; \cdot \; \underbrace{  (2^{96} - 2^{48} + 1) }_{C_2}  \cdot \underbrace{ (2^{288} - 2^{144} + 1)}_{C_3}$$
 
-where $C_1 = 4294901761 = 193 \cdot 22253377$ factors via trial division. 
+where $$C_1 = 4294901761 = 193 \cdot 22253377$$ factors via trial division. 
 
 $C_2 = 79228162514264056118567239681$ is a 29-digit composite with relatively small factors; it can be factored with the [GNU `factor` utility](https://www.gnu.org/software/coreutils/manual/html_node/factor-invocation.html#factor-invocation):
 
@@ -40,10 +40,10 @@ $C_2 = 79228162514264056118567239681$ is a 29-digit composite with relatively sm
 $ factor 79228162514264056118567239681
 79228162514264056118567239681: 1153 6337 38941695937 278452876033
 ```
-and therefore, we have that $C_2 = 1153\cdot 6337 \cdot  38941695937 \cdot 278452876033$
+and therefore, we have that $$C_2 = 1153\cdot 6337 \cdot  38941695937 \cdot 278452876033$$
 
 
-With this luck, we hope that $C_3$ also has a small factor - we use the utility [`gmp-ecm`](https://www.rieselprime.de/ziki/GMP-ECM), an implementation of the [elliptic curve factoring method](https://en.wikipedia.org/wiki/Lenstra_elliptic-curve_factorization) which is useful for finding small to medium sized prime factors)
+With this luck, we hope that $$C_3$$ also has a small factor - we use the utility [`gmp-ecm`](https://www.rieselprime.de/ziki/GMP-ECM), an implementation of the [elliptic curve factoring method](https://en.wikipedia.org/wiki/Lenstra_elliptic-curve_factorization) which is useful for finding small to medium sized prime factors)
 
 ```txt
 $ python3 -c "print(2**288 - 2**144 + 1)" | ecm 100000
