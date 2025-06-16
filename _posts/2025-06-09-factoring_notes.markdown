@@ -82,7 +82,7 @@ $ echo  "factorint(2^432+1)" | gp -q
 
 ## An Unbreakable Cipher
 
-In the August 1977 issue of Scientific American, [Martin Gardener](https://www.jstor.org/stable/24954008?seq=1) presented an instance oF [RSA](https://en.wikipedia.org/wiki/RSA_cryptosystem) that was prediced to "take millions of years to break" that involved factoring a 129 digit number.
+In the August 1977 issue of Scientific American, [Martin Gardener](https://www.jstor.org/stable/24954008?seq=1) presented an instance oF [RSA](https://en.wikipedia.org/wiki/RSA_cryptosystem) that was predicted to "take millions of years to break" that involved factoring a 129 digit number.
 
 ### Installing CADO-NFS
 CADO-NFS is an open source implementation of the [ number field sieve algorithm ](https://en.wikipedia.org/wiki/General_number_field_sieve); we can install and build it from source:
