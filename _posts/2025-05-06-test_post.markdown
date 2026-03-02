@@ -23,9 +23,9 @@ $$\int_0^\infty e^{-x^2} dx = \sqrt{\pi}$$
 Test $a$ for $$b$$ inline $$$c$$$ LaTeX
 
 ## Image Embed
-![](../img/img.jpeg)
+![test](/img/img.jpeg)
 
-![](https://fastly.picsum.photos/id/10/2500/1667.jpg)
+![test](https://fastly.picsum.photos/id/10/2500/1667.jpg)
 
 
 More content coming soon...
