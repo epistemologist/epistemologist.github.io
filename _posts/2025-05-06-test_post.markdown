@@ -14,10 +14,12 @@ int main() {
 }
 ```
 
+```python
+print("Hello World")
+```
+
 $$\int_0^\infty e^{-x^2} dx = \sqrt{\pi}$$
-$a$
-$$b$$
-$ c $
-$$ d $$
+
+Test $a$ for $$b$$ inline $$$c$$$ LaTeX
 
 More content coming soon...
