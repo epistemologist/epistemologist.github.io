@@ -9,17 +9,17 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Recently, I came across an old StackExchange thread wherein users submitted “lockers” or functions which only accepted a certain arithmetic sequence - then other users attempted to “crack” these lockers by providing said sequence. As a fun weekend challenge, I decided to crack one of these lockers that had remained uncracked for 9 years." />
 <meta property="og:description" content="Recently, I came across an old StackExchange thread wherein users submitted “lockers” or functions which only accepted a certain arithmetic sequence - then other users attempted to “crack” these lockers by providing said sequence. As a fun weekend challenge, I decided to crack one of these lockers that had remained uncracked for 9 years." />
-<link rel="canonical" href="http://localhost:4000/2023/04/11/cracking-safe.html" />
-<meta property="og:url" content="http://localhost:4000/2023/04/11/cracking-safe.html" />
+<link rel="canonical" href="/2023/04/11/cracking-safe.html" />
+<meta property="og:url" content="/2023/04/11/cracking-safe.html" />
 <meta property="og:site_name" content="epistemologist" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2023-04-11T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Cracking a 9 Year Old Safe" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-04-11T00:00:00-05:00","datePublished":"2023-04-11T00:00:00-05:00","description":"Recently, I came across an old StackExchange thread wherein users submitted “lockers” or functions which only accepted a certain arithmetic sequence - then other users attempted to “crack” these lockers by providing said sequence. As a fun weekend challenge, I decided to crack one of these lockers that had remained uncracked for 9 years.","headline":"Cracking a 9 Year Old Safe","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2023/04/11/cracking-safe.html"},"url":"http://localhost:4000/2023/04/11/cracking-safe.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-04-11T00:00:00-05:00","datePublished":"2023-04-11T00:00:00-05:00","description":"Recently, I came across an old StackExchange thread wherein users submitted “lockers” or functions which only accepted a certain arithmetic sequence - then other users attempted to “crack” these lockers by providing said sequence. As a fun weekend challenge, I decided to crack one of these lockers that had remained uncracked for 9 years.","headline":"Cracking a 9 Year Old Safe","mainEntityOfPage":{"@type":"WebPage","@id":"/2023/04/11/cracking-safe.html"},"url":"/2023/04/11/cracking-safe.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="epistemologist" /><!-- Add CSS for syntax highlighting -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="epistemologist" /><!-- Add CSS for syntax highlighting -->
   <link rel="stylesheet" href="/assets/stylesheets/pygments.css">
 </head>
 <body><header class="site-header" role="banner">
@@ -64,20 +64,17 @@ uncracked for 9 years.</p>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> d <span class="kw">in</span> b:</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        c<span class="op">=</span>(c<span class="op">&lt;&lt;</span><span class="dv">32</span>)<span class="op">+</span>d</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">pow</span>(<span class="dv">7</span>,c,<span class="bn">0xf494eca63dcab7b47ac21158799ffcabca8f2c6b3</span>)<span class="op">==</span><span class="bn">0xa3742a4abcb812e0c3664551dd3d6d2207aecb9be</span></span></code></pre></div>
-<p>Note that the function returns true only if <span
-class="math display">\[
-7^c=\underbrace{\texttt{0xa3}\cdots\texttt{be}}_{\equiv H} \]</span>
-modulo a prime <span class="math display">\[
-p=\texttt{0xf4}\cdots\texttt{b3} \]</span>. This is an example of the <a
+<p>Note that the function returns true only if $ 7^c=_{H} $ modulo a
+prime $ p= $. This is an example of the <a
 href="https://en.wikipedia.org/wiki/Discrete_logarithm#Properties">discrete
 logarithm problem</a>, an important primitive that has various
 applications in cryptography.</p>
 <h1 id="breaking-the-discrete-log">Breaking the Discrete Log</h1>
-<p>Note that the underlying group <span class="math display">\[ G =
-\mathbb{Z}^{\times}_p \]</span> that we are working in has order</p>
-<p><span class="math display">\[ \begin{align*} |G| &amp;= \phi(p) = p-1
-\\ &amp;= 2 \cdot 3 \cdot 23 \cdot 1057807 \cdot 2132567 \cdot
-\underbrace{717\cdots661}_{\text{35 digits}}  \end{align*}\]</span></p>
+<p>Note that the underlying group $ G = ^{}_p $ that we are working in
+has order</p>
+<p>$ <span class="math display">\[\begin{align*} |G| &amp;= \phi(p) =
+p-1 \\ &amp;= 2 \cdot 3 \cdot 23 \cdot 1057807 \cdot 2132567 \cdot
+\underbrace{717\cdots661}_{\text{35 digits}}  \end{align*}\]</span>$</p>
 <p>Since the order of the group factors into (relatively) small factors,
 we can use the <a
 href="https://en.wikipedia.org/wiki/Pohlig%E2%80%93Hellman_algorithm">Pohlig-Hellman
@@ -90,15 +87,12 @@ Remainder Theorem to reconstruct the final solution.</p>
 Pohlig-Hellman algorithm defaults to using the <a
 href="https://en.wikipedia.org/wiki/Baby-step_giant-step">baby-step
 giant-step algorithm (or BSGS)</a> which calculates the discrete
-logarithm in <span class="math display">\[ \mathbb{Z}_n \]</span> in
-time <span class="math display">\[ O(\sqrt{n}) \]</span>.</p>
-<p>Note that the largest prime factor of <span class="math display">\[
-|G| \]</span> is <span class="math display">\[
-p&#39;=71765404858975364469794424368755661 \]</span> and therefore, the
-application of BSGS at this step will take approximately <span
-class="math display">\[ \sqrt{p&#39;} \approx 10^{17} \]</span>.
-Therefore, a simple application of BSGS would be intractable - we
-instead opt for an application of the <a
+logarithm in $ _n $ in time $ O() $.</p>
+<p>Note that the largest prime factor of $ |G| $ is $
+p’=71765404858975364469794424368755661 $ and therefore, the application
+of BSGS at this step will take approximately $ ^{17} $. Therefore, a
+simple application of BSGS would be intractable - we instead opt for an
+application of the <a
 href="https://en.wikipedia.org/wiki/General_number_field_sieve">number
 field sieve</a> as implemented by <a
 href="https://cado-nfs.gitlabpages.inria.fr">CADO-NFS</a></p>
@@ -116,8 +110,9 @@ Info:root: target = 7
 Info:root: log(target) = 25109992438216120939941563608435562 mod ell
 25109992438216120939941563608435562</code></pre>
 <p>We therefore have that</p>
-<p><span class="math display">\[c =
-\frac{55489157388397020258158645620533604}{25109992438216120939941563608435562}  \mod{p&#39;}\]</span></p>
+<p><span class="math inline">\(c =
+\frac{55489157388397020258158645620533604}{25109992438216120939941563608435562}
+\mod{p&#39;}\)</span></p>
 <h1 id="solving-the-rest-of-the-discrete-logarithm">Solving the Rest of
 the Discrete Logarithm</h1>
 <p>We now apply Pohlig-Hellman for the rest of the factors to find the
@@ -140,9 +135,9 @@ value of <span class="math inline">\(c\)</span>.</p>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    moduli.append(p_<span class="op">^</span>e_)</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> crt(exponents, moduli)</span></code></pre></div>
-<p>Running this code, we get the value of <span class="math display">\[
-c = 1068574207815876554047411521461868356487653669046 \]</span>. We can
-verify this:</p>
+<p>Running this code, we get the value of $ c =
+1068574207815876554047411521461868356487653669046 $. We can verify
+this:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> c <span class="op">=</span> <span class="dv">1068574207815876554047411521461868356487653669046</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">pow</span>(<span class="dv">7</span>,c,<span class="bn">0xf494eca63dcab7b47ac21158799ffcabca8f2c6b3</span>)<span class="op">==</span><span class="bn">0xa3742a4abcb812e0c3664551dd3d6d2207aecb9be</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">True</span></span></code></pre></div>

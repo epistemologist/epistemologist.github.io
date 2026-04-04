@@ -9,17 +9,17 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Some Notes on the Cryptanalysis of Block Ciphers" />
 <meta property="og:description" content="Some Notes on the Cryptanalysis of Block Ciphers" />
-<link rel="canonical" href="http://localhost:4000/2023/07/19/block-cipher-notes.html" />
-<meta property="og:url" content="http://localhost:4000/2023/07/19/block-cipher-notes.html" />
+<link rel="canonical" href="/2023/07/19/block-cipher-notes.html" />
+<meta property="og:url" content="/2023/07/19/block-cipher-notes.html" />
 <meta property="og:site_name" content="epistemologist" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2023-07-19T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Some Notes on Block Ciphers" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-07-19T00:00:00-05:00","datePublished":"2023-07-19T00:00:00-05:00","description":"Some Notes on the Cryptanalysis of Block Ciphers","headline":"Some Notes on Block Ciphers","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2023/07/19/block-cipher-notes.html"},"url":"http://localhost:4000/2023/07/19/block-cipher-notes.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-07-19T00:00:00-05:00","datePublished":"2023-07-19T00:00:00-05:00","description":"Some Notes on the Cryptanalysis of Block Ciphers","headline":"Some Notes on Block Ciphers","mainEntityOfPage":{"@type":"WebPage","@id":"/2023/07/19/block-cipher-notes.html"},"url":"/2023/07/19/block-cipher-notes.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="epistemologist" /><!-- Add CSS for syntax highlighting -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="epistemologist" /><!-- Add CSS for syntax highlighting -->
   <link rel="stylesheet" href="/assets/stylesheets/pygments.css">
 </head>
 <body><header class="site-header" role="banner">
@@ -74,11 +74,9 @@ be the expanded subkeys. The encryption goes as follows:</p>
 <p>Note that for bitwise XOR and addition, the least significant bits of
 the result only dependon the least significant bits of the operands.
 More explicitly, given two words <code>A</code> and <code>B</code> of
-bit length <code>w</code>, we have for any <span class="math display">\[
-k \le w \]</span> that</p>
-<p><span class="math display">\[ \left( A \oplus B \right) \% 2^k =
-\left( (A \% 2^k) \oplus (B \% 2^k) \right) \\ \left( A + B \right) \%
-2^k = \left( (A \% 2^k) + (B \% 2^k) \right) \]</span></p>
+bit length <code>w</code>, we have for any $ k w $ that</p>
+<p>$ ( A B ) % 2^k = ( (A % 2^k) (B % 2^k) ) \ ( A + B ) % 2^k = ( (A %
+2^k) + (B % 2^k) ) $</p>
 <p>Since these are the only operations used by the encryption algorithm,
 this proprety extends to the entire algorithm. Therefore, to recover the
 subkeys, we can simply bruteforce over all possibilities starting from
@@ -146,36 +144,28 @@ class="sourceCode txt"><code class="sourceCode default"><span id="cb5-1"><a href
 <p>Note that in encrypytion, the only non-linear operation comes from
 the S-box. Therefore, removing it makes the entire encryption process
 affine. Let</p>
-<p><span class="math display">\[ \begin{align*}
+<p>$ <span class="math display">\[\begin{align*}
 \text{DES}_{\text{NO_S_BOX}}: \mathbb{Z}_2^{56} \to
 (\mathbb{Z}_2^{64}\to \mathbb{Z}_2^{64}) \\ k \mapsto E_k: (p \mapsto
-c)\end{align*}\]</span></p>
-<p>be our new encryption function. For any given key <span
-class="math display">\[ k \in \mathbb{Z}_2^{56} \]</span><br />
-we have that the corresponding map <span class="math display">\[ E_k
-\]</span> is affine. We can therefore construct a linear map from <span
-class="math display">\[E_k\]</span></p>
-<p><span class="math display">\[L(x) = E_k(x) \oplus E_k(0)
-\]</span>.</p>
-<p>Note that given the encryptions of <span class="math display">\[ 0
-\]</span> and all <span class="math display">\[ e_j \]</span> we can
+c)\end{align*}\]</span>$</p>
+<p>be our new encryption function. For any given key $ k _2^{56} $<br />
+we have that the corresponding map $ E_k $ is affine. We can therefore
+construct a linear map from <span class="math inline">\(E_k\)</span></p>
+<p>$L(x) = E_k(x) E_k(0) $.</p>
+<p>Note that given the encryptions of $ 0 $ and all $ e_j $ we can
 construct the matrix of this linear map: <span
-class="math display">\[M=\begin{bmatrix} \vert &amp; \vert &amp; \cdots
-&amp; \vert &amp; \vert \\ f(\hat{e_1})  &amp;  f(\hat{e_2}) &amp;
-\cdots &amp; f(\hat{e_{63}}) &amp; f(\hat{e_{64}}) \\ \vert &amp; \vert
-&amp; \cdots &amp; \vert &amp; \vert \\   \end{bmatrix}\]</span>, where
-<span class="math display">\[ [\{\hat{e_j}\}_{0&lt;j\le64}] = I_{64}
-\]</span> is the identity matrix.</p>
+class="math inline">\(M=\begin{bmatrix} \vert &amp; \vert &amp; \cdots
+&amp; \vert &amp; \vert \\ f(\hat{e_1}) &amp; f(\hat{e_2}) &amp; \cdots
+&amp; f(\hat{e_{63}}) &amp; f(\hat{e_{64}}) \\ \vert &amp; \vert &amp;
+\cdots &amp; \vert &amp; \vert \\ \end{bmatrix}\)</span>, where $
+[{}_{0&lt;j}] = I_{64} $ is the identity matrix.</p>
 <p>It remains an exercise of algebra to construct the decryption
 map:</p>
-<p><span class="math display">\[ D_k(x) = M^{-1}(x \oplus E_k(0))
-\]</span></p>
+<p>$ D_k(x) = M^{-1}(x E_k(0)) $</p>
 <p>Below is some Sage code that implements this. Note that DES uses 8
 different S-boxes that each produce a 4 bit output from a 6 bit input.
 For this weakened version of DES, I made each of these S-boxes simply
-return the middle 4 bits of the 6 bit input (i.e. <span
-class="math display">\[ \mathtt{x} \mapsto \mathtt{(x \&amp;
-011110_2)&gt;&gt;1} \]</span> )</p>
+return the middle 4 bits of the 6 bit input (i.e. $ $ )</p>
 <p>With this, we can see that our constructed decryption map correctly
 decrypts 10000 randomly chosen plaintexts.</p>
 <p><strong>TODO</strong>: Prove that this actually works with Z3.</p>
@@ -217,13 +207,12 @@ decrypts 10000 randomly chosen plaintexts.</p>
 <p>In attacking a reduced number of rounds of DES, note that if we use a
 smaller number of rounds than the recommended 16 then we may not get the
 necessary amount of diffusion. We can empirically test this as follows:
-- choose a random key <span class="math display">\[ K \]</span> and a
-random plaintext <span class="math display">\[P\]</span> - encrypt the
-plaintext <span class="math display">\[C = E_K(P)\]</span> - encrypt
-another plaintext with a 1-bit difference <span class="math display">\[
-C&#39; = E_K(P \oplus \Delta_X) \]</span> and observe the difference in
-ciphertext <span class="math display">\[\Delta_Y = C \oplus C&#39; =
-E_K(P) \oplus E_K( P \oplus \Delta_X)\]</span></p>
+- choose a random key $ K $ and a random plaintext <span
+class="math inline">\(P\)</span> - encrypt the plaintext <span
+class="math inline">\(C = E_K(P)\)</span> - encrypt another plaintext
+with a 1-bit difference $ C’ = E_K(P _X) $ and observe the difference in
+ciphertext <span class="math inline">\(\Delta_Y = C \oplus C&#39; =
+E_K(P) \oplus E_K( P \oplus \Delta_X)\)</span></p>
 <p>By observing 5000 of such random pairs, we can observe that most
 input/output dependence is lost after 4 rounds, with all dependence
 being lost after 5 rounds:</p>
@@ -272,20 +261,17 @@ from between 4 rounds and 5 rounds.</p>
 <h3 id="attempting-to-break-5-rounds">Attempting to Break 5 Rounds</h3>
 <p>Following the approach given in <a
 href="https://link.springer.com/chapter/10.1007/978-3-540-77272-9_10">this
-paper</a>, instead of directly solving for the key we instead fix <span
-class="math display">\[ k \]</span> of the key and then solve for the
-remaining bits with a SAT solver. This will either give us the rest of
-the bits of the key, or the SAT solver will fail to find a solution -
-indicating that our partial guess was wrong. Iterating over all <span
-class="math display">\[ 2^k \]</span> possibilities of what bits our
-partial guess could be, we will eventually guess the correct key.</p>
-<p>To estimate the time that this approach would take, for varying <span
-class="math display">\[ k \]</span> we generate a random DES key and fix
-<span class="math display">\[ k \]</span> of the bits. We then encode
+paper</a>, instead of directly solving for the key we instead fix $ k $
+of the key and then solve for the remaining bits with a SAT solver. This
+will either give us the rest of the bits of the key, or the SAT solver
+will fail to find a solution - indicating that our partial guess was
+wrong. Iterating over all $ 2^k $ possibilities of what bits our partial
+guess could be, we will eventually guess the correct key.</p>
+<p>To estimate the time that this approach would take, for varying $ k $
+we generate a random DES key and fix $ k $ of the bits. We then encode
 the conditons of encryption into CNF form and attempt to solve for the
 remaining bits with <code>CryptoMiniSat</code>. Below is a plot of how
-long such an approach would take for varying values of <span
-class="math display">\[ k \]</span></p>
+long such an approach would take for varying values of $ k $</p>
 <figure>
 <img src="/img/block_cipher/5_round_attack.png"
 alt="Plot of elapsed time vs fixed bits" />
@@ -293,8 +279,7 @@ alt="Plot of elapsed time vs fixed bits" />
 bits</figcaption>
 </figure>
 <p>From extrapolating the best fit line on the above plot, this kind of
-attack would take <span class="math display">\[ \approx 10^5 s \]</span>
-on a single core.</p>
+attack would take $ ^5 s $ on a single core.</p>
 <p>It is difficult to make a one-to-one comparison between such an
 approach and a brute force one for several reasons - a major one being
 that a SAT solver’s heuristics will prune down the key’s search space in
@@ -316,14 +301,11 @@ approximately how long a single DES encryption takes.</p>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="va">time_end</span><span class="op">=</span><span class="va">$(</span><span class="fu">date</span> +%s.%N<span class="va">)</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$time_end</span><span class="st"> - </span><span class="va">$time_start</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">bc</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="st">&quot;</span><span class="va">$tmp_file</span><span class="st">&quot;</span></span></code></pre></div>
-<p>With this, we can see that encrypting <span class="math display">\[ 8
-\cdot 10^6 \]</span> blocks takes approximately <span
-class="math display">\[ 6.6 s \]</span> or approximately <span
-class="math display">\[ 8.2 \cdot 10^{-7} s \]</span> per encryption. At
-this speed, a full brute force of all <span class="math display">\[
-2^{56} \]</span> DES keys would take 1800 years; our SAT-solver based
-attack only takes an equivalent of <span class="math display">\[ \approx
-2^{37} \]</span> DES encryptions.</p>
+<p>With this, we can see that encrypting $ 8 ^6 $ blocks takes
+approximately $ 6.6 s $ or approximately $ 8.2 ^{-7} s $ per encryption.
+At this speed, a full brute force of all $ 2^{56} $ DES keys would take
+1800 years; our SAT-solver based attack only takes an equivalent of $
+^{37} $ DES encryptions.</p>
 
   </div><a class="u-url" href="/2023/07/19/block-cipher-notes.html" hidden></a>
 </article>

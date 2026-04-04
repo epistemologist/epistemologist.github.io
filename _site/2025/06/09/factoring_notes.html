@@ -7,19 +7,19 @@
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Some Notes on Integer Factorization" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A Factorization From “The Art of Computer Programming” We aim to factor the integer [N = 2^{214} + 1]. Using the identity [4x^4+1 = (2x2+2x+1)(2x2-2x+1)], we can break [N] up into two factors as" />
-<meta property="og:description" content="A Factorization From “The Art of Computer Programming” We aim to factor the integer [N = 2^{214} + 1]. Using the identity [4x^4+1 = (2x2+2x+1)(2x2-2x+1)], we can break [N] up into two factors as" />
-<link rel="canonical" href="http://localhost:4000/2025/06/09/factoring_notes.html" />
-<meta property="og:url" content="http://localhost:4000/2025/06/09/factoring_notes.html" />
+<meta name="description" content="A Factorization From “The Art of Computer Programming” We aim to factor the integer (N = 2^{214} + 1). Using the identity (4x^4+1 = (2x2+2x+1)(2x2-2x+1)), we can break (N) up into two factors as" />
+<meta property="og:description" content="A Factorization From “The Art of Computer Programming” We aim to factor the integer (N = 2^{214} + 1). Using the identity (4x^4+1 = (2x2+2x+1)(2x2-2x+1)), we can break (N) up into two factors as" />
+<link rel="canonical" href="/2025/06/09/factoring_notes.html" />
+<meta property="og:url" content="/2025/06/09/factoring_notes.html" />
 <meta property="og:site_name" content="epistemologist" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2025-06-09T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Some Notes on Integer Factorization" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-06-09T00:00:00-05:00","datePublished":"2025-06-09T00:00:00-05:00","description":"A Factorization From “The Art of Computer Programming” We aim to factor the integer [N = 2^{214} + 1]. Using the identity [4x^4+1 = (2x2+2x+1)(2x2-2x+1)], we can break [N] up into two factors as","headline":"Some Notes on Integer Factorization","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2025/06/09/factoring_notes.html"},"url":"http://localhost:4000/2025/06/09/factoring_notes.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-06-09T00:00:00-05:00","datePublished":"2025-06-09T00:00:00-05:00","description":"A Factorization From “The Art of Computer Programming” We aim to factor the integer (N = 2^{214} + 1). Using the identity (4x^4+1 = (2x2+2x+1)(2x2-2x+1)), we can break (N) up into two factors as","headline":"Some Notes on Integer Factorization","mainEntityOfPage":{"@type":"WebPage","@id":"/2025/06/09/factoring_notes.html"},"url":"/2025/06/09/factoring_notes.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="epistemologist" /><!-- Add CSS for syntax highlighting -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="epistemologist" /><!-- Add CSS for syntax highlighting -->
   <link rel="stylesheet" href="/assets/stylesheets/pygments.css">
 </head>
 <body><header class="site-header" role="banner">
@@ -52,62 +52,58 @@
   <div class="post-content e-content" itemprop="articleBody">
     <h2 id="a-factorization-from-the-art-of-computer-programming">A
 Factorization From “The Art of Computer Programming”</h2>
-<p>We aim to factor the integer <span class="math display">\[N = 2^{214}
-+ 1\]</span>. Using the identity <span class="math display">\[4x^4+1 =
-(2x^2+2x+1)(2x^2-2x+1)\]</span>, we can break <span
-class="math display">\[N\]</span> up into two factors as</p>
-<p><span class="math display">\[ N = \underbrace{ (2^{107} - 2^{54} +
-1)}_{A}\underbrace{(2^{107} + 2^{54} + 1)}_{B}\]</span></p>
+<p>We aim to factor the integer <span class="math inline">\(N = 2^{214}
++ 1\)</span>. Using the identity <span class="math inline">\(4x^4+1 =
+(2x^2+2x+1)(2x^2-2x+1)\)</span>, we can break <span
+class="math inline">\(N\)</span> up into two factors as</p>
+<p>$ N = <em>{A}</em>{B}$</p>
 <h3 id="factoring-a">Factoring A</h3>
 <p>By applying trial division for all primes <span
-class="math display">\[p &lt; 1000\]</span>, we have that</p>
-<p><span class="math display">\[ A = 162259276829213345377179500806145 =
-5 \cdot 857 \cdot p_{29} \]</span></p>
-<p>where <span class="math display">\[p_{29} =
-37866809061660057264219253397\]</span> is a 29-digit prime <a
+class="math inline">\(p &lt; 1000\)</span>, we have that</p>
+<p>$ A = 162259276829213345377179500806145 = 5 p_{29} $</p>
+<p>where <span class="math inline">\(p_{29} =
+37866809061660057264219253397\)</span> is a 29-digit prime <a
 href="https://tio.run/##TY7PboQgGMTvPsVcmmiLUWARNfHgpU/QW9M0trJd0g0a6mbdp7cf9M/ulxCGGfgN82U5TE7m82W@bFuPDrwSQjVCV7VoBJdyp6TWXDeqLOuy4jtVFGl9XyudJZ5hpBc9Q5mcD/Zo4HEHga5D2Sag8SiKDiLqEQ9ET/aTxwDr8CwYJINi0Ayc06ITD7phEKQF7ZJ8qV9aRMRKbfN0Tgc2sj6Llt0Hl8AgblR9zlu8T26x7mTinVD5Gir94D5M6nOe/Xzvlrky8ce85QbavxnmzZvhMzrm@GWu2eytW1I8DuTiyjGrXdIs@U2f/InCbfsG">confirmed
 by the Miller-Rabin test</a>.</p>
 <h3 id="factoring-b">Factoring B</h3>
 <p>We first try to divide out small primes from <span
-class="math display">\[B\]</span> - we have that <span
-class="math display">\[B = 162259276829213381405976519770113 = 843589
-\cdot c_{27}\]</span> where <span class="math display">\[c_{27} =
-192343993140277293096491917\]</span>. We know that <span
-class="math display">\[c_{27}\]</span> is composite as we have that
-<span class="math display">\[3^{c_{27}-1} \not\equiv 1 \bmod(c_{27})
-\]</span> which contradicts Fermat’s little theorem. <a
+class="math inline">\(B\)</span> - we have that <span
+class="math inline">\(B = 162259276829213381405976519770113 = 843589
+\cdot c_{27}\)</span> where <span class="math inline">\(c_{27} =
+192343993140277293096491917\)</span>. We know that <span
+class="math inline">\(c_{27}\)</span> is composite as we have that
+$3^{c_{27}-1} (c_{27}) $ which contradicts Fermat’s little theorem. <a
 href="https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm">The
 Pollard Rho algorithm</a> <a
 href="https://tio.run/##VVBbbsMgEPznFNtIlSAPyRgrFpZ6BX/lAm7ANpJtEMEqnN4B0tTqfg0z7OzsmuBGvbCLCSZsW2/1DHPnRlCz0dbBcBcok8pJ67SeHm/lrtfFIdTCF1BesopxzmhVlHVdclbwa8UppzVCQvZgR41b0iCI5WNDmVGIyGckkklGQ0RTN3@LDnwD2B/9iZLPNmspQpSL/PgZ1SThZlf5sn1bD9iTPyJkYsCB7FyaFbfCOFx8dD5Du2uqj/JHzLJ7pjJWLQ4f0vzmcM45yL8PVrrVLiB2oxT1lJZCr@bfEwDZtic">discovers</a>
-that <span class="math display">\[c_{27}\]</span> factors into two
-primes: <span class="math display">\[c_{27} = 8174912477117 \cdot
-23528569104401\]</span></p>
+that <span class="math inline">\(c_{27}\)</span> factors into two
+primes: <span class="math inline">\(c_{27} = 8174912477117 \cdot
+23528569104401\)</span></p>
 <h2 id="a-modern-sized-factorization-a-la-knuth">A Modern Sized
 Factorization A La Knuth</h2>
 <p>In a similar approach, we attempt to factor <span
-class="math display">\[N = 2^{432}+1\]</span>, a composite with 131
+class="math inline">\(N = 2^{432}+1\)</span>, a composite with 131
 digits.</p>
-<p>We can factor the polynomial <span class="math display">\[p(x) =
-x^{432} + 1\]</span> to get an algebraic factorization of <span
-class="math display">\[N\]</span>. We have that:</p>
-<p><span class="math display">\[N = \underbrace{ (2^{16} + 1)
+<p>We can factor the polynomial <span class="math inline">\(p(x) =
+x^{432} + 1\)</span> to get an algebraic factorization of <span
+class="math inline">\(N\)</span>. We have that:</p>
+<p><span class="math inline">\(N = \underbrace{ (2^{16} + 1)
 }_{65537}\cdot \underbrace{ (2^{32} - 2^{16} + 1)}_{C_1} \; \cdot \;
-\underbrace{  (2^{96} - 2^{48} + 1) }_{C_2}  \cdot \underbrace{ (2^{288}
-- 2^{144} + 1)}_{C_3}\]</span></p>
-<p>where <span class="math display">\[C_1 = 4294901761 = 193 \cdot
-22253377\]</span> factors via trial division.</p>
-<p><span class="math display">\[C_2 =
-79228162514264056118567239681\]</span> is a 29-digit composite with
+\underbrace{ (2^{96} - 2^{48} + 1) }_{C_2} \cdot \underbrace{ (2^{288} -
+2^{144} + 1)}_{C_3}\)</span></p>
+<p>where <span class="math inline">\(C_1 = 4294901761 = 193 \cdot
+22253377\)</span> factors via trial division.</p>
+<p><span class="math inline">\(C_2 =
+79228162514264056118567239681\)</span> is a 29-digit composite with
 relatively small factors; it can be factored with the <a
 href="https://www.gnu.org/software/coreutils/manual/html_node/factor-invocation.html#factor-invocation">GNU
 <code>factor</code> utility</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> factor 79228162514264056118567239681</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">79228162514264056118567239681:</span> 1153 6337 38941695937 278452876033</span></code></pre></div>
-<p>and therefore, we have that <span class="math display">\[C_2 =
-1153\cdot 6337 \cdot  38941695937 \cdot 278452876033\]</span></p>
-<p>With this luck, we hope that <span
-class="math display">\[C_3\]</span> also has a small factor - we use the
-utility <a
+<p>and therefore, we have that <span class="math inline">\(C_2 =
+1153\cdot 6337 \cdot 38941695937 \cdot 278452876033\)</span></p>
+<p>With this luck, we hope that <span class="math inline">\(C_3\)</span>
+also has a small factor - we use the utility <a
 href="https://www.rieselprime.de/ziki/GMP-ECM"><code>gmp-ecm</code></a>,
 an implementation of the <a
 href="https://en.wikipedia.org/wiki/Lenstra_elliptic-curve_factorization">elliptic
@@ -208,15 +204,11 @@ Number</h4>
 <p>The technical paper mentioned above mentions that factoring a 512-bit
 number would take “a couple months” at 500,000 mips - we therefore have
 a total instruction count of</p>
-<p><span class="math display">\[500\cdot10^9 \text{ ops per second}
-\cdot 4 \text{ months} \approx 5.26 \cdot 10^{18} \text{ ops}
-\]</span></p>
+<p>$500^9 ^{18} $</p>
 <p>We can compare this instruction count to a <a
 href="https://yurichev.com/news/20220210_RSA/">factorization of CADO-NFS
 on a 512-bit modulus on modern hardware</a>:</p>
-<p><span class="math display">\[\frac{3.6 \cdot 10^9 \text{
-ops/second}}{\text{thread}} \cdot 12 \text{ threads } \cdot 4 \text{
-days} \approx  1.5 \cdot 10^{16} \text{ ops} \]</span></p>
+<p>$ ^{16} $</p>
 
   </div><a class="u-url" href="/2025/06/09/factoring_notes.html" hidden></a>
 </article>

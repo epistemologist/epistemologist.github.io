@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-04-03T23:54:47-05:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">epistemologist</title><subtitle>Random musings on whatever I feel</subtitle><entry><title type="html">SIGSAM Challenges</title><link href="http://localhost:4000/2026/04/03/sigsam_challenges.html" rel="alternate" type="text/html" title="SIGSAM Challenges" /><published>2026-04-03T00:00:00-05:00</published><updated>2026-04-03T00:00:00-05:00</updated><id>http://localhost:4000/2026/04/03/sigsam_challenges</id><content type="html" xml:base="http://localhost:4000/2026/04/03/sigsam_challenges.html"><![CDATA[<h1 id="problem-1">Problem 1</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2026-04-04T00:11:33-05:00</updated><id>/feed.xml</id><title type="html">epistemologist</title><subtitle>Random musings on whatever I feel</subtitle><entry><title type="html">SIGSAM Challenges</title><link href="/2026/04/03/sigsam_challenges.html" rel="alternate" type="text/html" title="SIGSAM Challenges" /><published>2026-04-03T00:00:00-05:00</published><updated>2026-04-03T00:00:00-05:00</updated><id>/2026/04/03/sigsam_challenges</id><content type="html" xml:base="/2026/04/03/sigsam_challenges.html"><![CDATA[<h1 id="problem-1">Problem 1</h1>
 <p>What is a 4 significant digit approximation to the condition number
 of the 256x256 Hilbert matrix?</p>
 <ul>
@@ -632,64 +632,60 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a h
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co"># sequence is likely not a linear recurrence</span></span>
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>sage: <span class="im">from</span> ore_algebra <span class="im">import</span> OreAlgebra, guess</span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>sage: [p.degree() <span class="cf">for</span> p <span class="kw">in</span> guess(seq, OreAlgebra(QQ[<span class="st">&#39;n&#39;</span>], <span class="st">&#39;Sn&#39;</span>)) ] <span class="co"># calculate the associated annihilator of this sequence</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">18</span>]</span></code></pre></div>]]></content><author><name></name></author><summary type="html"><![CDATA[Problem 1 What is a 4 significant digit approximation to the condition number of the 256x256 Hilbert matrix?]]></summary></entry><entry><title type="html">Some Notes on Integer Factorization</title><link href="http://localhost:4000/2025/06/09/factoring_notes.html" rel="alternate" type="text/html" title="Some Notes on Integer Factorization" /><published>2025-06-09T00:00:00-05:00</published><updated>2025-06-09T00:00:00-05:00</updated><id>http://localhost:4000/2025/06/09/factoring_notes</id><content type="html" xml:base="http://localhost:4000/2025/06/09/factoring_notes.html"><![CDATA[<h2 id="a-factorization-from-the-art-of-computer-programming">A
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">18</span>]</span></code></pre></div>]]></content><author><name></name></author><summary type="html"><![CDATA[Problem 1 What is a 4 significant digit approximation to the condition number of the 256x256 Hilbert matrix?]]></summary></entry><entry><title type="html">Some Notes on Integer Factorization</title><link href="/2025/06/09/factoring_notes.html" rel="alternate" type="text/html" title="Some Notes on Integer Factorization" /><published>2025-06-09T00:00:00-05:00</published><updated>2025-06-09T00:00:00-05:00</updated><id>/2025/06/09/factoring_notes</id><content type="html" xml:base="/2025/06/09/factoring_notes.html"><![CDATA[<h2 id="a-factorization-from-the-art-of-computer-programming">A
 Factorization From “The Art of Computer Programming”</h2>
-<p>We aim to factor the integer <span class="math display">\[N = 2^{214}
-+ 1\]</span>. Using the identity <span class="math display">\[4x^4+1 =
-(2x^2+2x+1)(2x^2-2x+1)\]</span>, we can break <span
-class="math display">\[N\]</span> up into two factors as</p>
-<p><span class="math display">\[ N = \underbrace{ (2^{107} - 2^{54} +
-1)}_{A}\underbrace{(2^{107} + 2^{54} + 1)}_{B}\]</span></p>
+<p>We aim to factor the integer <span class="math inline">\(N = 2^{214}
++ 1\)</span>. Using the identity <span class="math inline">\(4x^4+1 =
+(2x^2+2x+1)(2x^2-2x+1)\)</span>, we can break <span
+class="math inline">\(N\)</span> up into two factors as</p>
+<p>$ N = <em>{A}</em>{B}$</p>
 <h3 id="factoring-a">Factoring A</h3>
 <p>By applying trial division for all primes <span
-class="math display">\[p &lt; 1000\]</span>, we have that</p>
-<p><span class="math display">\[ A = 162259276829213345377179500806145 =
-5 \cdot 857 \cdot p_{29} \]</span></p>
-<p>where <span class="math display">\[p_{29} =
-37866809061660057264219253397\]</span> is a 29-digit prime <a
+class="math inline">\(p &lt; 1000\)</span>, we have that</p>
+<p>$ A = 162259276829213345377179500806145 = 5 p_{29} $</p>
+<p>where <span class="math inline">\(p_{29} =
+37866809061660057264219253397\)</span> is a 29-digit prime <a
 href="https://tio.run/##TY7PboQgGMTvPsVcmmiLUWARNfHgpU/QW9M0trJd0g0a6mbdp7cf9M/ulxCGGfgN82U5TE7m82W@bFuPDrwSQjVCV7VoBJdyp6TWXDeqLOuy4jtVFGl9XyudJZ5hpBc9Q5mcD/Zo4HEHga5D2Sag8SiKDiLqEQ9ET/aTxwDr8CwYJINi0Ayc06ITD7phEKQF7ZJ8qV9aRMRKbfN0Tgc2sj6Llt0Hl8AgblR9zlu8T26x7mTinVD5Gir94D5M6nOe/Xzvlrky8ce85QbavxnmzZvhMzrm@GWu2eytW1I8DuTiyjGrXdIs@U2f/InCbfsG">confirmed
 by the Miller-Rabin test</a>.</p>
 <h3 id="factoring-b">Factoring B</h3>
 <p>We first try to divide out small primes from <span
-class="math display">\[B\]</span> - we have that <span
-class="math display">\[B = 162259276829213381405976519770113 = 843589
-\cdot c_{27}\]</span> where <span class="math display">\[c_{27} =
-192343993140277293096491917\]</span>. We know that <span
-class="math display">\[c_{27}\]</span> is composite as we have that
-<span class="math display">\[3^{c_{27}-1} \not\equiv 1 \bmod(c_{27})
-\]</span> which contradicts Fermat’s little theorem. <a
+class="math inline">\(B\)</span> - we have that <span
+class="math inline">\(B = 162259276829213381405976519770113 = 843589
+\cdot c_{27}\)</span> where <span class="math inline">\(c_{27} =
+192343993140277293096491917\)</span>. We know that <span
+class="math inline">\(c_{27}\)</span> is composite as we have that
+$3^{c_{27}-1} (c_{27}) $ which contradicts Fermat’s little theorem. <a
 href="https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm">The
 Pollard Rho algorithm</a> <a
 href="https://tio.run/##VVBbbsMgEPznFNtIlSAPyRgrFpZ6BX/lAm7ANpJtEMEqnN4B0tTqfg0z7OzsmuBGvbCLCSZsW2/1DHPnRlCz0dbBcBcok8pJ67SeHm/lrtfFIdTCF1BesopxzmhVlHVdclbwa8UppzVCQvZgR41b0iCI5WNDmVGIyGckkklGQ0RTN3@LDnwD2B/9iZLPNmspQpSL/PgZ1SThZlf5sn1bD9iTPyJkYsCB7FyaFbfCOFx8dD5Du2uqj/JHzLJ7pjJWLQ4f0vzmcM45yL8PVrrVLiB2oxT1lJZCr@bfEwDZtic">discovers</a>
-that <span class="math display">\[c_{27}\]</span> factors into two
-primes: <span class="math display">\[c_{27} = 8174912477117 \cdot
-23528569104401\]</span></p>
+that <span class="math inline">\(c_{27}\)</span> factors into two
+primes: <span class="math inline">\(c_{27} = 8174912477117 \cdot
+23528569104401\)</span></p>
 <h2 id="a-modern-sized-factorization-a-la-knuth">A Modern Sized
 Factorization A La Knuth</h2>
 <p>In a similar approach, we attempt to factor <span
-class="math display">\[N = 2^{432}+1\]</span>, a composite with 131
+class="math inline">\(N = 2^{432}+1\)</span>, a composite with 131
 digits.</p>
-<p>We can factor the polynomial <span class="math display">\[p(x) =
-x^{432} + 1\]</span> to get an algebraic factorization of <span
-class="math display">\[N\]</span>. We have that:</p>
-<p><span class="math display">\[N = \underbrace{ (2^{16} + 1)
+<p>We can factor the polynomial <span class="math inline">\(p(x) =
+x^{432} + 1\)</span> to get an algebraic factorization of <span
+class="math inline">\(N\)</span>. We have that:</p>
+<p><span class="math inline">\(N = \underbrace{ (2^{16} + 1)
 }_{65537}\cdot \underbrace{ (2^{32} - 2^{16} + 1)}_{C_1} \; \cdot \;
-\underbrace{  (2^{96} - 2^{48} + 1) }_{C_2}  \cdot \underbrace{ (2^{288}
-- 2^{144} + 1)}_{C_3}\]</span></p>
-<p>where <span class="math display">\[C_1 = 4294901761 = 193 \cdot
-22253377\]</span> factors via trial division.</p>
-<p><span class="math display">\[C_2 =
-79228162514264056118567239681\]</span> is a 29-digit composite with
+\underbrace{ (2^{96} - 2^{48} + 1) }_{C_2} \cdot \underbrace{ (2^{288} -
+2^{144} + 1)}_{C_3}\)</span></p>
+<p>where <span class="math inline">\(C_1 = 4294901761 = 193 \cdot
+22253377\)</span> factors via trial division.</p>
+<p><span class="math inline">\(C_2 =
+79228162514264056118567239681\)</span> is a 29-digit composite with
 relatively small factors; it can be factored with the <a
 href="https://www.gnu.org/software/coreutils/manual/html_node/factor-invocation.html#factor-invocation">GNU
 <code>factor</code> utility</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> factor 79228162514264056118567239681</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">79228162514264056118567239681:</span> 1153 6337 38941695937 278452876033</span></code></pre></div>
-<p>and therefore, we have that <span class="math display">\[C_2 =
-1153\cdot 6337 \cdot  38941695937 \cdot 278452876033\]</span></p>
-<p>With this luck, we hope that <span
-class="math display">\[C_3\]</span> also has a small factor - we use the
-utility <a
+<p>and therefore, we have that <span class="math inline">\(C_2 =
+1153\cdot 6337 \cdot 38941695937 \cdot 278452876033\)</span></p>
+<p>With this luck, we hope that <span class="math inline">\(C_3\)</span>
+also has a small factor - we use the utility <a
 href="https://www.rieselprime.de/ziki/GMP-ECM"><code>gmp-ecm</code></a>,
 an implementation of the <a
 href="https://en.wikipedia.org/wiki/Lenstra_elliptic-curve_factorization">elliptic
@@ -790,15 +786,11 @@ Number</h4>
 <p>The technical paper mentioned above mentions that factoring a 512-bit
 number would take “a couple months” at 500,000 mips - we therefore have
 a total instruction count of</p>
-<p><span class="math display">\[500\cdot10^9 \text{ ops per second}
-\cdot 4 \text{ months} \approx 5.26 \cdot 10^{18} \text{ ops}
-\]</span></p>
+<p>$500^9 ^{18} $</p>
 <p>We can compare this instruction count to a <a
 href="https://yurichev.com/news/20220210_RSA/">factorization of CADO-NFS
 on a 512-bit modulus on modern hardware</a>:</p>
-<p><span class="math display">\[\frac{3.6 \cdot 10^9 \text{
-ops/second}}{\text{thread}} \cdot 12 \text{ threads } \cdot 4 \text{
-days} \approx  1.5 \cdot 10^{16} \text{ ops} \]</span></p>]]></content><author><name></name></author><summary type="html"><![CDATA[A Factorization From “The Art of Computer Programming” We aim to factor the integer \[N = 2^{214} + 1\]. Using the identity \[4x^4+1 = (2x^2+2x+1)(2x^2-2x+1)\], we can break \[N\] up into two factors as]]></summary></entry><entry><title type="html">Some Notes on Block Ciphers</title><link href="http://localhost:4000/2023/07/19/block-cipher-notes.html" rel="alternate" type="text/html" title="Some Notes on Block Ciphers" /><published>2023-07-19T00:00:00-05:00</published><updated>2023-07-19T00:00:00-05:00</updated><id>http://localhost:4000/2023/07/19/block-cipher-notes</id><content type="html" xml:base="http://localhost:4000/2023/07/19/block-cipher-notes.html"><![CDATA[<h1 id="some-notes-on-the-cryptanalysis-of-block-ciphers">Some Notes on
+<p>$ ^{16} $</p>]]></content><author><name></name></author><summary type="html"><![CDATA[A Factorization From “The Art of Computer Programming” We aim to factor the integer \(N = 2^{214} + 1\). Using the identity \(4x^4+1 = (2x^2+2x+1)(2x^2-2x+1)\), we can break \(N\) up into two factors as]]></summary></entry><entry><title type="html">Some Notes on Block Ciphers</title><link href="/2023/07/19/block-cipher-notes.html" rel="alternate" type="text/html" title="Some Notes on Block Ciphers" /><published>2023-07-19T00:00:00-05:00</published><updated>2023-07-19T00:00:00-05:00</updated><id>/2023/07/19/block-cipher-notes</id><content type="html" xml:base="/2023/07/19/block-cipher-notes.html"><![CDATA[<h1 id="some-notes-on-the-cryptanalysis-of-block-ciphers">Some Notes on
 the Cryptanalysis of Block Ciphers</h1>
 <p>The following are some notes on the cryptanalysis of various block
 ciphers - most from the <a
@@ -822,11 +814,9 @@ be the expanded subkeys. The encryption goes as follows:</p>
 <p>Note that for bitwise XOR and addition, the least significant bits of
 the result only dependon the least significant bits of the operands.
 More explicitly, given two words <code>A</code> and <code>B</code> of
-bit length <code>w</code>, we have for any <span class="math display">\[
-k \le w \]</span> that</p>
-<p><span class="math display">\[ \left( A \oplus B \right) \% 2^k =
-\left( (A \% 2^k) \oplus (B \% 2^k) \right) \\ \left( A + B \right) \%
-2^k = \left( (A \% 2^k) + (B \% 2^k) \right) \]</span></p>
+bit length <code>w</code>, we have for any $ k w $ that</p>
+<p>$ ( A B ) % 2^k = ( (A % 2^k) (B % 2^k) ) \ ( A + B ) % 2^k = ( (A %
+2^k) + (B % 2^k) ) $</p>
 <p>Since these are the only operations used by the encryption algorithm,
 this proprety extends to the entire algorithm. Therefore, to recover the
 subkeys, we can simply bruteforce over all possibilities starting from
@@ -894,36 +884,28 @@ class="sourceCode txt"><code class="sourceCode default"><span id="cb5-1"><a href
 <p>Note that in encrypytion, the only non-linear operation comes from
 the S-box. Therefore, removing it makes the entire encryption process
 affine. Let</p>
-<p><span class="math display">\[ \begin{align*}
+<p>$ <span class="math display">\[\begin{align*}
 \text{DES}_{\text{NO_S_BOX}}: \mathbb{Z}_2^{56} \to
 (\mathbb{Z}_2^{64}\to \mathbb{Z}_2^{64}) \\ k \mapsto E_k: (p \mapsto
-c)\end{align*}\]</span></p>
-<p>be our new encryption function. For any given key <span
-class="math display">\[ k \in \mathbb{Z}_2^{56} \]</span><br />
-we have that the corresponding map <span class="math display">\[ E_k
-\]</span> is affine. We can therefore construct a linear map from <span
-class="math display">\[E_k\]</span></p>
-<p><span class="math display">\[L(x) = E_k(x) \oplus E_k(0)
-\]</span>.</p>
-<p>Note that given the encryptions of <span class="math display">\[ 0
-\]</span> and all <span class="math display">\[ e_j \]</span> we can
+c)\end{align*}\]</span>$</p>
+<p>be our new encryption function. For any given key $ k _2^{56} $<br />
+we have that the corresponding map $ E_k $ is affine. We can therefore
+construct a linear map from <span class="math inline">\(E_k\)</span></p>
+<p>$L(x) = E_k(x) E_k(0) $.</p>
+<p>Note that given the encryptions of $ 0 $ and all $ e_j $ we can
 construct the matrix of this linear map: <span
-class="math display">\[M=\begin{bmatrix} \vert &amp; \vert &amp; \cdots
-&amp; \vert &amp; \vert \\ f(\hat{e_1})  &amp;  f(\hat{e_2}) &amp;
-\cdots &amp; f(\hat{e_{63}}) &amp; f(\hat{e_{64}}) \\ \vert &amp; \vert
-&amp; \cdots &amp; \vert &amp; \vert \\   \end{bmatrix}\]</span>, where
-<span class="math display">\[ [\{\hat{e_j}\}_{0&lt;j\le64}] = I_{64}
-\]</span> is the identity matrix.</p>
+class="math inline">\(M=\begin{bmatrix} \vert &amp; \vert &amp; \cdots
+&amp; \vert &amp; \vert \\ f(\hat{e_1}) &amp; f(\hat{e_2}) &amp; \cdots
+&amp; f(\hat{e_{63}}) &amp; f(\hat{e_{64}}) \\ \vert &amp; \vert &amp;
+\cdots &amp; \vert &amp; \vert \\ \end{bmatrix}\)</span>, where $
+[{}_{0&lt;j}] = I_{64} $ is the identity matrix.</p>
 <p>It remains an exercise of algebra to construct the decryption
 map:</p>
-<p><span class="math display">\[ D_k(x) = M^{-1}(x \oplus E_k(0))
-\]</span></p>
+<p>$ D_k(x) = M^{-1}(x E_k(0)) $</p>
 <p>Below is some Sage code that implements this. Note that DES uses 8
 different S-boxes that each produce a 4 bit output from a 6 bit input.
 For this weakened version of DES, I made each of these S-boxes simply
-return the middle 4 bits of the 6 bit input (i.e. <span
-class="math display">\[ \mathtt{x} \mapsto \mathtt{(x \&amp;
-011110_2)&gt;&gt;1} \]</span> )</p>
+return the middle 4 bits of the 6 bit input (i.e. $ $ )</p>
 <p>With this, we can see that our constructed decryption map correctly
 decrypts 10000 randomly chosen plaintexts.</p>
 <p><strong>TODO</strong>: Prove that this actually works with Z3.</p>
@@ -965,13 +947,12 @@ decrypts 10000 randomly chosen plaintexts.</p>
 <p>In attacking a reduced number of rounds of DES, note that if we use a
 smaller number of rounds than the recommended 16 then we may not get the
 necessary amount of diffusion. We can empirically test this as follows:
-- choose a random key <span class="math display">\[ K \]</span> and a
-random plaintext <span class="math display">\[P\]</span> - encrypt the
-plaintext <span class="math display">\[C = E_K(P)\]</span> - encrypt
-another plaintext with a 1-bit difference <span class="math display">\[
-C&#39; = E_K(P \oplus \Delta_X) \]</span> and observe the difference in
-ciphertext <span class="math display">\[\Delta_Y = C \oplus C&#39; =
-E_K(P) \oplus E_K( P \oplus \Delta_X)\]</span></p>
+- choose a random key $ K $ and a random plaintext <span
+class="math inline">\(P\)</span> - encrypt the plaintext <span
+class="math inline">\(C = E_K(P)\)</span> - encrypt another plaintext
+with a 1-bit difference $ C’ = E_K(P _X) $ and observe the difference in
+ciphertext <span class="math inline">\(\Delta_Y = C \oplus C&#39; =
+E_K(P) \oplus E_K( P \oplus \Delta_X)\)</span></p>
 <p>By observing 5000 of such random pairs, we can observe that most
 input/output dependence is lost after 4 rounds, with all dependence
 being lost after 5 rounds:</p>
@@ -1020,20 +1001,17 @@ from between 4 rounds and 5 rounds.</p>
 <h3 id="attempting-to-break-5-rounds">Attempting to Break 5 Rounds</h3>
 <p>Following the approach given in <a
 href="https://link.springer.com/chapter/10.1007/978-3-540-77272-9_10">this
-paper</a>, instead of directly solving for the key we instead fix <span
-class="math display">\[ k \]</span> of the key and then solve for the
-remaining bits with a SAT solver. This will either give us the rest of
-the bits of the key, or the SAT solver will fail to find a solution -
-indicating that our partial guess was wrong. Iterating over all <span
-class="math display">\[ 2^k \]</span> possibilities of what bits our
-partial guess could be, we will eventually guess the correct key.</p>
-<p>To estimate the time that this approach would take, for varying <span
-class="math display">\[ k \]</span> we generate a random DES key and fix
-<span class="math display">\[ k \]</span> of the bits. We then encode
+paper</a>, instead of directly solving for the key we instead fix $ k $
+of the key and then solve for the remaining bits with a SAT solver. This
+will either give us the rest of the bits of the key, or the SAT solver
+will fail to find a solution - indicating that our partial guess was
+wrong. Iterating over all $ 2^k $ possibilities of what bits our partial
+guess could be, we will eventually guess the correct key.</p>
+<p>To estimate the time that this approach would take, for varying $ k $
+we generate a random DES key and fix $ k $ of the bits. We then encode
 the conditons of encryption into CNF form and attempt to solve for the
 remaining bits with <code>CryptoMiniSat</code>. Below is a plot of how
-long such an approach would take for varying values of <span
-class="math display">\[ k \]</span></p>
+long such an approach would take for varying values of $ k $</p>
 <figure>
 <img src="/img/block_cipher/5_round_attack.png"
 alt="Plot of elapsed time vs fixed bits" />
@@ -1041,8 +1019,7 @@ alt="Plot of elapsed time vs fixed bits" />
 bits</figcaption>
 </figure>
 <p>From extrapolating the best fit line on the above plot, this kind of
-attack would take <span class="math display">\[ \approx 10^5 s \]</span>
-on a single core.</p>
+attack would take $ ^5 s $ on a single core.</p>
 <p>It is difficult to make a one-to-one comparison between such an
 approach and a brute force one for several reasons - a major one being
 that a SAT solver’s heuristics will prune down the key’s search space in
@@ -1064,14 +1041,11 @@ approximately how long a single DES encryption takes.</p>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="va">time_end</span><span class="op">=</span><span class="va">$(</span><span class="fu">date</span> +%s.%N<span class="va">)</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$time_end</span><span class="st"> - </span><span class="va">$time_start</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">bc</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="st">&quot;</span><span class="va">$tmp_file</span><span class="st">&quot;</span></span></code></pre></div>
-<p>With this, we can see that encrypting <span class="math display">\[ 8
-\cdot 10^6 \]</span> blocks takes approximately <span
-class="math display">\[ 6.6 s \]</span> or approximately <span
-class="math display">\[ 8.2 \cdot 10^{-7} s \]</span> per encryption. At
-this speed, a full brute force of all <span class="math display">\[
-2^{56} \]</span> DES keys would take 1800 years; our SAT-solver based
-attack only takes an equivalent of <span class="math display">\[ \approx
-2^{37} \]</span> DES encryptions.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Some Notes on the Cryptanalysis of Block Ciphers]]></summary></entry><entry><title type="html">Cracking a 9 Year Old Safe</title><link href="http://localhost:4000/2023/04/11/cracking-safe.html" rel="alternate" type="text/html" title="Cracking a 9 Year Old Safe" /><published>2023-04-11T00:00:00-05:00</published><updated>2023-04-11T00:00:00-05:00</updated><id>http://localhost:4000/2023/04/11/cracking-safe</id><content type="html" xml:base="http://localhost:4000/2023/04/11/cracking-safe.html"><![CDATA[<p>Recently, I came across <a
+<p>With this, we can see that encrypting $ 8 ^6 $ blocks takes
+approximately $ 6.6 s $ or approximately $ 8.2 ^{-7} s $ per encryption.
+At this speed, a full brute force of all $ 2^{56} $ DES keys would take
+1800 years; our SAT-solver based attack only takes an equivalent of $
+^{37} $ DES encryptions.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Some Notes on the Cryptanalysis of Block Ciphers]]></summary></entry><entry><title type="html">Cracking a 9 Year Old Safe</title><link href="/2023/04/11/cracking-safe.html" rel="alternate" type="text/html" title="Cracking a 9 Year Old Safe" /><published>2023-04-11T00:00:00-05:00</published><updated>2023-04-11T00:00:00-05:00</updated><id>/2023/04/11/cracking-safe</id><content type="html" xml:base="/2023/04/11/cracking-safe.html"><![CDATA[<p>Recently, I came across <a
 href="https://codegolf.stackexchange.com/q/36822/">an old StackExchange
 thread</a> wherein users submitted “lockers” or functions which only
 accepted a certain arithmetic sequence - then other users attempted to
@@ -1085,20 +1059,17 @@ uncracked for 9 years.</p>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> d <span class="kw">in</span> b:</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        c<span class="op">=</span>(c<span class="op">&lt;&lt;</span><span class="dv">32</span>)<span class="op">+</span>d</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">pow</span>(<span class="dv">7</span>,c,<span class="bn">0xf494eca63dcab7b47ac21158799ffcabca8f2c6b3</span>)<span class="op">==</span><span class="bn">0xa3742a4abcb812e0c3664551dd3d6d2207aecb9be</span></span></code></pre></div>
-<p>Note that the function returns true only if <span
-class="math display">\[
-7^c=\underbrace{\texttt{0xa3}\cdots\texttt{be}}_{\equiv H} \]</span>
-modulo a prime <span class="math display">\[
-p=\texttt{0xf4}\cdots\texttt{b3} \]</span>. This is an example of the <a
+<p>Note that the function returns true only if $ 7^c=_{H} $ modulo a
+prime $ p= $. This is an example of the <a
 href="https://en.wikipedia.org/wiki/Discrete_logarithm#Properties">discrete
 logarithm problem</a>, an important primitive that has various
 applications in cryptography.</p>
 <h1 id="breaking-the-discrete-log">Breaking the Discrete Log</h1>
-<p>Note that the underlying group <span class="math display">\[ G =
-\mathbb{Z}^{\times}_p \]</span> that we are working in has order</p>
-<p><span class="math display">\[ \begin{align*} |G| &amp;= \phi(p) = p-1
-\\ &amp;= 2 \cdot 3 \cdot 23 \cdot 1057807 \cdot 2132567 \cdot
-\underbrace{717\cdots661}_{\text{35 digits}}  \end{align*}\]</span></p>
+<p>Note that the underlying group $ G = ^{}_p $ that we are working in
+has order</p>
+<p>$ <span class="math display">\[\begin{align*} |G| &amp;= \phi(p) =
+p-1 \\ &amp;= 2 \cdot 3 \cdot 23 \cdot 1057807 \cdot 2132567 \cdot
+\underbrace{717\cdots661}_{\text{35 digits}}  \end{align*}\]</span>$</p>
 <p>Since the order of the group factors into (relatively) small factors,
 we can use the <a
 href="https://en.wikipedia.org/wiki/Pohlig%E2%80%93Hellman_algorithm">Pohlig-Hellman
@@ -1111,15 +1082,12 @@ Remainder Theorem to reconstruct the final solution.</p>
 Pohlig-Hellman algorithm defaults to using the <a
 href="https://en.wikipedia.org/wiki/Baby-step_giant-step">baby-step
 giant-step algorithm (or BSGS)</a> which calculates the discrete
-logarithm in <span class="math display">\[ \mathbb{Z}_n \]</span> in
-time <span class="math display">\[ O(\sqrt{n}) \]</span>.</p>
-<p>Note that the largest prime factor of <span class="math display">\[
-|G| \]</span> is <span class="math display">\[
-p&#39;=71765404858975364469794424368755661 \]</span> and therefore, the
-application of BSGS at this step will take approximately <span
-class="math display">\[ \sqrt{p&#39;} \approx 10^{17} \]</span>.
-Therefore, a simple application of BSGS would be intractable - we
-instead opt for an application of the <a
+logarithm in $ _n $ in time $ O() $.</p>
+<p>Note that the largest prime factor of $ |G| $ is $
+p’=71765404858975364469794424368755661 $ and therefore, the application
+of BSGS at this step will take approximately $ ^{17} $. Therefore, a
+simple application of BSGS would be intractable - we instead opt for an
+application of the <a
 href="https://en.wikipedia.org/wiki/General_number_field_sieve">number
 field sieve</a> as implemented by <a
 href="https://cado-nfs.gitlabpages.inria.fr">CADO-NFS</a></p>
@@ -1137,8 +1105,9 @@ Info:root: target = 7
 Info:root: log(target) = 25109992438216120939941563608435562 mod ell
 25109992438216120939941563608435562</code></pre>
 <p>We therefore have that</p>
-<p><span class="math display">\[c =
-\frac{55489157388397020258158645620533604}{25109992438216120939941563608435562}  \mod{p&#39;}\]</span></p>
+<p><span class="math inline">\(c =
+\frac{55489157388397020258158645620533604}{25109992438216120939941563608435562}
+\mod{p&#39;}\)</span></p>
 <h1 id="solving-the-rest-of-the-discrete-logarithm">Solving the Rest of
 the Discrete Logarithm</h1>
 <p>We now apply Pohlig-Hellman for the rest of the factors to find the
@@ -1161,9 +1130,9 @@ value of <span class="math inline">\(c\)</span>.</p>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    moduli.append(p_<span class="op">^</span>e_)</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> crt(exponents, moduli)</span></code></pre></div>
-<p>Running this code, we get the value of <span class="math display">\[
-c = 1068574207815876554047411521461868356487653669046 \]</span>. We can
-verify this:</p>
+<p>Running this code, we get the value of $ c =
+1068574207815876554047411521461868356487653669046 $. We can verify
+this:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> c <span class="op">=</span> <span class="dv">1068574207815876554047411521461868356487653669046</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">pow</span>(<span class="dv">7</span>,c,<span class="bn">0xf494eca63dcab7b47ac21158799ffcabca8f2c6b3</span>)<span class="op">==</span><span class="bn">0xa3742a4abcb812e0c3664551dd3d6d2207aecb9be</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">True</span></span></code></pre></div>
@@ -1191,7 +1160,7 @@ into Z3 and let it spit out the answer:</p>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>s.check()</span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(s.model()) <span class="co"># [d = 316804249, a0 = -1154709934]</span></span></code></pre></div>
 <p>With this, we get that our final sequence is
-<code>[-1154709934, -837905685, -521101436, -204297187, 112507062]</code>.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Recently, I came across an old StackExchange thread wherein users submitted “lockers” or functions which only accepted a certain arithmetic sequence - then other users attempted to “crack” these lockers by providing said sequence. As a fun weekend challenge, I decided to crack one of these lockers that had remained uncracked for 9 years.]]></summary></entry><entry><title type="html">100 Digit Challenge Solutions</title><link href="http://localhost:4000/2023/02/10/100-digit-challenge.html" rel="alternate" type="text/html" title="100 Digit Challenge Solutions" /><published>2023-02-10T00:00:00-06:00</published><updated>2023-02-10T00:00:00-06:00</updated><id>http://localhost:4000/2023/02/10/100-digit-challenge</id><content type="html" xml:base="http://localhost:4000/2023/02/10/100-digit-challenge.html"><![CDATA[<p>The following are solutions to the <a
+<code>[-1154709934, -837905685, -521101436, -204297187, 112507062]</code>.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Recently, I came across an old StackExchange thread wherein users submitted “lockers” or functions which only accepted a certain arithmetic sequence - then other users attempted to “crack” these lockers by providing said sequence. As a fun weekend challenge, I decided to crack one of these lockers that had remained uncracked for 9 years.]]></summary></entry><entry><title type="html">100 Digit Challenge Solutions</title><link href="/2023/02/10/100-digit-challenge.html" rel="alternate" type="text/html" title="100 Digit Challenge Solutions" /><published>2023-02-10T00:00:00-06:00</published><updated>2023-02-10T00:00:00-06:00</updated><id>/2023/02/10/100-digit-challenge</id><content type="html" xml:base="/2023/02/10/100-digit-challenge.html"><![CDATA[<p>The following are solutions to the <a
 href="https://en.wikipedia.org/wiki/Hundred-dollar,_Hundred-digit_Challenge_problems">Hundred-dollar,
 Hundred-digit Challenge problems</a> posed by Professor Nick Trefethen -
 various mathematical problems where the goal is to provide an answer to
@@ -1237,7 +1206,7 @@ href="https://nbviewer.org/github/epistemologist/100-Digit-Challenge/blob/main/P
 <li><a
 href="https://nbviewer.org/github/epistemologist/100-Digit-Challenge/blob/main/Problem%209.ipynb">Problem
 9</a></li>
-</ul>]]></content><author><name></name></author><summary type="html"><![CDATA[The following are solutions to the Hundred-dollar, Hundred-digit Challenge problems posed by Professor Nick Trefethen - various mathematical problems where the goal is to provide an answer to within 10 digits of accuracy. The solutions are implemented in Python as well as using additional scientific computing libraries (e.g. numpy, scipy, sympy for symbolic calculation, mpmath for extended precision). Originally, these started as a final project for a class on Computational Mathematics, but I ended up continuing it after the class ended. For many of the problems, in order to get sufficiently high accuracy, a combination of mathematical enginuity as well as good implementation of efficient algorithms are needed.]]></summary></entry><entry><title type="html">Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts</title><link href="http://localhost:4000/2022/01/03/big-numbers-notes.html" rel="alternate" type="text/html" title="Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts" /><published>2022-01-03T08:28:12-06:00</published><updated>2022-01-03T08:28:12-06:00</updated><id>http://localhost:4000/2022/01/03/big-numbers-notes</id><content type="html" xml:base="http://localhost:4000/2022/01/03/big-numbers-notes.html"><![CDATA[<p>In his essay titled <a
+</ul>]]></content><author><name></name></author><summary type="html"><![CDATA[The following are solutions to the Hundred-dollar, Hundred-digit Challenge problems posed by Professor Nick Trefethen - various mathematical problems where the goal is to provide an answer to within 10 digits of accuracy. The solutions are implemented in Python as well as using additional scientific computing libraries (e.g. numpy, scipy, sympy for symbolic calculation, mpmath for extended precision). Originally, these started as a final project for a class on Computational Mathematics, but I ended up continuing it after the class ended. For many of the problems, in order to get sufficiently high accuracy, a combination of mathematical enginuity as well as good implementation of efficient algorithms are needed.]]></summary></entry><entry><title type="html">Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts</title><link href="/2022/01/03/big-numbers-notes.html" rel="alternate" type="text/html" title="Notes on Littlewood’s ‘Large Numbers’ and Related Thoughts" /><published>2022-01-03T08:28:12-06:00</published><updated>2022-01-03T08:28:12-06:00</updated><id>/2022/01/03/big-numbers-notes</id><content type="html" xml:base="/2022/01/03/big-numbers-notes.html"><![CDATA[<p>In his essay titled <a
 href="https://www.jstor.org/stable/3609933?seq=1#metadata_info_tab_contents">“Large
 Numbers”</a>(published as part of his larger collection of essays titled
 <em>A Mathematical Miscellany</em>), John Littlewood writes on the
@@ -1247,26 +1216,16 @@ modern take on some of his examples as well as give some new ones.</p>
 <h3 id="scales-of-measurement">Scales of Measurement</h3>
 <p>In §7, Littlewood discusses the size of various scales of measurement
 (e.g. the range of sound from just perceptible to just tolerable -
-Littlewood mentions a figure of <span class="math display">\[ 10^{12}
-\]</span>, however the range between <a
-href="https://en.wikipedia.org/wiki/Sound_pressure#Examples">0 decibels
-and 120 decibels</a> represents a range of <span class="math display">\[
-10^6 \]</span>).</p>
-<p>Other examples include - <strong>luminance</strong>: <span
-class="math display">\[ 10^{-6} \frac{\text{cd}}{\text{m}^2} \]</span>
-(threshold of vision) to <span class="math display">\[  10^{6}
-\frac{\text{cd}}{\text{m}^2} \]</span> (incandescent lamp) - <em>range
-of <span class="math display">\[ 10^{12} \]</span></em> -
-<strong>length</strong>: <span class="math display">\[ 10^{-3}
-m\]</span> to <span class="math display">\[ 10^{3} m\]</span> -
-<em>range of <span class="math display">\[ 10^6 \]</span></em> -
-<strong>time</strong>: <span class="math display">\[ 10^{-2} s \]</span>
-(human reaction time) to <span class="math display">\[ 10^9 s\]</span>
-(human lifetime) - <em>range of <span class="math display">\[ 10^{11}
-\]</span></em> - <strong>mass</strong>: <span class="math display">\[
-10^{-6} \text{kg} \]</span> (milligram) to <span class="math display">\[
-10^3 \text{kg} \]</span> (metric ton) - <em>range of <span
-class="math display">\[ 10^9 \]</span></em></p>
+Littlewood mentions a figure of $ 10^{12} $, however the range between
+<a href="https://en.wikipedia.org/wiki/Sound_pressure#Examples">0
+decibels and 120 decibels</a> represents a range of $ 10^6 $).</p>
+<p>Other examples include - <strong>luminance</strong>: $ 10^{-6} $
+(threshold of vision) to $ 10^{6} $ (incandescent lamp) - <em>range of $
+10^{12} $</em> - <strong>length</strong>: $ 10^{-3} m$ to $ 10^{3} m$ -
+<em>range of $ 10^6 $</em> - <strong>time</strong>: $ 10^{-2} s $ (human
+reaction time) to $ 10^9 s$ (human lifetime) - <em>range of $ 10^{11}
+$</em> - <strong>mass</strong>: $ 10^{-6} $ (milligram) to $ 10^3 $
+(metric ton) - <em>range of $ 10^9 $</em></p>
 <h3 id="coincidences-probabilities">Coincidences / Probabilities</h3>
 <h4 id="will-west-case">Will West Case</h4>
 <p>Littlewood writes: &gt;Dorothy Sayers in Unpopular Opinions, cites
@@ -1274,18 +1233,15 @@ the case of two negroes, each named Will West, confined simultaneously
 in Leavenworth Penitentiary, U.S.A. (in 1903), and with the same
 Bertillon measurements. (Is this really credible ?)</p>
 <p>We estimate this probability, let <span
-class="math display">\[P\]</span> be the probability that two people
+class="math inline">\(P\)</span> be the probability that two people
 share the same facial features, Bertillon measurements and name. We
 have:</p>
-<p><span class="math display">\[ P \approx \underbrace{\text{Prob(same
-body measurements)}}_{:=P_b} \]</span> <span class="math display">\[
-\cdot \;  \underbrace{\text{Prob(same name)}}_{:=P_n}\]</span></p>
-<h5 id="estimating-p_n">Estimating <span class="math display">\[ P_n
-\]</span></h5>
-<p>Let <span class="math display">\[n_1, n_2\]</span> be the names of
-two arbitrary people. We have the crude approximation:</p>
-<p><span class="math display">\[ P(n_1 = n_2) = \sum_{\text{names }n}
-P(n_1 = n) P(n_2 = n) \\ = \sum_{\text{names } n} P(n)^2 \]</span></p>
+<p>$ P <em>{:=P_b} $ $ ; </em>{:=P_n}$</p>
+<h5 id="estimating-p_n">Estimating $ P_n $</h5>
+<p>Let <span class="math inline">\(n_1, n_2\)</span> be the names of two
+arbitrary people. We have the crude approximation:</p>
+<p>$ P(n_1 = n_2) = <em>{n} P(n_1 = n) P(n_2 = n) \ = </em>{ n} P(n)^2
+$</p>
 <p>Using data from <a href="https://www.ssa.gov/OACT/babynames/">U.S.
 Social Security Adminbistration</a> and using the top 1000 names from
 the years 1880 and 2010 (assuming that 50% of births are male and 50% of
@@ -1293,10 +1249,9 @@ births are female), we <a
 href="https://gist.github.com/epistemologist/12cff945e6b8c918055f5585fc373c7f">get
 estimates</a> of probabilities of 1.8% and 0.21% respectively. Assuming
 that choosing first names and last names are independent, we estimate
-that <span class="math display">\[  P_n \approx 10^{-2} \cdot 10^{-2} =
-10^{-4} \]</span></p>
+that $ P_n ^{-2} ^{-2} = 10^{-4} $</p>
 <h5 id="estimating-p_b">Estimating <span
-class="math display">\[P_b\]</span></h5>
+class="math inline">\(P_b\)</span></h5>
 <p>Littlewood mentions that the two Wests’ shared Bermillon measurements
 - these are a system of 11 different biometric measurements that were
 taken of prisoners as means of identification. In the original case, the
@@ -1306,15 +1261,14 @@ exactly the same, but remarkably similar</a>.</p>
 <p>Bertillon <a
 href="https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2014.00739.x">himself
 predicted</a> that the probability of two people sharing all 11
-measurements was <span class="math display">\[P_b \approx 1/4^{32} =
-1/268435456\]</span>. However, <a
+measurements was <span class="math inline">\(P_b \approx 1/4^{32} =
+1/268435456\)</span>. However, <a
 href="https://link.springer.com/article/10.1007%2Fs00414-015-1158-6">more
 recent studies</a> in forensic anthropometry place the probability of
-two people sharing 8 different body measurement traits at <span
-class="math display">\[ P_b \approx 10^{-20} \]</span>.</p>
-<p>We therefore make the estimate <span class="math display">\[ P_b
-\approx 10^{-12} \]</span> and therefore, <span class="math display">\[
-P \approx 10^{-12} \cdot 10^{-4} = 10^{-16} \]</span>.</p>
+two people sharing 8 different body measurement traits at $ P_b ^{-20}
+$.</p>
+<p>We therefore make the estimate $ P_b ^{-12} $ and therefore, $ P
+^{-12} ^{-4} = 10^{-16} $.</p>
 <h5 id="wrapping-things-up">Wrapping Things Up</h5>
 <p>We now calculate the probability that for any one person being
 incarcerated that they share the same features to someone in the same
@@ -1322,21 +1276,18 @@ prison that they are being held similarly to the two Will Wests.</p>
 <p>Assuming an average prison houses an average of <a
 href="https://www.americanjail.org/jail-statistics">250 inmates</a>, the
 probability that a person who is imprisoned meets their doppelganger in
-the same prison is <span class="math display">\[p = 1 - (1-P)^{250}
-\]</span>.</p>
+the same prison is $p = 1 - (1-P)^{250} $.</p>
 <p>Therefore, if <span class="math inline">\(n\)</span> people are
 incarcerated, we have that the probability that any one person will find
-their doppelganger is <span class="math display">\[ p&#39; = 1 - (1-p)^n
-= 1 - (1-P)^{250n} \]</span>. Considering that the U.S. made <a
+their doppelganger is $ p’ = 1 - (1-p)^n = 1 - (1-P)^{250n} $.
+Considering that the U.S. made <a
 href="https://www.ojjdp.gov/ojstatbb/crime/ucr.asp?table_in=2">10
-million arrests in 2019</a>, we estimate <span class="math display">\[ N
-\approx 5 \cdot 10^6 \]</span>. We therefore have that:</p>
-<p><span class="math display">\[ p&#39; = 1 - (1-P)^{N} \\ = 1 - \left(
-1 - NP + \frac{N(N-1)}{2} P^2 - \cdots \right) \\ = NP + O(P^2)
-\]</span></p>
-<p>Plugging in <span class="math display">\[N = 250 \cdot 5 \cdot 10^6,
-P = 10^{-16}\]</span>, we get that <span class="math display">\[p&#39;
-\approx 10^{-7}\]</span>.</p>
+million arrests in 2019</a>, we estimate $ N ^6 $. We therefore have
+that:</p>
+<p>$ p’ = 1 - (1-P)^{N} \ = 1 - ( 1 - NP + P^2 - ) \ = NP + O(P^2) $</p>
+<p>Plugging in <span class="math inline">\(N = 250 \cdot 5 \cdot 10^6, P
+= 10^{-16}\)</span>, we get that <span class="math inline">\(p&#39;
+\approx 10^{-7}\)</span>.</p>
 <p>This probability is reasonable as <a
 href="https://en.wikipedia.org/wiki/Doppelg%C3%A4nger#Examples_in_real_life">various
 doppelgangers have been found in real life</a> and so we expect it to be
@@ -1355,18 +1306,12 @@ more shuffling is necessary than one would naturally suppose ; I learned
 this from experience during a period of addiction, and have since
 compared notes with others.)</p>
 <p>Note that Littlewood gives a probability for holding 13 of a suit to
-be <span class="math display">\[2.4 \cdot 10^{-9} \]</span>; however,
-the <a href="https://stats.stackexchange.com/a/288235">actual
-probability</a> seems to be <span class="math display">\[ \approx 2.5
-\cdot 10^{-11} \]</span>. Using Littlewood’s assumptions, we have that
-the expected rate of perfect bridge suits is <span
-class="math display">\[ 2.5 \cdot 10^{-11} \cdot \frac{\text{30
-hands}}{\text{week}} \cdot 2 \cdot 10^6 \; \text{players} = \frac{0.0015
-\text{ hands}}{\text{week}} \approx \frac{7.8 \text{
-hands}}{\text{century}}\]</span></p>
+be $2.4 ^{-9} $; however, the <a
+href="https://stats.stackexchange.com/a/288235">actual probability</a>
+seems to be $ ^{-11} $. Using Littlewood’s assumptions, we have that the
+expected rate of perfect bridge suits is $ 2.5 ^{-11} ^6 ; = $</p>
 <p>Meanwhile, the probability of all 4 players receiving perfect deals
-is <span class="math display">\[ \approx 4.5 \cdot 10^{-28} \]</span>, a
-much rarer occurance - this is discussed in <a
+is $ ^{-28} $, a much rarer occurance - this is discussed in <a
 href="https://www.youtube.com/watch?v=s9-b-QJZdVA">this video by Matt
 Parker</a>.</p>
 <h3 id="computation">Computation</h3>
@@ -1382,9 +1327,8 @@ be completely factorised in 40 minutes; up to 10^15 in a day; up to
 <p>The cutting edge of the largest integers we can factor now has well
 evolved since the time of Littlewood due to both advances in better
 hardware and the development of better algorithms.</p>
-<p>For reference, I can factor numbers of the magnitude <span
-class="math display">\[ 10^{40} \]</span> nearly instantly on my nearly
-10-year old laptop:</p>
+<p>For reference, I can factor numbers of the magnitude $ 10^{40} $
+nearly instantly on my nearly 10-year old laptop:</p>
 <pre class="gp"><code>? x = random(10^40); x
 %1 = 8986749531375339305571207626880980158008
 ? factor(x)
@@ -1403,9 +1347,9 @@ class="math display">\[ 10^{40} \]</span> nearly instantly on my nearly
   ***   last result computed in 12 ms.</code></pre>
 <p>In a 1977 issue of Scientific American, Martin Gardener <a
 href="https://en.wikipedia.org/wiki/The_Magic_Words_are_Squeamish_Ossifrage">encoded
-a message with RSA</a> using a modulus on the order of <span
-class="math display">\[ 10^{129} \]</span>. The message was eventually
-decrypted by a distributed computation effort lead by <a
+a message with RSA</a> using a modulus on the order of $ 10^{129} $. The
+message was eventually decrypted by a distributed computation effort
+lead by <a
 href="https://link.springer.com/chapter/10.1007%2FBFb0000440">Atkins et
 al.</a>.</p>
 <p>As of writing, the largest number that has been factored has <a
@@ -1418,26 +1362,18 @@ parameters, the amount of computation to train these models has risen
 exponentially in recent years. <a
 href="https://openai.com/blog/ai-and-compute/">This blog post from
 OpenAI</a> shows a <em>3.4 month doubling time</em> in the increase of
-AI training. Note that models like AlphaGo and AlphaGoZero exceed <span
-class="math display">\[ 10^2 \]</span> petaflop/s-days, or around <span
-class="math display">\[ 10^{22} \]</span> operations <span
-class="math display">\[ \approx 0.1 \text{mol} \]</span></p>
+AI training. Note that models like AlphaGo and AlphaGoZero exceed $ 10^2
+$ petaflop/s-days, or around $ 10^{22} $ operations $ $</p>
 <h4 id="bitcoin-mining">Bitcoin Mining</h4>
 <p>Looking at the <a
 href="https://www.blockchain.com/charts/hash-rate">hashrate for
-Bitcoin</a>, as of January 2022 the Bitcoin network is performing <span
-class="math display">\[ \approx 177 \cdot 10^{18} \]</span> SHA 256
-hashes <strong>per second</strong>. Assuming that each hash is
-equivalent <a
+Bitcoin</a>, as of January 2022 the Bitcoin network is performing $
+^{18} $ SHA 256 hashes <strong>per second</strong>. Assuming that each
+hash is equivalent <a
 href="https://bitcoin.stackexchange.com/questions/1293/how-many-integer-operations-on-a-gpu-are-necessary-for-one-hash">to
 around 1000 arithmetic operations</a>, we have that the Bitcoin network
-can perform <span class="math display">\[ 10^{23}
-\frac{\text{operations}}{s}
-\approx 1 \frac{\text{mol}}{s}\]</span>. Throughout its entire
-existence, the Bitcoin network has performed <span
-class="math display">\[ 10^{28} \]</span> hashes or around <span
-class="math display">\[ 10^{31} \text{operations} \approx 10^8
-\text{mol} \]</span>.</p>
+can perform $ 10^{23} $. Throughout its entire existence, the Bitcoin
+network has performed $ 10^{28} $ hashes or around $ 10^{31} ^8 $.</p>
 <h4 id="breaking-cryptographic-schemes">Breaking Cryptographic
 Schemes</h4>
 <h5 id="distributed.net">Distributed.net</h5>
@@ -1450,105 +1386,78 @@ lengths. The projects’ statuses are as follows:</p>
 <ul>
 <li><a
 href="https://stats.distributed.net/projects.php?project_id=3">cracking
-a key of 56 bits</a>: <span class="math display">\[ 26 \cdot 10^{15}
-\]</span> keys attempted over 193 days, completed</li>
+a key of 56 bits</a>: $ 26 ^{15} $ keys attempted over 193 days,
+completed</li>
 <li><a
 href="https://stats.distributed.net/projects.php?project_id=5">cracking
-a key of 64 bits</a>: <span class="math display">\[ 15 \cdot 10^{18}
-\]</span> keys attempted over 1726 days, completed</li>
+a key of 64 bits</a>: $ 15 ^{18} $ keys attempted over 1726 days,
+completed</li>
 <li><a
 href="https://stats.distributed.net/projects.php?project_id=8">cracking
-a key of 72 bits</a>: <span class="math display">\[ 390 \cdot 10^{18}
-\]</span> keys attempted over 6972 days, incomplete</li>
+a key of 72 bits</a>: $ 390 ^{18} $ keys attempted over 6972 days,
+incomplete</li>
 </ul>
 <h2 id="nonhuman-scale-numbers">Nonhuman Scale Numbers</h2>
 <h3 id="a-mouse-surviving-in-hell">A Mouse Surviving in Hell</h3>
 <p>We expand on some of the ommited details in Littlewood’s calculation
 on the probability that a mouse can survive a week in Hell.</p>
-<p>Following Littlewood’s notation, let - <span class="math display">\[
-T_0 \]</span> be average room temperature (note all temperature units
-are measured <a
+<p>Following Littlewood’s notation, let - $ T_0 $ be average room
+temperature (note all temperature units are measured <a
 href="https://en.wikipedia.org/wiki/Thermodynamic_temperature">absolutely</a>
-- i.e. absolute zero is at <span class="math display">\[T = 0\]</span>)
-- <span class="math display">\[ T_H \]</span> be the temperature of Hell
-(we assume that <span class="math display">\[ T_h \gg T_0 \]</span>) -
-<span class="math display">\[ \mu = k n_0 \]</span> be the number of
-particles in the mouse (here, <span class="math display">\[ n_0
-\]</span> is <a
+- i.e. absolute zero is at <span class="math inline">\(T = 0\)</span>) -
+$ T_H $ be the temperature of Hell (we assume that $ T_h T_0 $) - $ = k
+n_0 $ be the number of particles in the mouse (here, $ n_0 $ is <a
 href="https://en.wikipedia.org/wiki/Avogadro%27s_number">Avogadro’s
-number</a>, so <span class="math display">\[ k \]</span> represents the
-number of moles)</p>
+number</a>, so $ k $ represents the number of moles)</p>
 <p>We assume, as Littlewood does, that “…we should treat the problem as
 classical, and suppose that the molecules and densities are terrestial.”
 - let the particles in Hell (or somewhere extremely hot if you prefer)
 follow a <a
 href="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution">Maxwell-Boltzmann
 distribution</a></p>
-<p>Littlewood also defines two other variables, <span
-class="math display">\[ c_0, c_H \]</span> or the average speed of
-particles at temperatures of <span class="math display">\[ T_0 \]</span>
-and <span class="math display">\[ T_H \]</span> respectively. We can
-describe this by calculating the <a
+<p>Littlewood also defines two other variables, $ c_0, c_H $ or the
+average speed of particles at temperatures of $ T_0 $ and $ T_H $
+respectively. We can describe this by calculating the <a
 href="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Typical_speeds">mean
-velocity</a> at various temperatures, giving <span
-class="math display">\[ c_0 = \sqrt{\frac{8 k_B T_0}{ \pi m}}, c_H =
-\sqrt{\frac{8 k_B T_H}{\pi m}} \]</span>.</p>
-<p>Next, for any given particle at temperature <span
-class="math display">\[ T =  T_H \]</span>, the probability <span
-class="math display">\[ p \]</span> that its speed does not exceed <span
-class="math display">\[ c_0 \]</span> can be found by integrating <a
+velocity</a> at various temperatures, giving $ c_0 = , c_H = $.</p>
+<p>Next, for any given particle at temperature $ T = T_H $, the
+probability $ p $ that its speed does not exceed $ c_0 $ can be found by
+integrating <a
 href="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Distribution_for_the_speed">the
 distribution function of the particle’s speed</a> as follows:</p>
-<p><span class="math display">\[ p = \int_0^{c_0} f(v) =
-\sqrt{\frac{2}{\pi}} \left(\frac{m}{k T_H}\right)^{3/2}
-\int_0^{c_0}  v^2 e^{-\frac{mv^2}{2k T_H}} dv \\ = \sqrt{\frac{2}{\pi}}
-\left(\frac{m}{k T_H}\right)^{3/2} \int_0^{c_0} \left( v^2 + O(1/T_H)
-\right) dv \\ \sim T_H^{-3/2} c_0^3 \sim (T_0 /
-T_H)^{3/2}  \]</span></p>
+<p>$ p = _0^{c_0} f(v) = ()^{3/2} _0^{c_0} v^2 e^{-} dv \ = ()^{3/2}
+_0^{c_0} ( v^2 + O(1/T_H) ) dv \ T_H^{-3/2} c_0^3 (T_0 / T_H)^{3/2}
+$</p>
 <p>Littlewood then states that the probability that most of the
-particles in the mouse have <span class="math display">\[ c \le c_0
-\]</span> is of the order of <span class="math display">\[ p^\mu
-\]</span>. He then breaks up the time interval of a week into time
-intervals of length <span class="math display">\[ \tau \]</span> similar
-to the <a href="https://en.wikipedia.org/wiki/Mean_free_time">mean free
-time</a> or average time between molecular collisions.</p>
+particles in the mouse have $ c c_0 $ is of the order of $ p^$. He then
+breaks up the time interval of a week into time intervals of length $ $
+similar to the <a
+href="https://en.wikipedia.org/wiki/Mean_free_time">mean free time</a>
+or average time between molecular collisions.</p>
 <p>Here, we simply take Littlewood’s word [TODO: actually derive this]
-and say that <span class="math display">\[ \tau_H \sim
-\frac{n_0^{-1/3}}{c_0} \sqrt{\frac{T_0}{T_H}} \]</span> and so the total
-number of time periods in a week is <span class="math display">\[ \nu =
-w / \tau_H \]</span></p>
-<p>We therefore have that the total probability of survival is <span
-class="math display">\[ p = 1/C\]</span>, where</p>
-<p><span class="math display">\[ C = (p^{-\mu})^\nu =
-\left(\sqrt{\frac{T_H}{T_0}}\right)^{\frac{3}{2} c_0 k w n_0^{4/3}
-\sqrt{\frac{T_H}{T_0}}} \]</span></p>
+and say that $ _H $ and so the total number of time periods in a week is
+$ = w / _H $</p>
+<p>We therefore have that the total probability of survival is $ p =
+1/C$, where</p>
+<p>$ C = (p<sup>{-})</sup>= ()^{ c_0 k w n_0^{4/3} } $</p>
 <p>Let’s now substitute actual numbers into this equation (here, we
 depart from the values that Littlewood uses as his values are just to
-get a nice final result): - we set room temperature at <span
-class="math display">\[ T_0 \approx 300 \text{K} \]</span> or around
-<span class="math display">\[ 80^{\circ}\text{F} \]</span> - the
-temperature of Hell is difficult to estimate - while Biblical accounts
-such as one in <a
+get a nice final result): - we set room temperature at $ T_0 $ or around
+$ 80^{} $ - the temperature of Hell is difficult to estimate - while
+Biblical accounts such as one in <a
 href="https://www.biblegateway.com/passage/?search=Revelation+21">Revelations
 21:8</a> describe a “fiery lake of burning sulfur” and therefore a
 temperature less than the boiling point of sulfur at <a
 href="https://en.wikipedia.org/wiki/Sulfur">around 700 K</a>, we take
-this as metaphor and instead take Littlewood’s value of <span
-class="math display">\[ T_H   \approx 10^{12} \text{K} \]</span>. For
-comparison, <a
+this as metaphor and instead take Littlewood’s value of $ T_H ^{12} $.
+For comparison, <a
 href="https://en.wikipedia.org/wiki/Orders_of_magnitude_(temperature)">similar
 temperatures</a> can be seen in the formation of stars and microseconds
-after the Big Bang. - we use a value of <span class="math display">\[ k
-= 10^2 \]</span>; for reference, <span class="math display">\[ 10^2
-\text{mol} \]</span> of water weighs around <span
-class="math display">\[ 1.8 \text{kg} \]</span> - we have that <span
-class="math display">\[ w = 7 \text{days} \approx 6 \cdot 10^5 \text{s}
-\]</span> - we <a
+after the Big Bang. - we use a value of $ k = 10^2 $; for reference, $
+10^2 $ of water weighs around $ 1.8 $ - we have that $ w = 7 ^5 $ - we
+<a
 href="https://www.wolframalpha.com/input/?i=sqrt%28+%288+*+Boltzmann%27s+constant+*+300+Kelvin%29+%2F+%28pi+*+18+grams+%2F+Avogadro%27s+number%29+%29+">can
-calculate</a> <span class="math display">\[ c_0 \]</span> from our
-earlier definition: <span class="math display">\[ c_0 = \sqrt{\frac{8
-\cdot (1.4 \cdot 10^{-23} \frac{J}{K} ) \cdot 300K }{\pi \left( \frac{18
-g}{6 \cdot 10^{23}} \right) }} \approx 600 \frac{m}{s}\]</span></p>
+calculate</a> $ c_0 $ from our earlier definition: $ c_0 = $</p>
 <p>We can now explicitly calculate C:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>In [<span class="dv">1</span>]: <span class="im">from</span> math <span class="im">import</span> sqrt, log </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   ...: T_0 <span class="op">=</span> <span class="dv">300</span> </span>
@@ -1565,13 +1474,10 @@ g}{6 \cdot 10^{23}} \right) }} \approx 600 \frac{m}{s}\]</span></p>
 <p>This is not the only example of large numbers arising from the study
 of physical phenomena: - <a
 href="http://www.fpx.de/fp/Fun/Googolplex/GetAGoogol.html">Here</a>, it
-is described that a black hole of mass <span class="math display">\[
-6.14 \cdot 10^{41} \text{kg} \approx 3 \cdot 10^{11} \]</span> times the
-mass of the sun has a dimensionless entropy of <span
-class="math display">\[ 10^{100} \]</span> and therefore has <span
-class="math display">\[ e^{10^{100}} \approx 10^{10^{99.6}}\]</span>
-different macroscopic states - <a
-href="https://arxiv.org/pdf/1712.08465.pdf">In this paper</a>, the
-probability that a human teleports due to random quantum fluctuations is
-calculated to be approximately <span class="math display">\[ 10^{-4.5
-\cdot 10^{29}} \]</span></p>]]></content><author><name></name></author><summary type="html"><![CDATA[In his essay titled “Large Numbers”(published as part of his larger collection of essays titled A Mathematical Miscellany), John Littlewood writes on the various applications of large numbers. In this post, we give a more modern take on some of his examples as well as give some new ones.]]></summary></entry></feed>
+is described that a black hole of mass $ 6.14 ^{41} ^{11} $ times the
+mass of the sun has a dimensionless entropy of $ 10^{100} $ and
+therefore has $ e<sup>{10</sup>{100}} <sup>{10</sup>{99.6}}$ different
+macroscopic states - <a href="https://arxiv.org/pdf/1712.08465.pdf">In
+this paper</a>, the probability that a human teleports due to random
+quantum fluctuations is calculated to be approximately $ 10^{-4.5 ^{29}}
+$</p>]]></content><author><name></name></author><summary type="html"><![CDATA[In his essay titled “Large Numbers”(published as part of his larger collection of essays titled A Mathematical Miscellany), John Littlewood writes on the various applications of large numbers. In this post, we give a more modern take on some of his examples as well as give some new ones.]]></summary></entry></feed>
