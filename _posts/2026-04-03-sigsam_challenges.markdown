@@ -136,7 +136,7 @@ What is $\int_1^6 x^{x^x} dx$ to 7 significant digits?
 
 Note that $f(x) = x^{x^x}$ is superexponential and increases rapidly on this interval - for instance, $f(6) = 6^{6^6} \approx 2.659 \cdot 10^{36305} \implies \int_1^6 f(x) dx \le (6-1) f(6) \approx 1.33 \cdot 10^{36306} $
 
-![Plot of f](./2_plot.png)
+![Plot of f](/img/sigsam/2_plot.png)
 
 ## First Attempt
 As the integral is dominated by its behavior near $x=6$, we break the integral up into two parts, writing $$\int_1^6 f(x) = \int_1^t f(x) + \int_t^6 f(x)$$ with $\left| \int_1^t f(t) \right| \le (t-1) f(t) \le \varepsilon$. We evaluate the second integral with the trapezoid rule; we have that
@@ -386,7 +386,7 @@ sys     0m0.024s
 We can ask a generalization of this question - define $F(k)$ to be the coefficient of $x^{6k}$ in the polynomial $p(x)= (x+1)^{4k} (x^2+x+1)^{2k} (x^4+x^3+x^2+x+1)^k$ - how high can we calculate $F(k)$?
 
 [Standard libraries](https://gist.github.com/epistemologist/51a98fa1ae61ff2372e6316d573d686d) are able to calculate up to $k = 5000$ in less than 10 seconds:
-![](4_plot1.png)
+![](/img/sigsam/4_plot1.png)
 
 The general shape of the above plot confirms the $O(n^2)$ time complexity of naive polynomial multiplication algorithm and the $O(n \log n)$ time complexity of FFT-based multiplication algorithms used by modern libraries. 
 
@@ -401,11 +401,11 @@ $$F(k) \le \text{sum of all coefficients} = p(1) = 2^{4k} \cdot 3^{2k} \cdot 5^k
 
 We can remedy this by instead calculating the polynomial in $\mathbb{Z}_p[x]$ for a small prime $p$:
 
-![alt text](4_plot2.png)
+![alt text](/img/sigsam/4_plot2.png)
 
 We then can calculate $F(k) \bmod p$ for several small primes in parallel and then use the above bound with the Chinese Remainder Theorem to reconstruct the actual value of $F(k)$.
 
-![alt text](4_diagram.png)
+![alt text](/img/sigsam/4_diagram.png)
 
 We illustrate this by calculating $F(50000)$. Since we know that $F(50000) \le 720^{50000}$, we calculate $F(50000) \bmod p$ for $\frac{\log_{2}(720^{50000})}{64} \approx 7416$ 64-bit primes in parallel and then reconstruct the value of $F(50000)$ with the Chinese Remainder Theorem:
 
