@@ -30,7 +30,7 @@ We have for a real $n \times n$ matrix $A$, we have that $$ \| A \|_2 = \sup_{|x
 Our plan of attack is as follows:
  - we can calculate $\lambda_{\text{max}}$ via [power iteration](https://en.wikipedia.org/wiki/Power_iteration); this is useful as it is less expensive than other methods like calculating the characteristic polynomial
  - we have an [explicit closed form](https://mathoverflow.net/questions/47561/deriving-inverse-of-hilbert-matrix) of 
- $(H^{-1})_{ij} = (-1)^{i+j} (i+j-1) \binom{n+i-1}{n-j} \binom{n+j-1}{n-i} \binom{i+j-2}{i-1}^2 $
+ $(H^{-1})_{ij} = (-1)^{i+j} (i+j-1) \binom{n+i-1}{n-j} \binom{n+j-1}{n-i} \binom{i+j-2}{i-1}^2$
  - we calculate $c = \|H \|_2 \cdot \| H^{-1}\|_2$ with various working precisions and take agreeing digits as confirmation of precision
 
 We first generate $H$ and $H^{-1}$:
@@ -134,7 +134,7 @@ We therefore have with some confidence that $\boxed{c \approx 1.7659\cdot10^{389
 # Problem 2
 What is $\int_1^6 x^{x^x} dx$ to 7 significant digits?
 
-Note that $f(x) = x^{x^x}$ is superexponential and increases rapidly on this interval - for instance, $f(6) = 6^{6^6} \approx 2.659 \cdot 10^{36305} \implies \int_1^6 f(x) dx \le (6-1) f(6) \approx 1.33 \cdot 10^{36306} $
+Note that $f(x) = x^{x^x}$ is superexponential and increases rapidly on this interval - for instance, $f(6) = 6^{6^6} \approx 2.659 \cdot 10^{36305} \implies \int_1^6 f(x) dx \le (6-1) f(6) \approx 1.33 \cdot 10^{36306}$
 
 ![](/img/sigsam/2_plot.png "Plot of f")
 
@@ -490,17 +490,71 @@ F(k) &= [x^{6k}] \left( (1-x^2)^{4k} \cdot (1-x^3)^{2k} \cdot (1-x^5)^k \cdot (1
 \end{aligned}$$
 
 This representation as a summation suggests that $F(k)$ may have a closed form or at least a simple recurrence. We attempt to [guess such a closed form with SageMath](https://ask.sagemath.org/question/68486/code-for-guessing-formula-for-integer-sequence/) (see [this paper](https://arxiv.org/pdf/1306.4263) for the package used):
+
 ```python
 sage: R.<x> = PolynomialRing(QQ)
 sage: def F(k):
 ....:     p = (x+1)**(4*k) * (x**2+x+1)**(2*k) * (x**4+x**3+x**2+x+1)**k
 ....:     return p.coefficients()[6*k]
-....: 
-sage: seq = [F(k) for k in range(1, 200)]
-sage: C = CFiniteSequences(QQ)
-sage: C.guess(seq)
-0 # sequence is likely not a linear recurrence
+sage: seq = [F(k) for k in range(200)]
+sage: C = CFiniteSequences(QQ); C.guess(seq) 
+0 # Sequence is likely not defined by a linear recurrence
 sage: from ore_algebra import OreAlgebra, guess
-sage: [p.degree() for p in guess(seq, OreAlgebra(QQ['n'], 'Sn')) ] # calculate the associated annihilator of this sequence
-[18, 18, 18, 18, 18]
+sage: g = guess(seq, OreAlgebra(QQ['n'], 'Sn'))
+sage: [ p.degree() for p in g ]
+[18, 18, 18, 18, 18] 
+sage: %time seq_more = g.to_list(init=seq[:5], n = 100000) # Calculate the first 100000 terms
+# CPU times: user 2min 21s, sys: 1.06 s, total: 2min 22s
+# Wall time: 2min 22s
+sage: test = str(seq_more[50000]) # Compare to F(50000) value calculated before
+sage: f"F(50000) = {test[:10]}...{test[-10:]} ({len(test)} digits)"
+'F(50000) = 3612727222...0386752768 (142864 digits)'
 ```
+
+# Problem 5
+What is the largest zero of the 1000th Laguerre polynomial to 12 significant digits?
+ - the *Laguerre polynomials* satisfy the recurrence relation $$\begin{cases} L_0(x) = 1 \\ L_1(x) = 1-x \\ L_n(x) = \frac{2n-1-x}{n}L_{n-1}(x) - \frac{n-1}{n} L_{n-2}(x) & n > 1 \end{cases}$$
+
+## Naive Approach
+
+Direct calculation with `numpy` yields numerical overflow:
+```python
+import numpy as np
+from scipy.special import laguerre
+
+L = laguerre(1000)
+all(np.isnan(L))
+# /usr/local/lib/python3.12/dist-packages/scipy/special/_orthogonal.py:568: RuntimeWarning: overflow encountered in multiply
+#  - (n + alpha) * _ufuncs.eval_genlaguerre(n - 1, alpha, x)) / x
+
+# True
+```
+
+Explicitly, the $n^\text{th}$ Laguerre polynomial can be written as $L_n(x) = \sum_{k=0}^n \binom{n}{k} \frac{(-1)^k}{k!}x^k$ - therefore, the higher order coefficients will be too small to be representable in floating point.
+
+## Root Isolation
+
+Given a polynomial, Sage has built-in functionality to [calculate a list of intervals containing all of its real roots](https://github.com/sagemath/sage/blob/develop/src/sage/rings/polynomial/real_roots.pyx) - we demonstrate this functionality below:
+
+```python
+sage: R.<x> = QQ[]
+....: n = 1000
+....: P = sum([binomial(n, k)*(-1)^k/factorial(k)*x^k for k in range(n
+....: +1)])
+....: P *= P.denominator()
+....: # Calculate interval where maximum root lies
+....: (lo, hi), _ = P.real_root_intervals()[-1]
+....: # Do binary search to refine interval
+....: while abs(hi - lo) > 10**(-12):
+....:     print(".", end="")
+....:     mid = (lo + hi)/2
+....:     if P(mid) * P(lo) > 0:
+....:         lo = mid
+....:     else:
+....:         hi = mid
+....: print("\n", mid.n() )
+.............................................
+3943.24739484527
+```
+
+# Problem 6
