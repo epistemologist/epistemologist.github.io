@@ -558,3 +558,63 @@ sage: R.<x> = QQ[]
 ```
 
 # Problem 6
+Find both the global maximum of $J_\nu(2000 \pi)$ and where it occurs. Compute the global maximum to 16 significant digits, and compute where it occurs to 8 significant digits.
+
+ - here, we restrict $\nu \ge 0$
+ - $J_\nu$ is [the Bessel function of the first kind](https://en.wikipedia.org/wiki/Bessel_function#Bessel_functions_of_the_first_kind:_J%CE%B1)
+
+## Some Theory
+Before solving the problem, we should take a second to determine whether or not the problem is well-posed, as it is not clear whether or not this function even has a maximum in the first place.
+
+However, note that [we have that](https://dlmf.nist.gov/10.19#i) for fixed $z$ and as $\nu \to \infty$, we have
+$$J_{\nu}\left(z\right)\sim\frac{1}{\sqrt{2\pi\nu}}\left(\frac{ez}{2\nu}\right)^{\nu} \to 0$$
+
+We also have [the strict inequality](https://dlmf.nist.gov/10.14#E4)
+
+$$ | J_\nu(x)| \le \frac{1}{\Gamma(\nu+1)} \left(\frac{x}{2}\right)^\nu \implies |J_\nu(2000\pi)| \le \underbrace{ \frac{(1000\pi)^\nu}{\Gamma(\nu+1)} }_{f(\nu)}$$
+
+It can be shown that for large enough $N$ - say $10^4$ - $f(\nu)$ is decreasing on $(N, \infty)$. We therefore have that for $\nu > 10^4$ that
+
+$$|J_\nu(2000 \pi)| \le f(10^4) \approx 1.11 \cdot 10^{-688}$$
+
+
+It therefore suffices to find the optimum $\nu^* = \arg\max_{\nu \in [0, 10000] } J_\nu(2000\pi)$. We find this optimum with brute force:
+
+```python
+from scipy.optimize import minimize, brute, fmin
+from scipy.special import jv
+from math import pi
+
+F = lambda v: -jv(v, 2000*pi)
+
+res = brute(
+     lambda v: -jv(v, 2000*pi), 
+    (slice(0, 10000, 0.01), ), full_output=True, disp=True, finish=fmin)
+
+# (array([6268.26082196]), -0.03658537275397168)
+```
+
+# Problem 7
+Define functions $f(x)$ and $g(x)$ as 
+
+$$\begin{aligned}
+f(x) &= \tan(\tanh(\sin(x))) + \tanh(\sin(\tan(x))) \\
+&+ \sin(\tan(\tanh(x))) - \tan(\sin(\tanh(x))) \\
+&- \sin(\tanh(\tan(x))) - \tanh(\tan(\sin(x))) \\
+&- \tan(\sinh(\tanh(x))) - \sinh(\tanh(\tan(x))) \\
+&- \tanh(\tan(\sinh(x))) + \tan(\tanh(\sinh(x))) \\
+&+ \tanh(\sinh(\tan(x))) + \sinh(\tan(\tanh(x)))
+\end{aligned}$$
+
+and
+
+$$\begin{aligned}
+g(x) &= \sinh(\tanh(\sin(x))) + \tanh(\sin(\sinh(x))) \\
+&+ \sin(\sinh(\tanh(x))) - \sinh(\sin(\tanh(x))) \\
+&- \sin(\tanh(\sinh(x))) - \tanh(\sinh(\sin(x))) \\
+&- \tan(\sinh(\sin(x))) - \sinh(\sin(\tan(x))) \\
+&- \sin(\tan(\sinh(x))) + \tan(\sin(\sinh(x))) \\
+&+ \sin(\sinh(\tan(x))) + \sinh(\tan(\sin(x)))
+\end{aligned}$$
+
+What is $\lim_{x \to 0} \frac{f(g(x))}{g(f(x))}$ to 9 significant digits?
