@@ -618,3 +618,32 @@ g(x) &= \sinh(\tanh(\sin(x))) + \tanh(\sin(\sinh(x))) \\
 \end{aligned}$$
 
 What is $\lim_{x \to 0} \frac{f(g(x))}{g(f(x))}$ to 9 significant digits?
+
+## Naive Approach
+Direct evaluation of $f(x)$ is suceptible to underflow - this problem compounds when calculating $f(g(x))$ and $g(f(x))$. Hence, directly calculating $\frac{f(g(x))}{g(f(x))}$ is not feasible except for $x \approx 0.9$ even with extended 128-bit precision.
+![](/img/sigsam/7_plot.png "")
+
+## Power Series
+
+Instead of directly evaluating $f$ and $g$, note that at $z=0$, we have the series expansions:
+
+$$
+\begin{aligned}
+\sin z &= \sum_{k=0}^{\infty} \frac{(-1)^k z^{2k+1}}{(2k+1)!} \\
+\sinh{z} &=\sum_{k=0}^{\infty} \frac{z^{2k+1}}{(2k+1)!} \\
+\tan{z} &= \sum_{k=1}^{\infty} \frac{(-1)^{k-1}(2^{2k} - 1)2^{2k} B_{2k} z^{2k-1}}{(2k)!} \\
+\tanh{z} &= \sum_{k=1}^{\infty} \frac{(2^{2k} - 1)2^{2k} B_{2k} z^{2k-1}}{(2k)!}
+\end{aligned}
+$$
+
+We can therefore calculate $F(x) = f(g(x)) / g(f(x))$ as a *formal power series* - this can be done in a [couple lines of SageMath](https://doc.sagemath.org/html/en/reference/power_series/sage/rings/power_series_ring_element.html)
+```python
+sage: R.<x> = PowerSeriesRing(QQ, default_prec = 20)
+....: f = tan(tanh(sin(x))) + tanh(sin(tan(x))) + sin(tan(tanh(x))) - tan(sin(tanh(x))) - sin(tanh(tan(x))) - tanh(tan(sin(x))) - tan(sinh(tanh(x))) - sinh(tanh(tan(x))) - tanh(tan(sinh(x))) + tan(tanh(sinh(x))) + tanh(sinh(tan(x))) + sinh(tan(tanh(x)))
+....: g = sinh(tanh(sin(x))) + tanh(sin(sinh(x))) + sin(sinh(tanh(x))) - sinh(sin(tanh(x))) - sin(tanh(sinh(x))) - tanh(sinh(sin(x))) - tan(sinh(sin(x))) - sinh(sin(tan(x))) - sin(tan(sinh(x))) + tan(sin(sinh(x))) + sin(sinh(tan(x))) + sinh(tan(sin(x)))
+sage: f(g(x)) / g(f(x))
+2451447860952057740817096729600000000000000000000/801034487517232030831498951509084442801 + 268594208861616474527619350824913280000000000000000000/6223236933521375647529915354274077036120969*x^4 + O(x^5)
+```
+As we have that $F(x) = c_0 + c_1 x^4 + \cdots$, we have that $\lim_{x \to 0} F(x)$ is the constant term in the above power series, namely
+
+$$ \frac{2451447860952057740817096729600000000000000000000}{801034487517232030831498951509084442801} \approx 3060352455.6729174 $$
