@@ -220,6 +220,7 @@ def calc_integral(d):
 ```
 
 We have the following estimates of the integral:
+
 | number of applications of integration by parts | estimate of integral|
 |-|-|
 |1|1.10265158296803e+36300|
@@ -228,7 +229,7 @@ We have the following estimates of the integral:
 |4|1.10266499936194e+36300|
 |5| 1.10266499936194e+36300|
 
-We can therefore say with some confidence that the integral $\int_1^6 x^{x^x} \approx 1.10266449993619 \cdot 10^{36300}$
+We can therefore say with some confidence that the integral $\int_1^6 x^{x^x} \approx \boxed{ 1.102664 \cdot 10^{36300} }$
 
 # Problem 3
 What is $$\sum_{n=1}^\infty (n^\pi + n^2 + n^{\sqrt2} + 1)^{-1/3}$$ to 14 significant digits?
@@ -297,14 +298,14 @@ We instead opt for PARI-GP's [`sumnum`](https://pari.math.u-bordeaux.fr/dochtml/
 600 21.193240377711540944
 ```
 
-With the above code, we estimate the sum to be $\approx 21.193240377711540944$
+With the above code, we estimate the sum to be $\approx \boxed{ 21.193240377712 }$
 
 ## Digression: Complex Analysis
 We state the following theorem without proof:
 
 **Theorem**: Let $f(z)$ be a sufficiently nice analytic function with $f(z) = O(z^{-\alpha})$ for some $\alpha > 1$ as $|z| \to \infty$. We have that $$ \sum_{k=1}^\infty f(k) = \frac{1}{2 \pi i} \int_C f(z) \pi \cot{(\pi z)}$$ where the contour $C$ is such that $C$ runs from $\infty$ to $\infty$, starting in the upper half plane and crossing the real line between 0 and 1, having to its left all positive integers
 
-A proof of this utilizes the residue theorem and can be found [here, Theorem 3.6](www-m3.ma.tum.de/bornemann/challengebook/)
+A proof of this utilizes the residue theorem and can be found [here, Theorem 3.6](http://www-m3.ma.tum.de/bornemann/challengebook/)
 
 It turns out that our summand is sufficiently nice to apply this theorem: it remains to choose a contour $C$ that satisfies the above theorem and yields good convergence.
 
@@ -392,7 +393,7 @@ The general shape of the above plot confirms the $O(n^2)$ time complexity of nai
 
 However, we also have an example of the more general phenomenon that a single time complexity is often not enough to yield important information - for example, comparing [Sympy's implementation of polynomial multiplication](https://github.com/sympy/sympy/blob/16fa855354eb7bcabd3fe10993841e03b1382692/sympy/polys/densearith.py#L735) and [flint's implementation of polynomial multiplication](https://github.com/flintlib/flint/blob/fe1d6c6966a163d658ed1afe6a69ac7142e91940/src/fmpz_poly/mul.c), we can see different algorithms are used depending on the polynomial degree. These design choices ultimately explain the fact that Sympy is slower than Flint for small $k$ but comparable for larger $k$.
 
-We showcase two techniques for calculating $F(k)$ for higher $k$
+We showcase two techniques for calculating $F(k)$ for higher $k$.
 
 ## Reconstruction via Chinese Remainder Theorem
 Calculating the above polynomial in $\mathbb{Z}[x]$ is slow mainly due to the size of the polynomial's coefficients. Note that since all of the coefficients of $x$ in $p(x)$ are positive, we have that 
