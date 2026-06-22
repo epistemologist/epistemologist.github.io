@@ -4,6 +4,13 @@ title:  "SIGSAM Challenges"
 categories: 
 ---
 
+In February 1997, [Fee and Monogan](https://dl.acm.org/doi/10.1145/251586.251590) proposed ten numerical problems that seem to be solvable with typical numerical libraries. They write:
+
+> "[We present] some problems that appear at first glance to be purely numerical, that is they look like they should be solvable by using a purely numerical package. However, you may find that this just leads to an error message when you try to solve them using a purely numerical package. Can our computer algebra systems come to the rescue and solve the following problems?"
+
+
+Almost 30 years later, we present solutions to these problems with modern programs.
+
 # Problem 1
 What is a 4 significant digit approximation to the condition number of the 256x256 Hilbert matrix?
 
@@ -648,3 +655,89 @@ sage: f(g(x)) / g(f(x))
 As we have that $F(x) = c_0 + c_1 x^4 + \cdots$, we have that $\lim_{x \to 0} F(x)$ is the constant term in the above power series, namely
 
 $$ \frac{2451447860952057740817096729600000000000000000000}{801034487517232030831498951509084442801} \approx 3060352455.6729174 $$
+
+# Problem 8
+What is
+
+$$\prod_{n=1}^\infty \tanh\left( \frac{1}{2} \tan^{-1}(n) \sinh^{-1}(n)\right)$$
+
+to 14 significant digits?
+
+## Initial Attempts
+
+![](/img/sigsam/8_plot.png "Plot of product terms")
+
+Note that the terms of the product rapidly approach 1 - hence, we can get an estimate of the above product by taking a partial product.
+
+We can write a simple C program to take the product of the first N terms:
+```c
+#include<stdio.h>
+#include<math.h>
+
+double F(int n) {
+    return tanh(0.5 * atan(n) * asinh(n));
+}
+
+int main(int argc, char** argv) {
+    double out = 1;
+    int lim = atoi( argv[1] );
+    for (int i = 1; i < lim; i++) {
+        out *= F(i);
+    }
+    printf("%d: %.17lf\n", lim, out);
+}
+```
+
+```sh
+$ for i in {0..32..2}; do ./calc_prod "$((1 << i)) "; done; echo
+1: 1.00000000000000000
+4: 0.17959494132937540
+16: 0.11082394271675355
+64: 0.09462337598787798
+256: 0.08879820894851700
+1024: 0.08637294794296040
+4096: 0.08530853193572750
+16384: 0.08483213403121476
+65536: 0.08461730643287897
+262144: 0.08452014245788493
+1048576: 0.08447614250058469
+4194304: 0.08445620714072524
+16777216: 0.08444717286874558
+67108864: 0.08444307833008752
+268435456: 0.08444122251122592
+1073741824: 0.08444038143574970
+```
+
+With this, we get that the product is approximately $0.08444$
+
+## More Digits
+First, note we have:
+$$ \begin{aligned} L = \prod_{n=1}^\infty F(n) &\implies \ln(L) = \sum_{n=1}^\infty \ln(F(n)) \\ 
+&=  \underbrace{ \sum_{k=1}^N \ln(F(n))  }_{\text{calculate}}  + \underbrace{ \sum_{k > N} \ln(F(n)) }_{\text{estimate }} \end{aligned} $$
+
+To get more digits, we utilize the [Abel-Plana formula](https://en.wikipedia.org/wiki/Abel%E2%80%93Plana_formula) - this is similar to the [Euler-Macluarin summation formula](https://en.wikipedia.org/wiki/Euler%E2%80%93Maclaurin_formula) mentioned earlier; however, as mentioned in [mpmath's documentation](https://mpmath.org/doc/current/calculus/sums_limits.html#sumem), Abel-Plana works better when the growth of $F(k)$ above grows like a power of $k$ as we have here.
+
+```python
+import mpmath
+from mpmath import log, tanh, atan, asinh, inf
+
+mpmath.mp.dps = 100
+F = lambda n: log( tanh( 0.5 * atan(n) * asinh(n) ) )
+N = 500
+
+sum1 = sum( [F(i) for i in range(1, N)] ) # Sum first N terms
+sum2, err = mpmath.sumap( F, [N, inf], error=True) # Get bound on tail
+
+# Calculate total product via interval arithmetic
+mpmath.iv.dps = 100
+# sum of F(k) for k > 0 is bounded by below interval
+sum_interval = mpmath.iv.mpf( [ sum1 + sum2 - err, sum1 + sum2 + err ]) 
+prod_interval = mpmath.iv.exp( sum_interval )  
+mpmath.mpf( prod_interval.a ), mpmath.mpf( prod_interval.b )
+
+# 0.0844396840301890445961951627743214644576628... 
+# 0.0844396840301890445961951627743214644576796... 
+```
+
+With the above method, we are able to get 42 correct significant digits.
+
