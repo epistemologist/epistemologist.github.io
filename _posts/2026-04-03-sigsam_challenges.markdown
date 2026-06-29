@@ -741,3 +741,31 @@ mpmath.mpf( prod_interval.a ), mpmath.mpf( prod_interval.b )
 
 With the above method, we are able to get 42 correct significant digits.
 
+# Problem 9
+Find the largest eigenvalue $\lambda$ to 13 significant digits for the following integral equation.
+$$ \int_0^1 \exp(x + y + x^2 + xy + y^2 + x^2 y^2 ) f(y) dx  = \lambda f(x) $$
+
+## Initial Setup
+Note that this is an example of a [Fredholm integral equation of the second kind](https://en.wikipedia.org/wiki/Fredholm_integral_equation#Equation_of_the_second_kind). For ease of notation, let $K(x,y) = \exp(x + y + x^2 + xy + y^2 + x^2 y^2 ) $ be the kernel that $f$ is integrated against, and let $g(x,y) = K(x,y) f(y)$ be the integrand in the left hand side above.
+
+We can use any number of quadrature rules to approximate the integral on the right hand side - for sample points $0 \le y_1 < y_2 \cdots  < y_{N-1} < y_N \le 1$ and weights $\{ w_j \}_{1 \le j \le N}$, we have
+$$ \int_0^1 g(x,y) dy \approx \sum_{j=1}^N w_j g(x, y_j)$$
+
+The above equation therefore becomes
+$$ \lambda f(x) \approx \sum_{j=1}^N w_j K(x, y_j) f(y_j) \$$
+
+Assume we sample $f$ at $N$ points $0 \le x_1 < x_2 \cdots x_{N-1} < x_N \le 1$. For each $x_i$ and taking each above approximation above as an equality, we get $N$ equations. 
+$$ \lambda f(x_i) = \sum_{j=1}^N w_j K(x_i, y_j) f(y_j) $$
+
+We rewrite the above system using matrices: let
+ - $ K = [K(x_i, y_j)]_{1 \le i,j \le N} \in \R^{N\times N}$ be a matrix of the kernel at the chosen sample points
+ - $ w = [w_j]_{1 \le j \le N}$ be a vector of weights given by the chosen quadrature rule
+- $f = [f(x_k)]_{1 \le k \le N}$ be the vector of function values which we aim to solve for
+
+After expanding, the above equation becomes:
+$$\begin{aligned}
+\underbrace{ \begin{bmatrix} \lambda f(x_1) \\ \vdots \\ \lambda f(x_n) \end{bmatrix}}_{\lambda f} &= \begin{bmatrix} \sum_{j=1}^N w_j K(x_1, y_j) f(y_j) \\ \vdots \\ \sum_{j=1}^N w_j K(x_1, y_j) f(y_j)  \end{bmatrix} \\
+&= \sum_{j=1}^N \left( (w_j f(y_j ) \cdot \begin{bmatrix} K(x_1, y_j) \\ \vdots \\ K(x_n, y_j)   \end{bmatrix} \right) \\
+&= \begin{bmatrix} K(x_1, y_1) & \cdots & K(x_1, y_n) \\ \vdots & \ddots & \vdots \\ K(x_n, y_1) & \cdots & K(x_n, y_n) \end{bmatrix} \begin{bmatrix} w_1 f(y_1) \\ \vdots \\ w_n f(y_n) \end{bmatrix} \\
+&= K w^T f
+\end{aligned}$$
