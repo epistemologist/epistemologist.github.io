@@ -743,13 +743,14 @@ With the above method, we are able to get 42 correct significant digits.
 
 # Problem 9
 Find the largest eigenvalue $\lambda$ to 13 significant digits for the following integral equation.
-$$ \int_0^1 \exp(x + y + x^2 + xy + y^2 + x^2 y^2 ) f(y) dx  = \lambda f(x) $$
+$$ \int_0^1 \exp(x + y + x^2 + xy + y^2 + x^2 y^2 ) f(y) dy  = \lambda f(x) $$
+
 
 ## Initial Setup
 Note that this is an example of a [Fredholm integral equation of the second kind](https://en.wikipedia.org/wiki/Fredholm_integral_equation#Equation_of_the_second_kind). For ease of notation, let $K(x,y) = \exp(x + y + x^2 + xy + y^2 + x^2 y^2 ) $ be the kernel that $f$ is integrated against, and let $g(x,y) = K(x,y) f(y)$ be the integrand in the left hand side above.
 
 We can use any number of quadrature rules to approximate the integral on the right hand side - for sample points $0 \le y_1 < y_2 \cdots  < y_{N-1} < y_N \le 1$ and weights $\{ w_j \}_{1 \le j \le N}$, we have
-$$ \int_0^1 g(x,y) dy \approx \sum_{j=1}^N w_j g(x, y_j)$$
+$$ \int_0^1 g(x,y) dy \approx \sum_{j=1}^N w_j g(x, y_j) $$
 
 The above equation therefore becomes
 $$ \lambda f(x) \approx \sum_{j=1}^N w_j K(x, y_j) f(y_j) \$$
@@ -765,7 +766,22 @@ We rewrite the above system using matrices: let
 After expanding, the above equation becomes:
 $$\begin{aligned}
 \underbrace{ \begin{bmatrix} \lambda f(x_1) \\ \vdots \\ \lambda f(x_n) \end{bmatrix}}_{\lambda f} &= \begin{bmatrix} \sum_{j=1}^N w_j K(x_1, y_j) f(y_j) \\ \vdots \\ \sum_{j=1}^N w_j K(x_1, y_j) f(y_j)  \end{bmatrix} \\
-&= \sum_{j=1}^N \left( (w_j f(y_j ) \cdot \begin{bmatrix} K(x_1, y_j) \\ \vdots \\ K(x_n, y_j)   \end{bmatrix} \right) \\
-&= \begin{bmatrix} K(x_1, y_1) & \cdots & K(x_1, y_n) \\ \vdots & \ddots & \vdots \\ K(x_n, y_1) & \cdots & K(x_n, y_n) \end{bmatrix} \begin{bmatrix} w_1 f(y_1) \\ \vdots \\ w_n f(y_n) \end{bmatrix} \\
-&= K w^T f
+&= \sum_{j=1}^N \left( (f(y_j ) \cdot \begin{bmatrix} K(x_1, y_j) w_j \\ \vdots \\ K(x_n, y_j) w_j  \end{bmatrix} \right) \\
+&= \underbrace{ \begin{bmatrix} K(x_1, y_1) w_1 & \cdots & K(x_1, y_n) w_1 \\ \vdots & \ddots & \vdots \\ K(x_n, y_1) w_n & \cdots & K(x_n, y_n) w_n\end{bmatrix} }_{\hat{K}} \begin{bmatrix} f(y_1) \\ \vdots \\ f(y_n) \end{bmatrix} \\
+&= \hat{ K }f \\
+\implies  \lambda f = \hat{K} f
 \end{aligned}$$
+
+**Small technicality**: In the above and what follows, we assume that $x_i = y_i$ for all $1 \le i \le N$.
+
+Note that finding the eigenvalues of the matrix $\hat{K} \in \R^{N \times N}$ takes $O(N^3)$ time complexity - we therefore want a quadrature rule with minimal sample points. To illustrate this, we use the above method with two different quadrature rules:
+ - we use [Simpson's 3/8 rule](https://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson's_3/8_rule) - we have:
+ 
+$$\begin{aligned}
+\int_0^1 f (x) dx \approx \frac{3}{8N} &( f(x_0) + 3f(x_1) + 3f(x_2)  \\
++ 2&f(x_3) + 3f(x_4) + 3f(x_5) \\
+&+ \cdots +  \\
++ 2&f(x_{n-3}) + 3f(x_{n-2}) + 3f(x_{n-1}) \\
++&f(x_n))
+\end{aligned}
+$$
