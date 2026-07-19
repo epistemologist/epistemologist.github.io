@@ -35,6 +35,7 @@ We have for a real $n \times n$ matrix $A$, we have that $$ \| A \|_2 = \sup_{|x
 (Here, for a vector $v = (v_1 \cdots v_n) \in \mathbb{R}^n$, $|v|_2 = (\sum_{i=1}^n v_i^2)^{1/2}$ is the standard Euclidean norm and $\lambda_{\text{max}}(M)$ represents the largest eigenvalue of $M$)
 
 Our plan of attack is as follows:
+
  - we can calculate $\lambda_{\text{max}}$ via [power iteration](https://en.wikipedia.org/wiki/Power_iteration); this is useful as it is less expensive than other methods like calculating the characteristic polynomial
  - we have an [explicit closed form](https://mathoverflow.net/questions/47561/deriving-inverse-of-hilbert-matrix) of 
  $(H^{-1})_{ij} = (-1)^{i+j} (i+j-1) \binom{n+i-1}{n-j} \binom{n+j-1}{n-i} \binom{i+j-2}{i-1}^2$
@@ -775,6 +776,7 @@ $$\begin{aligned}
 **Small technicality**: In the above and what follows, we assume that $x_i = y_i$ for all $1 \le i \le N$.
 
 Note that finding the eigenvalues of the matrix $\hat{K} \in \R^{N \times N}$ takes $O(N^3)$ time complexity - we therefore want a quadrature rule with minimal sample points. To illustrate this, we use the above method with two different quadrature rules:
+
  - we use [Simpson's 3/8 rule](https://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson's_3/8_rule) - we have:
  
 $$\begin{aligned}
@@ -785,3 +787,74 @@ $$\begin{aligned}
 +&f(x_n))
 \end{aligned}
 $$
+where $x_i = i/n$ are equally spaced abscissa. (Note for this method to work, we need $n \equiv 1 \bmod 3$)
+ - we also attempt using [Gauss-Legendre quadrature](https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature) - we have that
+ $\int_{-1}^1 f(x) \approx \sum_{i=1}^N w_i f(x_i)$
+ where the abscissas $x_i$ are the roots of the $n^\text{th}$ Legendre polynomial $P_n(x)$ and $w_i = \frac{2}{(1-x_i^2)(P'_n(x_i))^2}$
+
+```python
+import numpy as np
+from math import inf
+
+def power_iteration(M, iter=100):
+    v = np.ones(M.shape[0])
+    λ, λ_prev = 0, inf
+    for _ in range(iter):
+        v = M @ v
+        v = v / np.linalg.norm(v)
+        λ_prev, λ = λ, v.T @ M @ v 
+        if abs(λ - λ_prev) < 1e-15: break
+    return λ
+
+def solve_eigenvalue(N, quad_rule="gauss"):
+    if quad_rule == "gauss":
+        x, w = np.polynomial.legendre.leggauss(N) # np implementation slow for large N
+        x = (x + 1) / 2; w = w/2  # Shift x from [-1,1] to [0,1]
+    elif quad_rule == "simpson-3/8":
+        assert N % 3 == 1
+        x = np.arange(0, N) / (N-1)
+        w = 3/(8*N) * np.array([1] + [3,3,2]*( (N-4)//3 ) + [3,3,1])
+    # Evaluate kernel K(x,y) = exp(x + y + x**2 + xy + y**2 + x**2 * y**2 )
+    X, Y = np.meshgrid(x, x); K = np.exp(X + Y + X**2 + X*Y + Y**2 + X**2 * Y**2)
+    # Calculate max eigenvalue using power iteration
+    return abs(power_iteration(w * K))
+
+for N in [1<<i for i in range(2, 20)]:
+    # Offset N so N%3 == 1
+    N += 1 - (N % 3)
+    print(N, solve_eigenvalue(N, quad_rule="simpson-3/8"), solve_eigenvalue(N, quad_rule="gauss"))
+```
+
+We report the values of $\lambda$ given by both quadrature rules below (The number in parenthesis given after each value is how many digits the value in the current row agrees with the value in the previous row).
+
+| N | $\lambda$ from Simpson  | $\lambda$ from Gauss-Legendre |
+|---|---|---|
+| 4 | 55.31431066023942906 | 37.038189491645107272 |
+| 7 | 40.443850333007969722 | 37.52884997181127012 |
+| 10 | 38.32847376944170111 | 37.529145525137268348 |
+| 16 | 37.659409006783499636 | 37.52914556033570758 |
+| 22 | 37.565743437251561825 | 37.529145560335623495 |
+| 31 | 37.538326769743369835 | 37.529145560336307306 |
+| 46 | 37.531004151691295497 | 37.52914556033426543 |
+| 64 | 37.52963414952235983 | 37.52914556033575356 |
+| 91 | 37.52926349171153764 | 37.529145560337038252 |
+| 127 | 37.52917633563455667 | 37.529145560335063974 |
+| 181 | 37.529152959324969537 | 37.52914556033526757 |
+| 256 | 37.529147398484375912 | 37.529145560338284512 |
+| 361 | 37.529146023216616447 | 37.529145560328594645 |
+| 511 | 37.529145675274717515 | 37.52914556035115233 |
+| 724 | 37.529145588795126614 | 37.52914556035571393 |
+| 1024 | 37.529145567436042703 | 37.529145560332788513 |
+| 1447 | 37.52914556211421869 | 37.529145560295344503 |
+| 2047 | 37.529145560779183184 | 37.52914556030925146 |
+| 2896 | 37.52914556044609748 | 37.529145560345447356 |
+| 4096 | 37.52914556036303524 | 37.529145560312419577 |
+| 5791 | 37.529145560342298395 | 37.52914556031515633 |
+| 8191 | 37.529145560337107013 | 37.529145560207271888 |
+| 11584 | 37.529145560335810426 | 37.529145560224396756 |
+| 16384 | 37.529145560335486383 | 37.52914556035117426 |
+
+From the above, we see that $\lambda \approx 37.5291455603$.
+
+## Extrapolation
+
