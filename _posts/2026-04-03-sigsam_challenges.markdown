@@ -788,6 +788,8 @@ $$\begin{aligned}
 \end{aligned}
 $$
 where $x_i = i/n$ are equally spaced abscissa. (Note for this method to work, we need $n \equiv 1 \bmod 3$)
+
+
  - we also attempt using [Gauss-Legendre quadrature](https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature) - we have that
  $\int_{-1}^1 f(x) \approx \sum_{i=1}^N w_i f(x_i)$
  where the abscissas $x_i$ are the roots of the $n^\text{th}$ Legendre polynomial $P_n(x)$ and $w_i = \frac{2}{(1-x_i^2)(P'_n(x_i))^2}$
@@ -825,7 +827,7 @@ for N in [1<<i for i in range(2, 20)]:
     print(N, solve_eigenvalue(N, quad_rule="simpson-3/8"), solve_eigenvalue(N, quad_rule="gauss"))
 ```
 
-We report the values of $\lambda$ given by both quadrature rules below (The number in parenthesis given after each value is how many digits the value in the current row agrees with the value in the previous row).
+We report the values of $\lambda$ given for varying number of sample points by both quadrature rules below.
 
 | N | $\lambda$ from Simpson  | $\lambda$ from Gauss-Legendre |
 |---|---|---|
@@ -856,5 +858,45 @@ We report the values of $\lambda$ given by both quadrature rules below (The numb
 
 From the above, we see that $\lambda \approx 37.5291455603$.
 
-## Extrapolation
+# Problem 10
+Consider the following initial value problem:
 
+$$\frac{d^2y}{dx^2} = x^3 + y^3 + \left( \frac{dy}{dx} \right)^3 $$
+
+with initial conditions $y(0) = 0, y'(0) = 0$.
+
+ - Find the smallest positive number $r$ such that the solution has a derivative singularity at $x = r$. 
+ - Is $y(r)$ infinite or finite? If $y(r)$ if finite, then compute it to 13 significant digits.
+
+## Naive Approach
+Note that we can represent this IVP as a system of ODEs - letting $u = \frac{dy}{dx}$, we have the system of ODEs
+
+$$\begin{cases}\frac{dy}{dx} = u \\ \frac{du}{dx} = x^3 + y^3 + u^3 \end{cases}$$
+
+subject to initial conditions $y(0) = u(0) = 0$.
+
+[Putting this system into `scipy.solve_ivp`](https://gist.github.com/epistemologist/f7d0d7c7212ca4092e3c39a87ae3bd6d) indeed reveals that there is a singularity at around $x \approx 1.6$
+![](/img/sigsam/10_plot.png "alt text")
+
+## More Careful Analysis
+We use the [method of dominant balance](https://www.youtube.com/watch?v=2SBwUetNhFY) to determine the behavior of $y(x)$ as $x \to r$. Assuming that $y(x) \sim A(x - r)^p$ where $p < 0$, we have 
+
+$$\begin{aligned}
+y \sim A(x-r)^p&\implies \begin{cases} y' \sim Ap (x-r)^{p-1} \\ y'' \sim Ap(p-1)(x-r)^{p-2}  \end{cases} \\
+y'' &=x^3 + y^3 +(y')^3 \\
+&\implies Ap(p-1)(x-r)^{p-2} \sim x^3 + \underbrace{  A^3(x-r)^{3p}+ A^3p^3(x-r)^{3p-3} }_{f(x)}
+\end{aligned}$$
+
+As $x \to r$, we have $x^3 + f(x) \sim f(x)$ as $\lim_{x\to r} \frac{x^3 + f(x)}{f(x)} = 1$ - we therefore may ignore it in the asymptotic expansion above. This yields:
+
+$$\begin{aligned}
+Ap(p-1)(x-r)^{p-2} &\sim A^3(x-r)^{3p}+ A^3p^3(x-r)^{3p-3} \\
+&\implies p(p-1)(x-r)^{p-2} \sim A^3(x-r)^{3p} + \underbrace{ A^3p^3(x-r)^{3p-3} }_{\text{subdominant}} \\
+&\implies p(p-1)(x-r)^{p-2} \sim A^3(x-r)^{3p}
+\end{aligned}$$
+
+Comparing powers of $(x-r)$ and leading coefficients, we have:
+$$\begin{aligned}
+\begin{cases} p(p-1) = A^3 \\ p-2 = 3p \end{cases} \implies p=-1, A = \sqrt[3]{2}
+\end{aligned}$$
+We therefore have that $y \sim \frac{\sqrt[3]{2}}{x-x_0}$.
