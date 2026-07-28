@@ -775,7 +775,7 @@ $$\begin{aligned}
 
 **Small technicality**: In the above and what follows, we assume that $x_i = y_i$ for all $1 \le i \le N$.
 
-Note that finding the eigenvalues of the matrix $\hat{K} \in \R^{N \times N}$ takes $O(N^3)$ time complexity - we therefore want a quadrature rule with minimal sample points. To illustrate this, we use the above method with two different quadrature rules:
+Note that finding the eigenvalues of the matrix $\hat{K} \in \mathbb{R}^{N \times N}$ takes $O(N^3)$ time complexity - we therefore want a quadrature rule with minimal sample points. To illustrate this, we use the above method with two different quadrature rules:
 
  - we use [Simpson's 3/8 rule](https://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson's_3/8_rule) - we have:
  
@@ -879,24 +879,78 @@ subject to initial conditions $y(0) = u(0) = 0$.
 ![](/img/sigsam/10_plot.png "alt text")
 
 ## More Careful Analysis
-We use the [method of dominant balance](https://www.youtube.com/watch?v=2SBwUetNhFY) to determine the behavior of $y(x)$ as $x \to r$. Assuming that $y(x) \sim A(x - r)^p$ where $p < 0$, we have 
+We use the [method of dominant balance](https://www.youtube.com/watch?v=2SBwUetNhFY) to determine the behavior of $y(x)$ as $x \to r$. Assuming that $y(x) \sim A(x - r)^p$, we have 
 
 $$\begin{aligned}
 y \sim A(x-r)^p&\implies \begin{cases} y' \sim Ap (x-r)^{p-1} \\ y'' \sim Ap(p-1)(x-r)^{p-2}  \end{cases} \\
 y'' &=x^3 + y^3 +(y')^3 \\
-&\implies Ap(p-1)(x-r)^{p-2} \sim x^3 + \underbrace{  A^3(x-r)^{3p}+ A^3p^3(x-r)^{3p-3} }_{f(x)}
+&\implies Ap(p-1)(x-r)^{p-2} \sim x^3 +  A^3(x-r)^{3p}+ A^3p^3(x-r)^{3p-3} 
 \end{aligned}$$
 
-As $x \to r$, we have $x^3 + f(x) \sim f(x)$ as $\lim_{x\to r} \frac{x^3 + f(x)}{f(x)} = 1$ - we therefore may ignore it in the asymptotic expansion above. This yields:
+Note that we have that as $x \to r$ that 
+$$\frac{A^3 (x-r)^{3p}}{A^3 p^3 (x-r)^{3p-3}} = \frac{(x-r)^3}{p^3} \to 0$$
+Hence, $A^3 (x-r)^{3p} \ll A^3 p^3 (x-r)^{3p - 3}$; hence, the $y^3$ term is subdominant. We therefore can ignore it in the above asymptotic expansion.
+
+Similarly, we have $x^3 \to r^3 < \infty$ which is finite whereas $(y')^3 \sim A^3p^3(x-r)^{3p-3} \to \infty$ as $x \to r$. Hence, $x^3 \ll (y')^3$ is subdominant as well - we therefore have that the asymptotic expansion becomes
+
+$$ y'' \sim (y' )^3 \implies Ap(p-1)(x-r)^{p-2} \sim A^3 p^3(x-r)^{3p-3} $$
+
+Equating multiplicative constants and leading powers of 2 - we get that 
+
+$$\begin{cases}Ap(p-1) = A^3p^3 \\ p-2 = 3p-3 \end{cases} \implies A^2 = 2, p = 1/2$$
+
+We therefore have that $y(x) \sim \pm\sqrt{2}(x-r)^{1/2}$. This suggests that $y(x)$ has a finite value - however $|y'(x)| \to \infty$ as $x \to r$. This is what was causing the blowup of the traditional Runge-Kutta scheme above.
+
+## Inverse Function
+
+Assuming $y(x)$ is "nice enough" (e.g. $y(x) \in C^1(\mathbb{R})$), note that we (at least [locally](https://en.wikipedia.org/wiki/Inverse_function_theorem)) may work with the inverse function $y^{-1}(x) \equiv g(x)$. Using implicit differentation, we have
+
+$$\begin{aligned} g(y(x)) = x &\underset{\partial_x}{\implies} g'(y(x))\cdot y'(x) =1 \\ &\implies  y'(x) = \left(g'(y(x)) \right)^{-1} \end{aligned}$$
+
+Differentiating again and using the original differential equation, we have:
+
+$$ \begin{aligned} g'(y(x))\cdot y'(x) =1 &\underset{\partial_x}{\implies} = \frac{d}{dx}\left( g'(y(x)) \right) \cdot y'(x) + g'(y(x)) \cdot y''(x) =  0 \\ &\implies  g'(y(x)) \cdot ( \underbrace{  y'(x) }_{=( g'(y(x)))^{-1}} )^2 + g'(y(x)) \cdot \underbrace{ y''(x) }_{=x^3 + y^3 + (y')^3} = 0 \\ &\underset{u = y(x)}{\implies} \;\; g''(u) ( g'(u) )^{-2} + g'(u) \left(g(u)^3 + u^3 + (g'(u))^{-3}\right) = 0 \\ &\implies g'' + (g')^3 g^3 + (g')^3 u^3 + 1 = 0  \end{aligned}$$
+
+Note that as $x \to r$, we have that $y'(x) \to \infty$ and therefore, we have that $g'(x) \sim (y(x))^{-1}\to 0$. This avoids the issue of the traditional integration scheme we were dealing with before. By switching between solving the original equation and the above equation when $|y'|$ exceeds some threshold, [we are able to get a much clearer picture of what is going on](https://gist.github.com/epistemologist/7df5ce717b8503f1830df117244eb22d).
+
+![](/img/sigsam/10_plot_2.png "Plot of y")
+
+The above plot gives that $r \approx 1.644, y(r) \approx 0.9319$.
+
+## Removing the Singularity
+Upon viewing the plot above of $y(x)$, it is more natural to view $y(x)$ as a trajectory or orbit around the point $P = (1,1)$. This motivates the substitution
+$$ \begin{aligned} x(\theta) &= 1 + r(\theta) \cos(\theta) \\ y(\theta) &= 1 + r(\theta) \sin(\theta) \end{aligned}$$
+
+The equations using this substitution get much messier, so we outsource the computation to `sympy`:
+
+```python
+import sympy
+from sympy import cos, sin
+
+t = sympy.symbols("theta")
+r = sympy.Function("r")(t)
+x = sympy.Function("x")(t)
+x = 1 + r*cos(t)
+y = 1 + r*sin(t)
+
+y_prime = y.diff(t) / x.diff(t)
+y_double_prime = sympy.simplify( ( y.diff(t) / x.diff(t) ).diff(t) / x.diff(t) )
+
+expr = sympy.simplify( y_double_prime - (x**3 + y**3 + (y_prime)**3) ) 
+num, den = sympy.fraction(expr, exact=True)
+expr = sympy.simplify( sympy.expand(num))
+expr = expr.collect([r.diff(t,2), r.diff(t), r])
+print(sympy.latex(expr))
+```
 
 $$\begin{aligned}
-Ap(p-1)(x-r)^{p-2} &\sim A^3(x-r)^{3p}+ A^3p^3(x-r)^{3p-3} \\
-&\implies p(p-1)(x-r)^{p-2} \sim A^3(x-r)^{3p} + \underbrace{ A^3p^3(x-r)^{3p-3} }_{\text{subdominant}} \\
-&\implies p(p-1)(x-r)^{p-2} \sim A^3(x-r)^{3p}
-\end{aligned}$$
+&\left(- 2 \sin^{3}{\left(\theta \right)} + \cos^{3}{\left(\theta \right)}\right) r^{3}{\left(\theta \right)} \\
+&+ \left(- 3 \sin^{4}{\left(\theta \right)} - 3 \sin^{3}{\left(\theta \right)} \cos{\left(\theta \right)}\right) r^{4}{\left(\theta \right)} \\
+&+ \left(- 3 \sin^{5}{\left(\theta \right)} - 3 \sin^{3}{\left(\theta \right)} \cos^{2}{\left(\theta \right)}\right) r^{5}{\left(\theta \right)} \\
+&+ \left(- \sin^{6}{\left(\theta \right)} - \sin^{3}{\left(\theta \right)} \cos^{3}{\left(\theta \right)}\right) r^{6}{\left(\theta \right)} \\
+&+ \left(\frac{9 \left(1 - \cos{\left(4 \theta \right)}\right) r^{3}{\left(\theta \right)}}{8} + 3 r^{5}{\left(\theta \right)} \sin^{5}{\left(\theta \right)} \cos{\left(\theta \right)} + 3 r^{5}{\left(\theta \right)} \sin^{2}{\left(\theta \right)} \cos^{4}{\left(\theta \right)} + 9 r^{4}{\left(\theta \right)} \sin^{4}{\left(\theta \right)} \cos{\left(\theta \right)} + 9 r^{4}{\left(\theta \right)} \sin^{2}{\left(\theta \right)} \cos^{3}{\left(\theta \right)} + 9 r^{3}{\left(\theta \right)} \sin^{3}{\left(\theta \right)} \cos{\left(\theta \right)} + 6 r^{2}{\left(\theta \right)} \sin^{2}{\left(\theta \right)} \cos{\left(\theta \right)} + 3 r^{2}{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{2}{\left(\theta \right)}\right) \frac{d}{d \theta} r{\left(\theta \right)} \\
+ &+ \left(r^{3}{\left(\theta \right)} \sin^{3}{\left(\theta \right)} \cos^{3}{\left(\theta \right)} + r^{3}{\left(\theta \right)} \cos^{6}{\left(\theta \right)} + 3 r^{2}{\left(\theta \right)} \sin^{2}{\left(\theta \right)} \cos^{3}{\left(\theta \right)} + 3 r^{2}{\left(\theta \right)} \cos^{5}{\left(\theta \right)} + 3 r{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{3}{\left(\theta \right)} + 3 r{\left(\theta \right)} \cos^{4}{\left(\theta \right)} + \sin^{3}{\left(\theta \right)} + 2 \cos^{3}{\left(\theta \right)}\right) \left(\frac{d}{d \theta} r{\left(\theta \right)}\right)^{3} \\
+ &+ \left(- \frac{9 \left(1 - \cos{\left(4 \theta \right)}\right) r^{2}{\left(\theta \right)}}{8} - 3 r^{4}{\left(\theta \right)} \sin^{4}{\left(\theta \right)} \cos^{2}{\left(\theta \right)} - 3 r^{4}{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{5}{\left(\theta \right)} - 9 r^{3}{\left(\theta \right)} \sin^{3}{\left(\theta \right)} \cos^{2}{\left(\theta \right)} - 9 r^{3}{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{4}{\left(\theta \right)} - 9 r^{2}{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{3}{\left(\theta \right)} + 3 r{\left(\theta \right)} \sin^{2}{\left(\theta \right)} \cos{\left(\theta \right)} - 6 r{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{2}{\left(\theta \right)} - 2\right) \left(\frac{d}{d \theta} r{\left(\theta \right)}\right)^{2}\\
+&- r^{2}{\left(\theta \right)} + r{\left(\theta \right)} \frac{d^{2}}{d \theta^{2}} r{\left(\theta \right)} \end{aligned}
+$$
 
-Comparing powers of $(x-r)$ and leading coefficients, we have:
-$$\begin{aligned}
-\begin{cases} p(p-1) = A^3 \\ p-2 = 3p \end{cases} \implies p=-1, A = \sqrt[3]{2}
-\end{aligned}$$
-We therefore have that $y \sim \frac{\sqrt[3]{2}}{x-x_0}$.
