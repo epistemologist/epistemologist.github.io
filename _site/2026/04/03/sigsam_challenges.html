@@ -327,14 +327,40 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a hr
 <span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;terms: </span><span class="sc">{</span>terms<span class="sc">}</span><span class="ss">, error:</span><span class="sc">{</span>error<span class="sc">}</span><span class="ss">&quot;</span>)</span>
 <span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    integral_estimate <span class="op">=</span> <span class="bu">sum</span>([term.replace(f, <span class="kw">lambda</span> x: x<span class="op">**</span>x<span class="op">*</span>sympy.log(x)).doit().evalf() <span class="cf">for</span> term <span class="kw">in</span> terms])</span>
 <span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> integral_estimate.n(), error</span></code></pre></div>
-<p>We have the following estimates of the integral: | number of
-applications of integration by parts | estimate of integral| |-|-|
-|1|1.10265158296803e+36300| |2|1.10266499903801e+36300|
-|3|1.10266499936193e+36300| |4|1.10266499936194e+36300| |5|
-1.10266499936194e+36300|</p>
+<p>We have the following estimates of the integral:</p>
+<table>
+<thead>
+<tr class="header">
+<th>number of applications of integration by parts</th>
+<th>estimate of integral</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1.10265158296803e+36300</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1.10266499903801e+36300</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1.10266499936193e+36300</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>1.10266499936194e+36300</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>1.10266499936194e+36300</td>
+</tr>
+</tbody>
+</table>
 <p>We can therefore say with some confidence that the integral <span
-class="math inline">\(\int_1^6 x^{x^x} \approx 1.10266449993619 \cdot
-10^{36300}\)</span></p>
+class="math inline">\(\int_1^6 x^{x^x} \approx \boxed{ 1.102664 \cdot
+10^{36300} }\)</span></p>
 <h1 id="problem-3">Problem 3</h1>
 <p>What is <span class="math display">\[\sum_{n=1}^\infty (n^\pi + n^2 +
 n^{\sqrt2} + 1)^{-1/3}\]</span> to 14 significant digits?</p>
@@ -406,7 +432,7 @@ class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="ex">550</span> 21.193240377711540944</span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="ex">600</span> 21.193240377711540944</span></code></pre></div>
 <p>With the above code, we estimate the sum to be <span
-class="math inline">\(\approx 21.193240377711540944\)</span></p>
+class="math inline">\(\approx \boxed{ 21.193240377712 }\)</span></p>
 <h2 id="digression-complex-analysis">Digression: Complex Analysis</h2>
 <p>We state the following theorem without proof:</p>
 <p><strong>Theorem</strong>: Let <span
@@ -423,7 +449,7 @@ class="math inline">\(\infty\)</span>, starting in the upper half plane
 and crossing the real line between 0 and 1, having to its left all
 positive integers</p>
 <p>A proof of this utilizes the residue theorem and can be found <a
-href="www-m3.ma.tum.de/bornemann/challengebook/">here, Theorem
+href="http://www-m3.ma.tum.de/bornemann/challengebook/">here, Theorem
 3.6</a></p>
 <p>It turns out that our summand is sufficiently nice to apply this
 theorem: it remains to choose a contour <span
@@ -545,7 +571,7 @@ small <span class="math inline">\(k\)</span> but comparable for larger
 <span class="math inline">\(k\)</span>.</p>
 <p>We showcase two techniques for calculating <span
 class="math inline">\(F(k)\)</span> for higher <span
-class="math inline">\(k\)</span></p>
+class="math inline">\(k\)</span>.</p>
 <h2 id="reconstruction-via-chinese-remainder-theorem">Reconstruction via
 Chinese Remainder Theorem</h2>
 <p>Calculating the above polynomial in <span
@@ -735,6 +761,116 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a h
 <span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>.............................................</span>
 <span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="fl">3943.24739484527</span></span></code></pre></div>
 <h1 id="problem-6">Problem 6</h1>
+<p>Find both the global maximum of <span
+class="math inline">\(J_\nu(2000 \pi)\)</span> and where it occurs.
+Compute the global maximum to 16 significant digits, and compute where
+it occurs to 8 significant digits.</p>
+<ul>
+<li>here, we restrict <span class="math inline">\(\nu \ge
+0\)</span></li>
+<li><span class="math inline">\(J_\nu\)</span> is <a
+href="https://en.wikipedia.org/wiki/Bessel_function#Bessel_functions_of_the_first_kind:_J%CE%B1">the
+Bessel function of the first kind</a></li>
+</ul>
+<h2 id="some-theory-1">Some Theory</h2>
+<p>Before solving the problem, we should take a second to determine
+whether or not the problem is well-posed, as it is not clear whether or
+not this function even has a maximum in the first place.</p>
+<p>However, note that <a href="https://dlmf.nist.gov/10.19#i">we have
+that</a> for fixed <span class="math inline">\(z\)</span> and as <span
+class="math inline">\(\nu \to \infty\)</span>, we have <span
+class="math display">\[J_{\nu}\left(z\right)\sim\frac{1}{\sqrt{2\pi\nu}}\left(\frac{ez}{2\nu}\right)^{\nu}
+\to 0\]</span></p>
+<p>We also have <a href="https://dlmf.nist.gov/10.14#E4">the strict
+inequality</a></p>
+<p><span class="math display">\[ | J_\nu(x)| \le \frac{1}{\Gamma(\nu+1)}
+\left(\frac{x}{2}\right)^\nu \implies |J_\nu(2000\pi)| \le \underbrace{
+\frac{(1000\pi)^\nu}{\Gamma(\nu+1)} }_{f(\nu)}\]</span></p>
+<p>It can be shown that for large enough <span
+class="math inline">\(N\)</span> - say <span
+class="math inline">\(10^4\)</span> - <span
+class="math inline">\(f(\nu)\)</span> is decreasing on <span
+class="math inline">\((N, \infty)\)</span>. We therefore have that for
+<span class="math inline">\(\nu &gt; 10^4\)</span> that</p>
+<p><span class="math display">\[|J_\nu(2000 \pi)| \le f(10^4) \approx
+1.11 \cdot 10^{-688}\]</span></p>
+<p>It therefore suffices to find the optimum <span
+class="math inline">\(\nu^* = \arg\max_{\nu \in [0, 10000] }
+J_\nu(2000\pi)\)</span>. We find this optimum with brute force:</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize, brute, fmin</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> jv</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> pi</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>F <span class="op">=</span> <span class="kw">lambda</span> v: <span class="op">-</span>jv(v, <span class="dv">2000</span><span class="op">*</span>pi)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> brute(</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>     <span class="kw">lambda</span> v: <span class="op">-</span>jv(v, <span class="dv">2000</span><span class="op">*</span>pi), </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    (<span class="bu">slice</span>(<span class="dv">0</span>, <span class="dv">10000</span>, <span class="fl">0.01</span>), ), full_output<span class="op">=</span><span class="va">True</span>, disp<span class="op">=</span><span class="va">True</span>, finish<span class="op">=</span>fmin)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># (array([6268.26082196]), -0.03658537275397168)</span></span></code></pre></div>
+<h1 id="problem-7">Problem 7</h1>
+<p>Define functions <span class="math inline">\(f(x)\)</span> and <span
+class="math inline">\(g(x)\)</span> as</p>
+<p><span class="math display">\[\begin{aligned}
+f(x) &amp;= \tan(\tanh(\sin(x))) + \tanh(\sin(\tan(x))) \\
+&amp;+ \sin(\tan(\tanh(x))) - \tan(\sin(\tanh(x))) \\
+&amp;- \sin(\tanh(\tan(x))) - \tanh(\tan(\sin(x))) \\
+&amp;- \tan(\sinh(\tanh(x))) - \sinh(\tanh(\tan(x))) \\
+&amp;- \tanh(\tan(\sinh(x))) + \tan(\tanh(\sinh(x))) \\
+&amp;+ \tanh(\sinh(\tan(x))) + \sinh(\tan(\tanh(x)))
+\end{aligned}\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\begin{aligned}
+g(x) &amp;= \sinh(\tanh(\sin(x))) + \tanh(\sin(\sinh(x))) \\
+&amp;+ \sin(\sinh(\tanh(x))) - \sinh(\sin(\tanh(x))) \\
+&amp;- \sin(\tanh(\sinh(x))) - \tanh(\sinh(\sin(x))) \\
+&amp;- \tan(\sinh(\sin(x))) - \sinh(\sin(\tan(x))) \\
+&amp;- \sin(\tan(\sinh(x))) + \tan(\sin(\sinh(x))) \\
+&amp;+ \sin(\sinh(\tan(x))) + \sinh(\tan(\sin(x)))
+\end{aligned}\]</span></p>
+<p>What is <span class="math inline">\(\lim_{x \to 0}
+\frac{f(g(x))}{g(f(x))}\)</span> to 9 significant digits?</p>
+<h2 id="naive-approach-1">Naive Approach</h2>
+<p>Direct evaluation of <span class="math inline">\(f(x)\)</span> is
+suceptible to underflow - this problem compounds when calculating <span
+class="math inline">\(f(g(x))\)</span> and <span
+class="math inline">\(g(f(x))\)</span>. Hence, directly calculating
+<span class="math inline">\(\frac{f(g(x))}{g(f(x))}\)</span> is not
+feasible except for <span class="math inline">\(x \approx 0.9\)</span>
+even with extended 128-bit precision. <img
+src="/img/sigsam/7_plot.png" /></p>
+<h2 id="power-series">Power Series</h2>
+<p>Instead of directly evaluating <span class="math inline">\(f\)</span>
+and <span class="math inline">\(g\)</span>, note that at <span
+class="math inline">\(z=0\)</span>, we have the series expansions:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sin z &amp;= \sum_{k=0}^{\infty} \frac{(-1)^k z^{2k+1}}{(2k+1)!} \\
+\sinh{z} &amp;=\sum_{k=0}^{\infty} \frac{z^{2k+1}}{(2k+1)!} \\
+\tan{z} &amp;= \sum_{k=1}^{\infty} \frac{(-1)^{k-1}(2^{2k} - 1)2^{2k}
+B_{2k} z^{2k-1}}{(2k)!} \\
+\tanh{z} &amp;= \sum_{k=1}^{\infty} \frac{(2^{2k} - 1)2^{2k} B_{2k}
+z^{2k-1}}{(2k)!}
+\end{aligned}
+\]</span></p>
+<p>We can therefore calculate <span class="math inline">\(F(x) = f(g(x))
+/ g(f(x))\)</span> as a <em>formal power series</em> - this can be done
+in a <a
+href="https://doc.sagemath.org/html/en/reference/power_series/sage/rings/power_series_ring_element.html">couple
+lines of SageMath</a></p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sage: R.<span class="op">&lt;</span>x<span class="op">&gt;</span> <span class="op">=</span> PowerSeriesRing(QQ, default_prec <span class="op">=</span> <span class="dv">20</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>....: f <span class="op">=</span> tan(tanh(sin(x))) <span class="op">+</span> tanh(sin(tan(x))) <span class="op">+</span> sin(tan(tanh(x))) <span class="op">-</span> tan(sin(tanh(x))) <span class="op">-</span> sin(tanh(tan(x))) <span class="op">-</span> tanh(tan(sin(x))) <span class="op">-</span> tan(sinh(tanh(x))) <span class="op">-</span> sinh(tanh(tan(x))) <span class="op">-</span> tanh(tan(sinh(x))) <span class="op">+</span> tan(tanh(sinh(x))) <span class="op">+</span> tanh(sinh(tan(x))) <span class="op">+</span> sinh(tan(tanh(x)))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>....: g <span class="op">=</span> sinh(tanh(sin(x))) <span class="op">+</span> tanh(sin(sinh(x))) <span class="op">+</span> sin(sinh(tanh(x))) <span class="op">-</span> sinh(sin(tanh(x))) <span class="op">-</span> sin(tanh(sinh(x))) <span class="op">-</span> tanh(sinh(sin(x))) <span class="op">-</span> tan(sinh(sin(x))) <span class="op">-</span> sinh(sin(tan(x))) <span class="op">-</span> sin(tan(sinh(x))) <span class="op">+</span> tan(sin(sinh(x))) <span class="op">+</span> sin(sinh(tan(x))) <span class="op">+</span> sinh(tan(sin(x)))</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>sage: f(g(x)) <span class="op">/</span> g(f(x))</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="dv">2451447860952057740817096729600000000000000000000</span><span class="op">/</span><span class="dv">801034487517232030831498951509084442801</span> <span class="op">+</span> <span class="dv">268594208861616474527619350824913280000000000000000000</span><span class="op">/</span><span class="dv">6223236933521375647529915354274077036120969</span><span class="op">*</span>x<span class="op">^</span><span class="dv">4</span> <span class="op">+</span> O(x<span class="op">^</span><span class="dv">5</span>)</span></code></pre></div>
+<p>As we have that <span class="math inline">\(F(x) = c_0 + c_1 x^4 +
+\cdots\)</span>, we have that <span class="math inline">\(\lim_{x \to 0}
+F(x)\)</span> is the constant term in the above power series, namely</p>
+<p><span class="math display">\[
+\frac{2451447860952057740817096729600000000000000000000}{801034487517232030831498951509084442801}
+\approx 3060352455.6729174 \]</span></p>
 
   </div><a class="u-url" href="/2026/04/03/sigsam_challenges.html" hidden></a>
 </article>

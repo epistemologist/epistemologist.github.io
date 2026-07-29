@@ -918,7 +918,7 @@ Note that as $x \to r$, we have that $y'(x) \to \infty$ and therefore, we have t
 The above plot gives that $r \approx 1.644, y(r) \approx 0.9319$.
 
 ## Removing the Singularity
-Upon viewing the plot above of $y(x)$, it is more natural to view $y(x)$ as a trajectory or orbit around the point $P = (1,1)$. This motivates the substitution
+Upon viewing the plot above of $y(x)$, it is more natural to view $y(x)$ as a trajectory or orbit around the point $(1,1)$. This motivates the substitution
 $$ \begin{aligned} x(\theta) &= 1 + r(\theta) \cos(\theta) \\ y(\theta) &= 1 + r(\theta) \sin(\theta) \end{aligned}$$
 
 The equations using this substitution get much messier, so we outsource the computation to `sympy`:
@@ -944,13 +944,38 @@ print(sympy.latex(expr))
 ```
 
 $$\begin{aligned}
-&\left(- 2 \sin^{3}{\left(\theta \right)} + \cos^{3}{\left(\theta \right)}\right) r^{3}{\left(\theta \right)} \\
-&+ \left(- 3 \sin^{4}{\left(\theta \right)} - 3 \sin^{3}{\left(\theta \right)} \cos{\left(\theta \right)}\right) r^{4}{\left(\theta \right)} \\
-&+ \left(- 3 \sin^{5}{\left(\theta \right)} - 3 \sin^{3}{\left(\theta \right)} \cos^{2}{\left(\theta \right)}\right) r^{5}{\left(\theta \right)} \\
-&+ \left(- \sin^{6}{\left(\theta \right)} - \sin^{3}{\left(\theta \right)} \cos^{3}{\left(\theta \right)}\right) r^{6}{\left(\theta \right)} \\
-&+ \left(\frac{9 \left(1 - \cos{\left(4 \theta \right)}\right) r^{3}{\left(\theta \right)}}{8} + 3 r^{5}{\left(\theta \right)} \sin^{5}{\left(\theta \right)} \cos{\left(\theta \right)} + 3 r^{5}{\left(\theta \right)} \sin^{2}{\left(\theta \right)} \cos^{4}{\left(\theta \right)} + 9 r^{4}{\left(\theta \right)} \sin^{4}{\left(\theta \right)} \cos{\left(\theta \right)} + 9 r^{4}{\left(\theta \right)} \sin^{2}{\left(\theta \right)} \cos^{3}{\left(\theta \right)} + 9 r^{3}{\left(\theta \right)} \sin^{3}{\left(\theta \right)} \cos{\left(\theta \right)} + 6 r^{2}{\left(\theta \right)} \sin^{2}{\left(\theta \right)} \cos{\left(\theta \right)} + 3 r^{2}{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{2}{\left(\theta \right)}\right) \frac{d}{d \theta} r{\left(\theta \right)} \\
- &+ \left(r^{3}{\left(\theta \right)} \sin^{3}{\left(\theta \right)} \cos^{3}{\left(\theta \right)} + r^{3}{\left(\theta \right)} \cos^{6}{\left(\theta \right)} + 3 r^{2}{\left(\theta \right)} \sin^{2}{\left(\theta \right)} \cos^{3}{\left(\theta \right)} + 3 r^{2}{\left(\theta \right)} \cos^{5}{\left(\theta \right)} + 3 r{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{3}{\left(\theta \right)} + 3 r{\left(\theta \right)} \cos^{4}{\left(\theta \right)} + \sin^{3}{\left(\theta \right)} + 2 \cos^{3}{\left(\theta \right)}\right) \left(\frac{d}{d \theta} r{\left(\theta \right)}\right)^{3} \\
- &+ \left(- \frac{9 \left(1 - \cos{\left(4 \theta \right)}\right) r^{2}{\left(\theta \right)}}{8} - 3 r^{4}{\left(\theta \right)} \sin^{4}{\left(\theta \right)} \cos^{2}{\left(\theta \right)} - 3 r^{4}{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{5}{\left(\theta \right)} - 9 r^{3}{\left(\theta \right)} \sin^{3}{\left(\theta \right)} \cos^{2}{\left(\theta \right)} - 9 r^{3}{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{4}{\left(\theta \right)} - 9 r^{2}{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{3}{\left(\theta \right)} + 3 r{\left(\theta \right)} \sin^{2}{\left(\theta \right)} \cos{\left(\theta \right)} - 6 r{\left(\theta \right)} \sin{\left(\theta \right)} \cos^{2}{\left(\theta \right)} - 2\right) \left(\frac{d}{d \theta} r{\left(\theta \right)}\right)^{2}\\
-&- r^{2}{\left(\theta \right)} + r{\left(\theta \right)} \frac{d^{2}}{d \theta^{2}} r{\left(\theta \right)} \end{aligned}
+&-(r(\theta))^2 + \left(-2\sin^3(\theta) + \cos^3(\theta)\right)(r(\theta))^3 + \left(-3\sin^4(\theta) - 3\sin^3(\theta)\cos(\theta)\right)(r(\theta))^4 \\
+&+ \left(-3\sin^5(\theta) - 3\sin^3(\theta)\cos^2(\theta)\right)(r(\theta))^5 + \left(-\sin^6(\theta) - \sin^3(\theta)\cos^3(\theta)\right)(r(\theta))^6 \\
+&+ \left(\frac{9(1 - \cos(4\theta))(r(\theta))^3}{8} + 6(r(\theta))^2\sin^2(\theta)\cos(\theta) + 3(r(\theta))^2\sin(\theta)\cos^2(\theta) + 9(r(\theta))^3\sin^3(\theta)\cos(\theta) + 9(r(\theta))^4\sin^2(\theta)\cos^3(\theta) + 9(r(\theta))^4\sin^4(\theta)\cos(\theta) + 3(r(\theta))^5\sin^2(\theta)\cos^4(\theta) + 3(r(\theta))^5\sin^5(\theta)\cos(\theta)\right)r'(\theta) \\
+&+ \left(-2 + 3r(\theta)\sin^2(\theta)\cos(\theta) - 6r(\theta)\sin(\theta)\cos^2(\theta) - 9(r(\theta))^2\sin(\theta)\cos^3(\theta) - 9(r(\theta))^3\sin(\theta)\cos^4(\theta) - 9(r(\theta))^3\sin^3(\theta)\cos^2(\theta) - 3(r(\theta))^4\sin(\theta)\cos^5(\theta) - 3(r(\theta))^4\sin^4(\theta)\cos^2(\theta) - \frac{9(1 - \cos(4\theta))(r(\theta))^2}{8}\right)(r'(\theta))^2 \\
+&+ \left(2\cos^3(\theta) + \sin^3(\theta) + 3r(\theta)\cos^4(\theta) + 3r(\theta)\sin(\theta)\cos^3(\theta) + 3(r(\theta))^2\cos^5(\theta) + 3(r(\theta))^2\sin^2(\theta)\cos^3(\theta) + (r(\theta))^3\cos^6(\theta) + (r(\theta))^3\sin^3(\theta)\cos^3(\theta)\right)(r'(\theta))^3 \\
+&+ r(\theta) \, r''(\theta) = 0
+\end{aligned}
 $$
+
+It remains to find some set of initial conditions for $r$. Note that we have $y(0) = 0$, so we have $r\left(\frac{-3\pi}{4}\right) = \sqrt{2}$. To get $r'(\theta)$, note:
+
+$$\begin{aligned}
+\frac{dy}{dx} &= \frac{dy/d\theta}{dx/d\theta} = \frac{r \cos\theta + r' \sin\theta}{-r \sin \theta + r' \cos\theta} \\
+&\implies 0 = \frac{\sqrt{2} \cos\left(\frac{-3\pi}{4}\right) + r' \sin\left(\frac{-3\pi}{4}\right)}{-\sqrt{2} \sin\left(\frac{-3\pi}{4}\right) + r' \cos\left(\frac{-3\pi}{4}\right)} =\frac{-1-r'\sqrt{2}}{1-r'/\sqrt{2}}  \\
+&\implies r' = -\sqrt{2}
+\end{aligned}$$
+
+Using a more accurate integration scheme (`scipy` provides a [8th order Runge-Kutta in `solve_ivp`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.DOP853.html)), we are able to (with the help of [`sympy.lambdify`](https://gist.github.com/epistemologist/fc80c97e1f3b7d0310c35b775992a866) to do the algebraic heavy-lifting), calculate $r(\theta)$ within a tolerance of relative tolerance of $10^{-10}$. With this, we are then able to calculate $y(x)$ which we plot below.
+
+![](/img/sigsam/10_plot_3.png "Plot of y")
+
+By the above calculation, $dy/dx$ has a singularity at $\theta^*$ when $r'\cos(\theta^*) -r \sin(\theta^*) = 0$. We can use Brent's method to solve for this optimal $\theta^*$ which we can then use to find the point singularity $(x, y(x)) = (1 + r(\theta^*) \cos(\theta^*) , 1 + r(\theta^*) \sin(\theta^*))$
+
+```python
+def find_singularity(t):
+    r, r_prime = sol.sol(t)
+    return  r_prime*np.cos(t) - r*np.sin(t)
+
+from scipy.optimize import root_scalar
+theta_opt = root_scalar(find_singularity, bracket=[-3*np.pi/4, np.pi/2]).root
+r = lambda t: sol.sol(t)[0]
+( 1 + r( theta_opt ) * np.cos(theta_opt) , 1 + r( theta_opt ) * np.sin(theta_opt) ) 
+# (np.float64(1.6443766903388382), np.float64(0.9319387651102722))
+```
 
